@@ -156,30 +156,7 @@ def order_success(request, order_id):
     return render(request, 'store/order_success.html', context)
 
 def visit_showroom(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email', '')
-        visit_date = request.POST.get('visit_date')
-        time_slot = request.POST.get('time_slot')
-        guests_count = request.POST.get('guests_count', 2)
-        interest_area = request.POST.get('interest_area', 'Artificial Plants & Decor')
-        notes = request.POST.get('notes', '')
-
-        ShowroomBooking.objects.create(
-            name=name,
-            phone=phone,
-            email=email,
-            visit_date=visit_date,
-            time_slot=time_slot,
-            guests_count=guests_count,
-            interest_area=interest_area,
-            notes=notes,
-        )
-        messages.success(request, 'Your VIP Showroom Visit has been scheduled! We look forward to welcoming you at Sector 88, Faridabad.')
-        return redirect('visit_showroom')
-
-    return render(request, 'store/visit.html')
+    return redirect("https://wa.me/919899097676?text=Hello%20Art%20Market%20Faridabad!%20I%20would%20like%20to%20visit%20your%20Sector%2088%20store%20or%20share%20what%20I%20need.")
 
 def about(request):
     return render(request, 'store/about.html')

@@ -135,8 +135,8 @@
                     </a>
                 </div>
 
-                <a href="{% url 'visit_showroom' %}" class="block text-center py-3.5 bg-terracotta-50 hover:bg-terracotta-100 text-terracotta-900 rounded-2xl text-xs font-bold transition-colors border border-terracotta-200">
-                    <i class="fas fa-eye mr-1.5 text-terracotta-700"></i> Want to view this piece in person? Visit our Sector 88 Showroom
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20have%20questions%20about%20*{{ product.name|urlencode }}*%20(SKU:%20{{ product.sku }}).%20Can%20you%20share%20more%20photos%20or%20a%20video?" target="_blank" class="block text-center py-3.5 bg-sand-100 hover:bg-sand-200 text-walnut-900 rounded-2xl text-xs font-bold transition-colors border border-sand-300">
+                    <i class="fab fa-whatsapp mr-1.5 text-forest-700"></i> Want custom sizing, live video look or advice? Ask on WhatsApp
                 </a>
             </div>
         </div>

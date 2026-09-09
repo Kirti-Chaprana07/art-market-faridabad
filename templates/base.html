@@ -141,7 +141,7 @@
                         <span class="w-2 h-2 rounded-full bg-terracotta-600"></span> Pots &amp; Planters
                     </a>
                     <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-terracotta-700 transition-colors py-1">Antique Decor</a>
-                    <a href="{% url 'visit_showroom' %}" class="hover:text-terracotta-700 transition-colors py-1 {% if '/visit-showroom/' in request.path %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">Showroom Visit</a>
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20have%20a%20custom%20decor%20/%20plant%20requirement." target="_blank" class="hover:text-forest-700 text-forest-800 transition-colors py-1 font-extrabold flex items-center gap-1"><i class="fab fa-whatsapp text-sm text-forest-600"></i> Custom Request</a>
                     <a href="{% url 'contact' %}" class="hover:text-terracotta-700 transition-colors py-1">Contact</a>
                 </nav>
 
@@ -196,8 +196,8 @@
                 <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="block py-2 text-walnut-900 font-bold flex items-center gap-2">
                     <i class="fas fa-gem text-xs text-walnut-600"></i> Antique Brass &amp; Heritage Urulis
                 </a>
-                <a href="{% url 'visit_showroom' %}" class="block py-2 text-walnut-900 font-bold flex items-center gap-2">
-                    <i class="fas fa-store text-xs text-forest-700"></i> Book Showroom Visit (Sector 88)
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20share%20what%20I%20need%20for%20my%20home." target="_blank" class="block py-2 text-forest-800 font-extrabold flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-xs text-forest-600"></i> Share What You Need on WhatsApp
                 </a>
                 <a href="{% url 'about' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">About Our Shop</a>
                 <a href="{% url 'contact' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">Contact &amp; Location</a>
@@ -321,19 +321,11 @@
         </div>
     </aside>
 
-    <!-- FLOATING ACTIONS -->
+    <!-- FLOATING DIRECT WHATSAPP ACTION -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-        <a href="{% url 'visit_showroom' %}" class="hidden sm:flex items-center gap-2.5 bg-walnut-950 text-sand-100 px-4 py-2.5 rounded-full text-xs font-bold shadow-xl hover:bg-walnut-900 border border-walnut-800 hover:scale-105 transition-all">
-            <span class="w-2 h-2 rounded-full bg-forest-400 animate-ping"></span>
-            <i class="fas fa-map-marker-alt text-terracotta-400"></i>
-            <span>Visit Sector 88 Store</span>
-        </a>
-
-        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20browsing%20your%20website%20and%20would%20like%20assistance." target="_blank" class="w-14 h-14 bg-forest-600 hover:bg-forest-700 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all duration-300 group" title="Chat on WhatsApp">
-            <i class="fab fa-whatsapp text-3xl"></i>
-            <span class="absolute right-16 bg-walnut-950 text-white text-xs px-3.5 py-2 rounded-xl shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none font-semibold border border-walnut-800">
-                WhatsApp: +91 98990 97676
-            </span>
+        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20looking%20for%20home%20decor%20/%20plants.%20Here%20is%20what%20I%20need:" target="_blank" class="flex items-center gap-2.5 bg-forest-700 hover:bg-forest-800 text-white px-5 py-3.5 rounded-full text-xs font-extrabold shadow-2xl hover:scale-105 transition-all group border-2 border-white/20">
+            <i class="fab fa-whatsapp text-xl"></i>
+            <span>Share What You Need on WhatsApp</span>
         </a>
     </div>
 
@@ -381,7 +373,7 @@
                         <span class="w-2 h-2 rounded-full bg-terracotta-500"></span> Quick Links
                     </h4>
                     <ul class="space-y-2.5 text-xs text-sand-300/80">
-                        <li><a href="{% url 'visit_showroom' %}" class="hover:text-sand-100 transition-colors">Book VIP Showroom Tour</a></li>
+                        <li><a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20sharing%20my%20decor%20requirement:" target="_blank" class="hover:text-forest-400 font-bold transition-colors"><i class="fab fa-whatsapp text-xs mr-1 text-forest-500"></i> Share Requirement on WhatsApp</a></li>
                         <li><a href="{% url 'about' %}" class="hover:text-sand-100 transition-colors">About Our Faridabad Workshop</a></li>
                         <li><a href="{% url 'contact' %}" class="hover:text-sand-100 transition-colors">Custom Gifting &amp; Bulk Orders</a></li>
                         <li><a href="{{ STORE_INSTAGRAM }}" target="_blank" class="hover:text-forest-400 transition-colors">Instagram @artmarketfaridabad</a></li>

@@ -39,8 +39,9 @@
                     <i class="fas fa-wine-bottle"></i>
                     <span>Shop Designer Planters</span>
                 </a>
-                <a href="{% url 'visit_showroom' %}" class="px-6 py-4 rounded-2xl border border-sand-300/40 hover:border-sand-100 bg-walnut-900/60 hover:bg-walnut-800 text-sand-100 hover:text-white text-xs sm:text-sm font-semibold transition-all">
-                    <span>Visit Sector 88 Store &rarr;</span>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20have%20a%20custom%20decor%20/%20plant%20requirement." target="_blank" class="px-6 py-4 rounded-2xl border border-sand-300/40 hover:border-sand-100 bg-walnut-900/60 hover:bg-walnut-800 text-sand-100 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-forest-400 text-sm"></i>
+                    <span>Share What You Need &rarr;</span>
                 </a>
             </div>
 
@@ -332,33 +333,35 @@
     </div>
 </section>
 
-<!-- SECTOR 88 SHOWROOM VIP INVITATION -->
+<!-- DIRECT WHATSAPP CUSTOM REQUIREMENT BANNER -->
 <section class="py-20 bg-walnut-950 text-white relative border-t border-walnut-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-walnut-900/90 rounded-3xl border border-sand-400/20 p-8 sm:p-12 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div class="bg-gradient-to-br from-walnut-900 via-walnut-900 to-forest-950/80 rounded-3xl border border-sand-400/20 p-8 sm:p-12 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
             <div class="max-w-2xl space-y-4 text-center lg:text-left">
                 <div class="flex items-center justify-center lg:justify-start gap-3">
                     <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300 shadow-md">
-                    <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-terracotta-900/80 text-terracotta-200 text-xs font-bold uppercase tracking-wider border border-terracotta-700/50">
-                        <i class="fas fa-map-pin text-terracotta-400"></i> Sector 88 Faridabad Flagship
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-forest-900/80 text-forest-200 text-xs font-bold uppercase tracking-wider border border-forest-700/50">
+                        <i class="fab fa-whatsapp text-forest-400"></i> Direct WhatsApp Ordering
                     </span>
                 </div>
-                <h2 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-white">Experience The Botanicals In Person</h2>
+                <h2 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-white">Have a Specific Plant or Decor in Mind?</h2>
                 <p class="text-sand-200 text-xs sm:text-sm leading-relaxed font-light">
-                    Visit our Sector 88 showroom near Maharana Pratap Chowk &amp; Chandi Wala Bagh. Touch the real-touch silk leaves, examine solid brass urulis, and get personalized room styling advice.
+                    Simply share a photo, room corner image, or Instagram reel with us on WhatsApp. Our team will verify size, suggest matching planters, and arrange doorstep delivery across Faridabad &amp; NCR.
                 </p>
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-sand-300">
-                    <span class="flex items-center gap-1.5"><i class="fas fa-car text-terracotta-400"></i> Free Parking</span>
-                    <span class="flex items-center gap-1.5"><i class="fas fa-coffee text-forest-400"></i> Complimentary Tea/Coffee</span>
-                    <span class="flex items-center gap-1.5"><i class="fas fa-user-shield text-terracotta-400"></i> 1-on-1 Decor Styling</span>
+                    <span class="flex items-center gap-1.5"><i class="fas fa-camera text-terracotta-400"></i> Send Reference Photos</span>
+                    <span class="flex items-center gap-1.5"><i class="fas fa-bolt text-forest-400"></i> Instant Price &amp; Stock Check</span>
+                    <span class="flex items-center gap-1.5"><i class="fas fa-truck text-terracotta-400"></i> Fast NCR Doorstep Delivery</span>
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                <a href="{% url 'visit_showroom' %}" class="px-8 py-4 bg-terracotta-700 hover:bg-terracotta-800 text-white rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider text-center shadow-lg transition-all">
-                    Schedule VIP Visit
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20looking%20for%20a%20specific%20decor%20/%20plant%20item.%20Here%20is%20what%20I%20need:" target="_blank" class="px-8 py-4 bg-forest-700 hover:bg-forest-800 text-white rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider text-center shadow-lg transition-all flex items-center justify-center gap-2.5">
+                    <i class="fab fa-whatsapp text-lg"></i>
+                    <span>Share on WhatsApp</span>
                 </a>
-                <a href="https://maps.google.com/?q=Maharana+Pratap+Chowk+Sector+88+Faridabad" target="_blank" class="px-6 py-4 border border-sand-400/30 hover:border-sand-100 bg-walnut-950 text-sand-100 hover:text-white rounded-2xl text-xs sm:text-sm font-semibold text-center transition-all">
-                    Get Driving Directions &rarr;
+                <a href="https://maps.google.com/?q=Maharana+Pratap+Chowk+Plot+19+Sector+88+Faridabad" target="_blank" class="px-6 py-4 border border-sand-400/30 hover:border-sand-100 bg-walnut-950 text-sand-100 hover:text-white rounded-2xl text-xs sm:text-sm font-semibold text-center transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-map-marker-alt text-terracotta-400"></i>
+                    <span>Sector 88 Store Directions &rarr;</span>
                 </a>
             </div>
         </div>

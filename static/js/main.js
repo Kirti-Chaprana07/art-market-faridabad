@@ -86,8 +86,8 @@ function updateCartUI() {
     // 2. Update Drawer Subtotal & Grand Total
     const subtotalEl = document.getElementById('cartSubtotal');
     const grandTotalEl = document.getElementById('cartGrandTotal');
-    if (subtotalEl) subtotalEl.innerText = `?${subtotal.toLocaleString('en-IN')}`;
-    if (grandTotalEl) grandTotalEl.innerText = `?${subtotal.toLocaleString('en-IN')}`;
+    if (subtotalEl) subtotalEl.innerText = `Rs. ${subtotal.toLocaleString('en-IN')}`;
+    if (grandTotalEl) grandTotalEl.innerText = `Rs. ${subtotal.toLocaleString('en-IN')}`;
 
     // 3. Update Free Shipping Bar
     const progressBar = document.getElementById('shippingProgressBar');
@@ -96,13 +96,13 @@ function updateCartUI() {
         if (subtotal >= FREE_SHIPPING_THRESHOLD) {
             progressBar.style.width = '100%';
             progressBar.classList.add('bg-emerald-600');
-            progressText.innerText = '?? You unlocked Free Delivery in Faridabad & NCR!';
+            progressText.innerText = 'You unlocked Free Delivery in Faridabad & NCR!';
         } else {
             const pct = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
             progressBar.style.width = `${pct}%`;
             progressBar.classList.remove('bg-emerald-600');
             const diff = FREE_SHIPPING_THRESHOLD - subtotal;
-            progressText.innerText = `Add ?${diff.toLocaleString('en-IN')} more for Free Delivery`;
+            progressText.innerText = `Add Rs. ${diff.toLocaleString('en-IN')} more for Free Delivery`;
         }
     }
 
@@ -127,7 +127,7 @@ function updateCartUI() {
                         <h4 class="text-xs font-bold text-stone-900 truncate">${item.name}</h4>
                         <span class="text-[10px] text-stone-500 font-mono">${item.sku}</span>
                         <div class="flex items-center justify-between mt-2">
-                            <span class="text-xs font-bold text-stone-900">?${(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                            <span class="text-xs font-bold text-stone-900">Rs. ${(item.price * item.quantity).toLocaleString('en-IN')}</span>
                             <div class="flex items-center border border-stone-200 rounded-lg bg-white overflow-hidden text-xs">
                                 <button onclick="updateCartQuantity('${item.id}', -1)" class="px-2 py-0.5 hover:bg-stone-100 text-stone-600">-</button>
                                 <span class="px-2 py-0.5 font-bold text-stone-800">${item.quantity}</span>
@@ -148,8 +148,8 @@ function updateCartUI() {
     if (fullCartContainer) {
         const pageSubtotal = document.getElementById('pageCartSubtotal');
         const pageTotal = document.getElementById('pageCartTotal');
-        if (pageSubtotal) pageSubtotal.innerText = `?${subtotal.toLocaleString('en-IN')}`;
-        if (pageTotal) pageTotal.innerText = `?${subtotal.toLocaleString('en-IN')}`;
+        if (pageSubtotal) pageSubtotal.innerText = `Rs. ${subtotal.toLocaleString('en-IN')}`;
+        if (pageTotal) pageTotal.innerText = `Rs. ${subtotal.toLocaleString('en-IN')}`;
 
         if (cart.length === 0) {
             fullCartContainer.innerHTML = `
@@ -172,7 +172,7 @@ function updateCartUI() {
                         <div>
                             <h4 class="font-cinzel text-sm font-bold text-stone-900">${item.name}</h4>
                             <span class="text-xs text-stone-500 font-mono">${item.sku}</span>
-                            <span class="text-xs text-stone-700 font-semibold block mt-1">?${item.price.toLocaleString('en-IN')} each</span>
+                            <span class="text-xs text-stone-700 font-semibold block mt-1">Rs. ${item.price.toLocaleString('en-IN')} each</span>
                         </div>
                     </div>
                     <div class="flex items-center justify-between sm:justify-end gap-6">
@@ -181,7 +181,7 @@ function updateCartUI() {
                             <span class="px-3 py-1 font-bold text-stone-800">${item.quantity}</span>
                             <button onclick="updateCartQuantity('${item.id}', 1)" class="px-3 py-1 hover:bg-stone-100 text-stone-600">+</button>
                         </div>
-                        <span class="font-bold text-stone-900 text-base">?${(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                        <span class="font-bold text-stone-900 text-base">Rs. ${(item.price * item.quantity).toLocaleString('en-IN')}</span>
                         <button onclick="removeFromCart('${item.id}')" class="text-stone-400 hover:text-rose-600 text-sm">
                             <i class="fas fa-trash-alt"></i>
                         </button>
@@ -199,8 +199,8 @@ function updateCartUI() {
         const hiddenAmount = document.getElementById('checkoutTotalAmount');
         const hiddenItems = document.getElementById('checkoutItemsJson');
 
-        if (subDisplay) subDisplay.innerText = `?${subtotal.toLocaleString('en-IN')}`;
-        if (totalDisplay) totalDisplay.innerText = `?${subtotal.toLocaleString('en-IN')}`;
+        if (subDisplay) subDisplay.innerText = `Rs. ${subtotal.toLocaleString('en-IN')}`;
+        if (totalDisplay) totalDisplay.innerText = `Rs. ${subtotal.toLocaleString('en-IN')}`;
         if (hiddenAmount) hiddenAmount.value = subtotal;
         if (hiddenItems) hiddenItems.value = JSON.stringify(cart);
 
@@ -210,10 +210,10 @@ function updateCartUI() {
             checkoutList.innerHTML = cart.map(item => `
                 <div class="flex items-center justify-between text-xs py-2">
                     <div class="flex items-center gap-2 truncate">
-                        <span class="font-bold text-stone-700">${item.quantity}?</span>
+                        <span class="font-bold text-stone-700">${item.quantity}x</span>
                         <span class="text-stone-800 truncate">${item.name}</span>
                     </div>
-                    <span class="font-semibold text-stone-900 flex-shrink-0">?${(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                    <span class="font-semibold text-stone-900 flex-shrink-0">Rs. ${(item.price * item.quantity).toLocaleString('en-IN')}</span>
                 </div>
             `).join('');
         }
@@ -264,15 +264,15 @@ function sendCartToWhatsApp() {
     }
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    let msg = `*??? New Order Request - Art Market Faridabad*%0A%0A`;
+    let msg = `*Order Request - Art Market Faridabad*%0A%0A`;
     msg += `Hello! I would like to place an order for the following items:%0A`;
     
     cart.forEach((item, index) => {
-        msg += `%0A${index + 1}. *${item.name}*%0A   - SKU: ${item.sku}%0A   - Qty: ${item.quantity} ? ?${item.price}%0A   - Subtotal: ?${item.price * item.quantity}`;
+        msg += `%0A${index + 1}. *${item.name}*%0A   - SKU: ${item.sku}%0A   - Qty: ${item.quantity} @ Rs. ${item.price}%0A   - Subtotal: Rs. ${item.price * item.quantity}`;
     });
 
-    msg += `%0A%0A*?? Total Cart Amount: ?${subtotal.toLocaleString('en-IN')}*%0A`;
-    msg += `?? Please confirm home delivery availability and payment options for Faridabad / Delhi NCR.`;
+    msg += `%0A%0A*Total Cart Amount: Rs. ${subtotal.toLocaleString('en-IN')}*%0A`;
+    msg += `Please confirm home delivery availability and payment options for Faridabad / Delhi NCR.`;
 
     const url = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${msg}`;
     window.open(url, '_blank');
@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <span class="text-[10px] text-stone-700 font-semibold">${p.category}</span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-xs font-bold text-stone-900">?${p.price.toLocaleString('en-IN')}</span>
+                                    <span class="text-xs font-bold text-stone-900">Rs. ${p.price.toLocaleString('en-IN')}</span>
                                     <span class="block text-[10px] text-emerald-600 font-semibold">View &rarr;</span>
                                 </div>
                             </a>

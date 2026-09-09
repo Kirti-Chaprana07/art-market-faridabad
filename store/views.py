@@ -284,7 +284,7 @@ def owner_add_product(request):
             image_file=image_file,
         )
 
-        messages.success(request, f'Product "{product.name}" (?{product.price}) has been published to the website!')
+        messages.success(request, f'Product "{product.name}" (Rs. {product.price:,.0f}) has been published to the website!')
         return redirect('owner_dashboard')
 
     return redirect('owner_dashboard')

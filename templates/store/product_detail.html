@@ -79,10 +79,10 @@
                 <div class="p-6 rounded-3xl bg-sand-100/70 border border-sand-200 flex items-center justify-between">
                     <div>
                         <div class="flex items-baseline gap-3">
-                            <span class="text-3xl font-bold text-walnut-950 font-cinzel">?{{ product.price|floatformat:0 }}</span>
+                            <span class="text-3xl font-bold text-walnut-950 font-cinzel">Rs. {{ product.price|floatformat:0 }}</span>
                             {% if product.original_price > product.price %}
-                            <span class="text-base text-walnut-400 line-through">?{{ product.original_price|floatformat:0 }}</span>
-                            <span class="text-xs font-bold text-terracotta-800 bg-terracotta-100 px-2 py-0.5 rounded-lg border border-terracotta-200">Save ?{{ product.original_price|add:"-product.price"|default:"0" }}</span>
+                            <span class="text-base text-walnut-400 line-through">Rs. {{ product.original_price|floatformat:0 }}</span>
+                            <span class="text-xs font-bold text-terracotta-800 bg-terracotta-100 px-2 py-0.5 rounded-lg border border-terracotta-200">Save Rs. {{ product.original_price|add:"-product.price"|default:"0" }}</span>
                             {% endif %}
                         </div>
                         <span class="text-[11px] text-walnut-600 mt-1.5 block">Inclusive of all taxes. Fast door delivery across Faridabad &amp; NCR.</span>
@@ -129,7 +129,7 @@
                     </button>
 
                     <!-- DIRECT WHATSAPP INSTANT BUY BUTTON -->
-                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20buy:%20*{{ product.name|urlencode }}*%0A??%20Rate:%20?{{ product.price|floatformat:0 }}%0A???%20SKU:%20{{ product.sku }}%0A%0APlease%20confirm%20delivery%20schedule%20to%20my%20address." target="_blank" class="w-full py-4 bg-forest-700 hover:bg-forest-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all">
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20buy:%20*{{ product.name|urlencode }}*%0ARate:%20Rs.%20{{ product.price|floatformat:0 }}%0ASKU:%20{{ product.sku }}%0A%0APlease%20confirm%20delivery%20schedule%20to%20my%20address." target="_blank" class="w-full py-4 bg-forest-700 hover:bg-forest-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all">
                         <i class="fab fa-whatsapp text-lg"></i>
                         <span>Buy on WhatsApp</span>
                     </a>
@@ -159,7 +159,7 @@
                         <a href="{% url 'product_detail' rel.slug %}">{{ rel.name }}</a>
                     </h4>
                     <div class="flex items-center justify-between text-xs pt-2 border-t border-sand-100">
-                        <span class="font-bold text-walnut-950 font-cinzel">?{{ rel.price|floatformat:0 }}</span>
+                        <span class="font-bold text-walnut-950 font-cinzel">Rs. {{ rel.price|floatformat:0 }}</span>
                         <a href="{% url 'product_detail' rel.slug %}" class="text-terracotta-700 font-bold hover:underline">View &rarr;</a>
                     </div>
                 </div>

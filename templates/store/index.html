@@ -56,7 +56,7 @@
                     <span class="text-[10px] text-sand-300 uppercase tracking-wider font-semibold">Decor &amp; Planters</span>
                 </div>
                 <div class="bg-walnut-900/70 p-3.5 rounded-2xl border border-walnut-800">
-                    <span class="block text-xl sm:text-2xl font-bold text-sand-100 font-cinzel">4.9?</span>
+                    <span class="block text-xl sm:text-2xl font-bold text-sand-100 font-cinzel">4.9 &#9733;</span>
                     <span class="text-[10px] text-sand-300 uppercase tracking-wider font-semibold">Faridabad Ratings</span>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                     <h3 class="font-cinzel text-xl font-bold text-white mb-1.5">5.5ft Fiddle Fig &amp; Face Planter Pot</h3>
                     <p class="text-xs text-sand-200 mb-4 font-light">As seen on our @artmarketfaridabad page. Zero maintenance evergreen luxury.</p>
                     <div class="flex items-center justify-between pt-2 border-t border-walnut-800">
-                        <span class="text-forest-400 font-bold text-sm">Special Store Rate: ?3,799</span>
+                        <span class="text-forest-400 font-bold text-sm">Special Store Rate: Rs. 3,799</span>
                         <a href="{% url 'shop' %}" class="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-forest-300">
                             <span>View Details &rarr;</span>
                         </a>
@@ -175,7 +175,7 @@
         
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-                <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-forest-700">Zero Maintenance ? Real-Touch Foliage</span>
+                <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-forest-700">Zero Maintenance &bull; Real-Touch Foliage</span>
                 <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-walnut-950">Bestseller Artificial Plants &amp; Trees</h2>
             </div>
             <a href="{% url 'shop' %}?category=artificial-plants-trees" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-forest-800 hover:text-forest-600 transition-colors">
@@ -227,9 +227,9 @@
 
                     <div class="pt-3 border-t border-sand-100">
                         <div class="flex items-baseline gap-2 mb-3">
-                            <span class="text-lg font-bold text-walnut-950 font-cinzel">?{{ product.price|floatformat:0 }}</span>
+                            <span class="text-lg font-bold text-walnut-950 font-cinzel">Rs. {{ product.price|floatformat:0 }}</span>
                             {% if product.original_price > product.price %}
-                            <span class="text-xs text-walnut-400 line-through">?{{ product.original_price|floatformat:0 }}</span>
+                            <span class="text-xs text-walnut-400 line-through">Rs. {{ product.original_price|floatformat:0 }}</span>
                             {% endif %}
                         </div>
 
@@ -238,7 +238,7 @@
                                 <i class="fas fa-cart-plus text-xs"></i>
                                 <span>Add</span>
                             </button>
-                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20buying:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }},%20SKU:%20{{ product.sku }}).%20Is%20it%20available?" target="_blank" class="w-full py-2.5 bg-forest-700 hover:bg-forest-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20buying:%20*{{ product.name|urlencode }}*%20(Price:%20Rs.%20{{ product.price|floatformat:0 }},%20SKU:%20{{ product.sku }}).%20Is%20it%20available?" target="_blank" class="w-full py-2.5 bg-forest-700 hover:bg-forest-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
                                 <i class="fab fa-whatsapp text-xs"></i>
                                 <span>WhatsApp</span>
                             </a>
@@ -309,9 +309,9 @@
 
                     <div class="pt-3 border-t border-sand-100">
                         <div class="flex items-baseline gap-2 mb-3">
-                            <span class="text-lg font-bold text-walnut-950 font-cinzel">?{{ product.price|floatformat:0 }}</span>
+                            <span class="text-lg font-bold text-walnut-950 font-cinzel">Rs. {{ product.price|floatformat:0 }}</span>
                             {% if product.original_price > product.price %}
-                            <span class="text-xs text-walnut-400 line-through">?{{ product.original_price|floatformat:0 }}</span>
+                            <span class="text-xs text-walnut-400 line-through">Rs. {{ product.original_price|floatformat:0 }}</span>
                             {% endif %}
                         </div>
 
@@ -320,7 +320,7 @@
                                 <i class="fas fa-cart-plus text-xs"></i>
                                 <span>Add</span>
                             </button>
-                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20order:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }}).%20Please%20confirm%20delivery%20schedule." target="_blank" class="w-full py-2.5 bg-forest-700 hover:bg-forest-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20order:%20*{{ product.name|urlencode }}*%20(Price:%20Rs.%20{{ product.price|floatformat:0 }}).%20Please%20confirm%20delivery%20schedule." target="_blank" class="w-full py-2.5 bg-forest-700 hover:bg-forest-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
                                 <i class="fab fa-whatsapp text-xs"></i>
                                 <span>WhatsApp</span>
                             </a>

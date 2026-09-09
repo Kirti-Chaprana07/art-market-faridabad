@@ -114,21 +114,20 @@
             <div class="flex items-center justify-between h-20">
                 
                 <!-- BRAND LOGO & CLEAN PROPORTIONAL NAME -->
-                <a href="{% url 'home' %}" class="flex items-center gap-3.5 group">
-                    <div class="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl overflow-hidden shadow-sm border-2 border-sand-300 group-hover:border-terracotta-700 transition-all bg-walnut-950 flex-shrink-0 flex items-center justify-center">
+                <div class="flex items-center gap-3.5">
+                    <a href="{% url 'home' %}" class="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl overflow-hidden shadow-sm border-2 border-sand-300 hover:border-terracotta-700 transition-all bg-walnut-950 flex-shrink-0 flex items-center justify-center group">
                         <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=150&q=80';">
-                    </div>
+                    </a>
                     <div class="flex flex-col justify-center">
-                        <span class="font-cinzel text-xl sm:text-2xl font-bold tracking-tight text-walnut-950 group-hover:text-terracotta-800 transition-colors leading-tight">
+                        <a href="{% url 'home' %}" class="font-cinzel text-xl sm:text-2xl font-bold tracking-tight text-walnut-950 hover:text-terracotta-800 transition-colors leading-tight">
                             Art Market
-                        </span>
-                        <span class="text-[11px] sm:text-xs font-semibold text-forest-800 tracking-normal flex items-center gap-1">
+                        </a>
+                        <a href="https://maps.google.com/?q=Maharana+Pratap+Chowk+Plot+19+Sector+88+Faridabad" target="_blank" class="text-[11px] sm:text-xs font-semibold text-forest-800 hover:text-forest-600 hover:underline tracking-normal flex items-center gap-1 transition-colors" title="View Sector 88 Location on Google Maps">
+                            <i class="fas fa-map-marker-alt text-[10px] text-terracotta-700"></i>
                             <span>Sector 88, Faridabad</span>
-                            <span class="text-sand-300">&bull;</span>
-                            <span class="text-walnut-600 font-medium">Plants &amp; Decor</span>
-                        </span>
+                        </a>
                     </div>
-                </a>
+                </div>
 
                 <!-- DESKTOP NAVIGATION -->
                 <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-bold text-walnut-700 uppercase tracking-wide">
@@ -176,8 +175,11 @@
             <div class="flex items-center gap-3 pb-3 border-b border-sand-100">
                 <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300">
                 <div>
-                    <span class="font-cinzel font-bold text-walnut-950 block leading-tight">Art Market</span>
-                    <span class="text-[11px] text-forest-800 font-semibold">Maharana Pratap Chowk, Sector 88</span>
+                    <a href="{% url 'home' %}" class="font-cinzel font-bold text-walnut-950 block leading-tight hover:text-terracotta-800">Art Market</a>
+                    <a href="https://maps.google.com/?q=Maharana+Pratap+Chowk+Plot+19+Sector+88+Faridabad" target="_blank" class="text-[11px] text-forest-800 font-semibold hover:underline flex items-center gap-1">
+                        <i class="fas fa-map-marker-alt text-[10px] text-terracotta-700"></i>
+                        <span>Sector 88, Faridabad</span>
+                    </a>
                 </div>
             </div>
             <div class="space-y-1 text-xs font-bold uppercase tracking-wider">

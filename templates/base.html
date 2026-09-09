@@ -124,8 +124,13 @@
                 </nav>
 
                 <!-- HEADER ACTIONS -->
-                <div class="flex items-center gap-2.5 sm:gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                     
+                    <!-- Instagram Button -->
+                    <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-sand-100 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:text-white text-walnut-800 flex items-center justify-center transition-all border border-sand-200 shadow-sm group" title="Follow us on Instagram (@artmarketfaridabad)">
+                        <i class="fab fa-instagram text-lg group-hover:scale-110 transition-transform"></i>
+                    </a>
+
                     <!-- Search Button -->
                     <button id="searchOpenBtn" class="w-10 h-10 rounded-xl bg-sand-100 hover:bg-sand-200 text-walnut-700 hover:text-walnut-950 flex items-center justify-center transition-all border border-sand-200" title="Search catalog">
                         <i class="fas fa-search text-xs sm:text-sm"></i>
@@ -149,15 +154,20 @@
 
         <!-- MOBILE MENU OVERLAY -->
         <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-sand-200 px-5 py-5 space-y-3.5 shadow-xl">
-            <div class="flex items-center gap-3 pb-3 border-b border-sand-100">
-                <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300">
-                <div>
-                    <a href="{% url 'home' %}" class="font-cinzel font-bold text-walnut-950 block leading-tight hover:text-terracotta-800">Art Market</a>
-                    <a href="{{ STORE_MAP_URL }}" target="_blank" class="text-[11px] text-forest-800 font-semibold hover:underline flex items-center gap-1">
-                        <i class="fas fa-map-marker-alt text-[10px] text-terracotta-700"></i>
-                        <span>Sector 88, Faridabad</span>
-                    </a>
+            <div class="flex items-center justify-between pb-3 border-b border-sand-100">
+                <div class="flex items-center gap-3">
+                    <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300">
+                    <div>
+                        <a href="{% url 'home' %}" class="font-cinzel font-bold text-walnut-950 block leading-tight hover:text-terracotta-800">Art Market</a>
+                        <a href="{{ STORE_MAP_URL }}" target="_blank" class="text-[11px] text-forest-800 font-semibold hover:underline flex items-center gap-1">
+                            <i class="fas fa-map-marker-alt text-[10px] text-terracotta-700"></i>
+                            <span>Sector 88, Faridabad</span>
+                        </a>
+                    </div>
                 </div>
+                <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-colors" title="Instagram">
+                    <i class="fab fa-instagram text-base"></i>
+                </a>
             </div>
             <div class="space-y-1 text-xs font-bold uppercase tracking-wider">
                 <a href="{% url 'home' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">Home</a>
@@ -180,6 +190,9 @@
                 </a>
                 <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="w-full bg-forest-700 hover:bg-forest-800 text-white text-center py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
                     <i class="fab fa-whatsapp text-sm"></i> WhatsApp Support (+91 98990 97676)
+                </a>
+                <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener noreferrer" class="w-full bg-gradient-to-r from-purple-600 via-rose-500 to-amber-500 hover:opacity-95 text-white text-center py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+                    <i class="fab fa-instagram text-sm"></i> Instagram @artmarketfaridabad
                 </a>
             </div>
         </div>

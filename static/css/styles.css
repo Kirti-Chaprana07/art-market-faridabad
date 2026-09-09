@@ -1,62 +1,66 @@
-/* Custom Aesthetics for Art Market Faridabad */
+/* Modern Minimalist Luxury Aesthetics for Art Market Faridabad (Zero Yellow) */
 
 :root {
-    --primary-brass: #b88628;
-    --primary-brass-dark: #7c511c;
-    --botanical-green: #2c734e;
-    --warm-cream: #faf8f5;
+    --primary-black: #111827;
+    --primary-charcoal: #1f2937;
+    --emerald-green: #059669;
+    --emerald-dark: #064e3b;
+    --soft-white: #fafafa;
+    --accent-terracotta: #c2410c;
 }
 
 body {
-    background-color: var(--warm-cream);
-    color: #2b2b2b;
+    background-color: #fcfcfc;
+    color: #1f2937;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 h1, h2, h3, .font-cinzel {
     font-family: 'Cinzel', serif;
+    letter-spacing: 0.02em;
 }
 
 .font-serif {
     font-family: 'Playfair Display', serif;
 }
 
-/* Custom Smooth Transitions */
+/* Card hover transitions */
 .product-card {
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
 
 .product-card:hover {
     transform: translateY(-4px);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.08);
 }
 
-/* Custom Scrollbar */
+/* Modern Minimalist Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1ede4;
+    background: #f3f4f6;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c5b497;
+    background: #d1d5db;
     border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a38f6d;
+    background: #9ca3af;
 }
 
-/* Keyframe animations */
+/* Smooth Fade In */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
+    from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-    animation: fadeIn 0.25s ease-out forwards;
+    animation: fadeIn 0.2s ease-out forwards;
 }
 
 /* Toast alert badge */

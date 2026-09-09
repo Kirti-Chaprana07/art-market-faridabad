@@ -127,7 +127,7 @@ function updateCartUI() {
                         <h4 class="text-xs font-bold text-stone-900 truncate">${item.name}</h4>
                         <span class="text-[10px] text-stone-500 font-mono">${item.sku}</span>
                         <div class="flex items-center justify-between mt-2">
-                            <span class="text-xs font-bold text-amber-900">?${(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                            <span class="text-xs font-bold text-stone-900">?${(item.price * item.quantity).toLocaleString('en-IN')}</span>
                             <div class="flex items-center border border-stone-200 rounded-lg bg-white overflow-hidden text-xs">
                                 <button onclick="updateCartQuantity('${item.id}', -1)" class="px-2 py-0.5 hover:bg-stone-100 text-stone-600">-</button>
                                 <span class="px-2 py-0.5 font-bold text-stone-800">${item.quantity}</span>
@@ -172,7 +172,7 @@ function updateCartUI() {
                         <div>
                             <h4 class="font-cinzel text-sm font-bold text-stone-900">${item.name}</h4>
                             <span class="text-xs text-stone-500 font-mono">${item.sku}</span>
-                            <span class="text-xs text-amber-800 font-semibold block mt-1">?${item.price.toLocaleString('en-IN')} each</span>
+                            <span class="text-xs text-stone-700 font-semibold block mt-1">?${item.price.toLocaleString('en-IN')} each</span>
                         </div>
                     </div>
                     <div class="flex items-center justify-between sm:justify-end gap-6">
@@ -246,7 +246,7 @@ function showToast(message) {
 
     const toast = document.createElement('div');
     toast.id = 'appToast';
-    toast.className = 'fixed bottom-24 right-6 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-amber-500/30 toast-badge';
+    toast.className = 'fixed bottom-24 right-6 z-50 bg-stone-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-stone-700 toast-badge';
     toast.innerHTML = `<i class="fas fa-check-circle text-emerald-400"></i> <span>${message}</span>`;
     document.body.appendChild(toast);
 
@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <img src="${p.image_url}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg bg-stone-100 flex-shrink-0">
                                 <div class="flex-grow min-w-0">
                                     <h4 class="text-xs font-bold text-stone-900 truncate">${p.name}</h4>
-                                    <span class="text-[10px] text-amber-800 font-semibold">${p.category}</span>
+                                    <span class="text-[10px] text-stone-700 font-semibold">${p.category}</span>
                                 </div>
                                 <div class="text-right">
                                     <span class="text-xs font-bold text-stone-900">?${p.price.toLocaleString('en-IN')}</span>

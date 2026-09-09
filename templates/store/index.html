@@ -5,25 +5,24 @@
 {% block content %}
 
 <!-- HERO BANNER -->
-<section class="relative bg-stone-950 text-white overflow-hidden border-b border-gold-500/20">
+<section class="relative bg-stone-950 text-white overflow-hidden border-b border-stone-800">
     <!-- Ambient Blur Background -->
-    <div class="absolute inset-0 z-0 opacity-25 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/95 to-stone-900/70 z-10"></div>
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-gold-600/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-40 right-10 w-96 h-96 bg-botanic-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute inset-0 z-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/95 to-stone-900/80 z-10"></div>
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 flex flex-col lg:flex-row items-center justify-between gap-12">
         
         <!-- Left: Text & Badges -->
         <div class="max-w-2xl text-center lg:text-left space-y-6">
             
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-stone-900/90 border border-gold-500/40 text-gold-300 text-xs font-bold tracking-wider uppercase shadow-inner">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-stone-900 border border-stone-700 text-stone-300 text-xs font-bold tracking-wider uppercase">
                 <img src="/static/images/logo.jpg" alt="Logo" class="w-4 h-4 rounded-full object-cover">
                 <span>Faridabad's Exclusive Heritage &amp; Botanical Boutique</span>
             </div>
 
             <h1 class="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                Handcrafted <span class="text-gold-400 font-serif italic">Antiques</span> &amp; Lifelike <span class="text-botanic-400 font-serif italic">Botanicals</span>
+                Handcrafted <span class="text-stone-300 font-serif italic">Antiques</span> &amp; Lifelike <span class="text-emerald-400 font-serif italic">Botanicals</span>
             </h1>
 
             <p class="text-stone-300 text-sm sm:text-base lg:text-lg leading-relaxed font-light">
@@ -31,31 +30,31 @@
             </p>
 
             <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
-                <a href="{% url 'shop' %}?category=antique-brass-bronze" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-700 hover:to-gold-600 text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-lg hover:shadow-gold-500/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                <a href="{% url 'shop' %}?category=antique-brass-bronze" class="px-7 py-4 rounded-2xl bg-white hover:bg-stone-200 text-stone-950 text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
                     <i class="fas fa-gem"></i>
                     <span>Explore Antiques</span>
                 </a>
-                <a href="{% url 'shop' %}?category=artificial-plants-trees" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-botanic-600 to-botanic-700 hover:from-botanic-700 hover:to-botanic-800 text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-lg hover:shadow-botanic-600/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                <a href="{% url 'shop' %}?category=artificial-plants-trees" class="px-7 py-4 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
                     <i class="fas fa-leaf"></i>
                     <span>Shop Artificial Plants</span>
                 </a>
-                <a href="{% url 'visit_showroom' %}" class="px-6 py-4 rounded-2xl border border-stone-600 hover:border-gold-400 bg-stone-900/60 hover:bg-stone-800 text-stone-200 hover:text-gold-300 text-xs sm:text-sm font-semibold transition-all">
+                <a href="{% url 'visit_showroom' %}" class="px-6 py-4 rounded-2xl border border-stone-600 hover:border-white bg-stone-900/60 hover:bg-stone-800 text-stone-200 hover:text-white text-xs sm:text-sm font-semibold transition-all">
                     <span>Visit Faridabad Store &rarr;</span>
                 </a>
             </div>
 
             <!-- Quick Trust Metrics -->
             <div class="pt-6 grid grid-cols-3 gap-4 border-t border-stone-800 text-left">
-                <div class="bg-stone-900/50 p-3 rounded-xl border border-stone-800/80">
-                    <span class="block text-xl sm:text-2xl font-bold text-gold-400 font-cinzel">500+</span>
+                <div class="bg-stone-900/60 p-3.5 rounded-2xl border border-stone-800">
+                    <span class="block text-xl sm:text-2xl font-bold text-white font-cinzel">500+</span>
                     <span class="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Artisan Relics</span>
                 </div>
-                <div class="bg-stone-900/50 p-3 rounded-xl border border-stone-800/80">
-                    <span class="block text-xl sm:text-2xl font-bold text-botanic-400 font-cinzel">100%</span>
+                <div class="bg-stone-900/60 p-3.5 rounded-2xl border border-stone-800">
+                    <span class="block text-xl sm:text-2xl font-bold text-emerald-400 font-cinzel">100%</span>
                     <span class="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Real-Touch Foliage</span>
                 </div>
-                <div class="bg-stone-900/50 p-3 rounded-xl border border-stone-800/80">
-                    <span class="block text-xl sm:text-2xl font-bold text-gold-400 font-cinzel">4.9?</span>
+                <div class="bg-stone-900/60 p-3.5 rounded-2xl border border-stone-800">
+                    <span class="block text-xl sm:text-2xl font-bold text-stone-200 font-cinzel">4.9?</span>
                     <span class="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Local NCR Ratings</span>
                 </div>
             </div>
@@ -63,20 +62,20 @@
 
         <!-- Right: Featured Visual Card With Logo Accent -->
         <div class="w-full max-w-md lg:max-w-none lg:w-5/12">
-            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-gold-500/40 group">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-stone-800 group">
                 <img src="https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=900&q=80" alt="Antique Brass & Botanical Setup" class="w-full h-96 sm:h-[480px] object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent flex flex-col justify-end p-6 sm:p-8">
+                <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent flex flex-col justify-end p-6 sm:p-8">
                     <div class="flex items-center gap-3 mb-2">
-                        <img src="/static/images/logo.jpg" alt="Logo" class="w-8 h-8 rounded-lg object-cover border border-gold-400 shadow-md">
-                        <span class="bg-gold-600 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                        <img src="/static/images/logo.jpg" alt="Logo" class="w-8 h-8 rounded-lg object-cover border border-stone-600 shadow-md">
+                        <span class="bg-stone-800 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border border-stone-700">
                             Curator's Choice
                         </span>
                     </div>
                     <h3 class="font-cinzel text-xl font-bold text-white mb-1.5">Royal Brass Uruli &amp; Japanese Bonsai</h3>
                     <p class="text-xs text-stone-300 mb-4 font-light">Pair solid heirloom brass with lifelike evergreen foliage for unmatched living room serenity.</p>
-                    <div class="flex items-center justify-between pt-2 border-t border-stone-700">
-                        <span class="text-gold-400 font-bold text-sm">Special Showroom Price: ?3,899</span>
-                        <a href="{% url 'shop' %}" class="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-gold-300">
+                    <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                        <span class="text-emerald-400 font-bold text-sm">Special Showroom Price: ?3,899</span>
+                        <a href="{% url 'shop' %}" class="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-emerald-400">
                             <span>View Set &rarr;</span>
                         </a>
                     </div>
@@ -91,8 +90,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             
-            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-gold-400 transition-colors">
-                <div class="w-12 h-12 rounded-xl bg-gold-100 text-gold-800 flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-stone-900 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-stone-900 text-white flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
                     <i class="fas fa-monument"></i>
                 </div>
                 <div>
@@ -101,8 +100,8 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-botanic-400 transition-colors">
-                <div class="w-12 h-12 rounded-xl bg-botanic-100 text-botanic-800 flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-emerald-600 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
                     <i class="fas fa-leaf"></i>
                 </div>
                 <div>
@@ -111,8 +110,8 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-gold-400 transition-colors">
-                <div class="w-12 h-12 rounded-xl bg-gold-100 text-gold-800 flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-stone-900 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-stone-900 text-white flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
                     <i class="fas fa-truck-fast"></i>
                 </div>
                 <div>
@@ -121,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-emerald-400 transition-colors">
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-emerald-600 transition-colors">
                 <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 text-xl shadow-sm">
                     <i class="fab fa-whatsapp"></i>
                 </div>
@@ -136,13 +135,13 @@
 </section>
 
 <!-- CURATED CATEGORIES -->
-<section class="py-16 bg-warmivory">
+<section class="py-16 bg-stone-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
-            <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-gold-700">Artisan Collections</span>
+            <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-800">Artisan Collections</span>
             <h2 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-stone-900">Explore by Category</h2>
-            <div class="w-16 h-0.5 bg-gold-500 mx-auto"></div>
+            <div class="w-16 h-0.5 bg-stone-900 mx-auto"></div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -151,12 +150,12 @@
                 <img src="{{ cat.image_url }}" alt="{{ cat.name }}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/50 to-transparent"></div>
                 <div class="relative z-10 space-y-2">
-                    <div class="w-9 h-9 rounded-xl bg-gold-500/20 text-gold-300 flex items-center justify-center text-sm backdrop-blur-md border border-gold-400/40">
+                    <div class="w-9 h-9 rounded-xl bg-white/10 text-white flex items-center justify-center text-sm backdrop-blur-md border border-white/20">
                         <i class="fas {{ cat.icon }}"></i>
                     </div>
-                    <h3 class="font-cinzel text-lg sm:text-xl font-bold text-white group-hover:text-gold-300 transition-colors">{{ cat.name }}</h3>
+                    <h3 class="font-cinzel text-lg sm:text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">{{ cat.name }}</h3>
                     <p class="text-stone-300 text-xs line-clamp-2 font-light">{{ cat.description }}</p>
-                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-gold-400 pt-1 group-hover:translate-x-1 transition-transform">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 pt-1 group-hover:translate-x-1 transition-transform">
                         <span>Browse Collection</span>
                         <i class="fas fa-arrow-right text-[10px]"></i>
                     </span>
@@ -174,10 +173,10 @@
         
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-                <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-gold-700">Museum-Grade Casting</span>
+                <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-stone-500">Museum-Grade Casting</span>
                 <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-stone-900">Featured Antique Masterpieces</h2>
             </div>
-            <a href="{% url 'shop' %}?category=antique-brass-bronze" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-gold-800 hover:text-gold-600 transition-colors">
+            <a href="{% url 'shop' %}?category=antique-brass-bronze" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-stone-900 hover:text-emerald-700 transition-colors">
                 <span>View All Antiques</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -199,12 +198,12 @@
                     </a>
                     
                     {% if product.discount_percent > 0 %}
-                    <span class="absolute top-3.5 left-3.5 bg-gradient-to-r from-amber-700 to-amber-600 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                    <span class="absolute top-3.5 left-3.5 bg-stone-900 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                         {{ product.discount_percent }}% OFF
                     </span>
                     {% endif %}
 
-                    <span class="absolute bottom-3 left-3 bg-stone-950/80 backdrop-blur-md text-gold-300 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
+                    <span class="absolute bottom-3 left-3 bg-stone-950/80 backdrop-blur-md text-stone-200 text-[10px] font-semibold px-2.5 py-1 rounded-lg">
                         {{ product.get_room_type_display }}
                     </span>
                 </div>
@@ -213,13 +212,13 @@
                 <div class="p-5 flex flex-col flex-grow justify-between space-y-3">
                     <div>
                         <div class="flex items-center justify-between text-[11px] text-stone-500 mb-1">
-                            <span class="font-mono text-gold-800 font-bold">{{ product.sku }}</span>
-                            <span class="flex items-center text-amber-500 gap-1 font-bold">
-                                <i class="fas fa-star text-xs"></i> {{ product.rating }}
+                            <span class="font-mono text-stone-700 font-bold">{{ product.sku }}</span>
+                            <span class="flex items-center text-stone-700 gap-1 font-bold">
+                                <i class="fas fa-star text-xs text-stone-900"></i> {{ product.rating }}
                             </span>
                         </div>
 
-                        <h3 class="font-cinzel font-bold text-stone-900 text-sm hover:text-gold-700 transition-colors line-clamp-2 leading-snug">
+                        <h3 class="font-cinzel font-bold text-stone-900 text-sm hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
                             <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
                         </h3>
 
@@ -236,11 +235,11 @@
                         </div>
 
                         <div class="grid grid-cols-2 gap-2">
-                            <button onclick="addToCart({{ product.id }}, '{{ product.name|escapejs }}', {{ product.price }}, '{{ product.image_url|escapejs }}', '{{ product.sku|escapejs }}')" class="w-full py-2.5 bg-stone-900 hover:bg-gold-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+                            <button onclick="addToCart({{ product.id }}, '{{ product.name|escapejs }}', {{ product.price }}, '{{ product.image_url|escapejs }}', '{{ product.sku|escapejs }}')" class="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
                                 <i class="fas fa-cart-plus text-xs"></i>
                                 <span>Add</span>
                             </button>
-                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20buying:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }},%20SKU:%20{{ product.sku }}).%20Is%20it%20available?" target="_blank" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20buying:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }},%20SKU:%20{{ product.sku }}).%20Is%20it%20available?" target="_blank" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
                                 <i class="fab fa-whatsapp text-xs"></i>
                                 <span>WhatsApp</span>
                             </a>
@@ -256,15 +255,15 @@
 
 <!-- BOTANICAL REALISM SECTION -->
 <section class="py-16 bg-stone-950 text-white relative overflow-hidden border-t border-stone-800">
-    <div class="absolute right-0 top-0 bottom-0 w-1/2 bg-botanic-900/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-1/2 bg-emerald-900/10 blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
             <div>
-                <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-botanic-400">Zero Maintenance ? Lifetime Green</span>
+                <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-400">Zero Maintenance ? Lifetime Green</span>
                 <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white">Lifelike Artificial Plants &amp; Trees</h2>
             </div>
-            <a href="{% url 'shop' %}?category=artificial-plants-trees" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-botanic-400 hover:text-botanic-300 transition-colors">
+            <a href="{% url 'shop' %}?category=artificial-plants-trees" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-emerald-400 hover:text-emerald-300 transition-colors">
                 <span>View All Botanicals</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -285,7 +284,7 @@
                         <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </a>
                     
-                    <span class="absolute top-3.5 left-3.5 bg-botanic-700 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                    <span class="absolute top-3.5 left-3.5 bg-emerald-800 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                         Real-Touch Silk
                     </span>
                 </div>
@@ -294,13 +293,13 @@
                 <div class="p-5 flex flex-col flex-grow justify-between space-y-3">
                     <div>
                         <div class="flex items-center justify-between text-[11px] text-stone-400 mb-1">
-                            <span class="font-mono text-botanic-400 font-bold">{{ product.sku }}</span>
-                            <span class="flex items-center text-amber-400 gap-1 font-bold">
-                                <i class="fas fa-star text-xs"></i> {{ product.rating }}
+                            <span class="font-mono text-emerald-400 font-bold">{{ product.sku }}</span>
+                            <span class="flex items-center text-stone-300 gap-1 font-bold">
+                                <i class="fas fa-star text-xs text-stone-400"></i> {{ product.rating }}
                             </span>
                         </div>
 
-                        <h3 class="font-cinzel font-bold text-white text-sm hover:text-botanic-400 transition-colors line-clamp-2 leading-snug">
+                        <h3 class="font-cinzel font-bold text-white text-sm hover:text-emerald-400 transition-colors line-clamp-2 leading-snug">
                             <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
                         </h3>
 
@@ -310,18 +309,18 @@
                     <!-- Price & Actions -->
                     <div class="pt-3 border-t border-stone-800">
                         <div class="flex items-baseline gap-2 mb-3">
-                            <span class="text-lg font-bold text-botanic-400 font-cinzel">?{{ product.price|floatformat:0 }}</span>
+                            <span class="text-lg font-bold text-emerald-400 font-cinzel">?{{ product.price|floatformat:0 }}</span>
                             {% if product.original_price > product.price %}
                             <span class="text-xs text-stone-500 line-through">?{{ product.original_price|floatformat:0 }}</span>
                             {% endif %}
                         </div>
 
                         <div class="grid grid-cols-2 gap-2">
-                            <button onclick="addToCart({{ product.id }}, '{{ product.name|escapejs }}', {{ product.price }}, '{{ product.image_url|escapejs }}', '{{ product.sku|escapejs }}')" class="w-full py-2.5 bg-stone-800 hover:bg-botanic-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+                            <button onclick="addToCart({{ product.id }}, '{{ product.name|escapejs }}', {{ product.price }}, '{{ product.image_url|escapejs }}', '{{ product.sku|escapejs }}')" class="w-full py-2.5 bg-stone-800 hover:bg-stone-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
                                 <i class="fas fa-cart-plus text-xs"></i>
                                 <span>Add</span>
                             </button>
-                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20order:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }}).%20Please%20confirm%20delivery%20schedule." target="_blank" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
+                            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20order:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }}).%20Please%20confirm%20delivery%20schedule." target="_blank" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm">
                                 <i class="fab fa-whatsapp text-xs"></i>
                                 <span>WhatsApp</span>
                             </a>
@@ -335,31 +334,31 @@
 </section>
 
 <!-- FARIDABAD SHOWROOM VIP INVITATION -->
-<section class="py-20 bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 text-white relative border-t border-gold-500/20">
+<section class="py-20 bg-stone-950 text-white relative border-t border-stone-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-stone-900/90 rounded-3xl border-2 border-gold-500/40 p-8 sm:p-12 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div class="bg-stone-900 rounded-3xl border border-stone-800 p-8 sm:p-12 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
             <div class="max-w-2xl space-y-4 text-center lg:text-left">
                 <div class="flex items-center justify-center lg:justify-start gap-3">
-                    <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-gold-400 shadow-md">
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-bold uppercase tracking-wider">
-                        <i class="fas fa-map-pin text-gold-400"></i> Faridabad Showroom
+                    <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-stone-700 shadow-md">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-800 text-stone-200 text-xs font-bold uppercase tracking-wider border border-stone-700">
+                        <i class="fas fa-map-pin text-emerald-400"></i> Faridabad Showroom
                     </span>
                 </div>
                 <h2 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-white">Experience Our Masterpieces In Person</h2>
                 <p class="text-stone-300 text-xs sm:text-sm leading-relaxed font-light">
                     Visit our Sector 15 Faridabad showroom to feel the weight of solid antique brass castings, explore 500+ curated home decor pieces, and receive personalized interior decor styling advice.
                 </p>
-                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-gold-200">
-                    <span class="flex items-center gap-1.5"><i class="fas fa-car text-gold-400"></i> Free Showroom Parking</span>
-                    <span class="flex items-center gap-1.5"><i class="fas fa-coffee text-gold-400"></i> Complimentary Tea/Coffee</span>
-                    <span class="flex items-center gap-1.5"><i class="fas fa-user-shield text-gold-400"></i> 1-on-1 Decor Styling</span>
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-stone-300">
+                    <span class="flex items-center gap-1.5"><i class="fas fa-car text-emerald-400"></i> Free Showroom Parking</span>
+                    <span class="flex items-center gap-1.5"><i class="fas fa-coffee text-emerald-400"></i> Complimentary Tea/Coffee</span>
+                    <span class="flex items-center gap-1.5"><i class="fas fa-user-shield text-emerald-400"></i> 1-on-1 Decor Styling</span>
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                <a href="{% url 'visit_showroom' %}" class="px-8 py-4 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-700 hover:to-gold-600 text-white rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider text-center shadow-lg transition-all">
+                <a href="{% url 'visit_showroom' %}" class="px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider text-center shadow-lg transition-all">
                     Schedule VIP Visit
                 </a>
-                <a href="https://maps.google.com/?q=Faridabad+Haryana" target="_blank" class="px-6 py-4 border border-stone-600 hover:border-gold-400 bg-stone-950 text-stone-200 hover:text-white rounded-2xl text-xs sm:text-sm font-semibold text-center transition-all">
+                <a href="https://maps.google.com/?q=Faridabad+Haryana" target="_blank" class="px-6 py-4 border border-stone-700 hover:border-stone-500 bg-stone-950 text-stone-200 hover:text-white rounded-2xl text-xs sm:text-sm font-semibold text-center transition-all">
                     Get Driving Directions &rarr;
                 </a>
             </div>
@@ -368,19 +367,19 @@
 </section>
 
 <!-- LOCAL CUSTOMER REVIEWS -->
-<section class="py-16 bg-warmivory">
+<section class="py-16 bg-stone-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
-            <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-gold-700">Faridabad Verified Buyers</span>
+            <span class="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-800">Faridabad Verified Buyers</span>
             <h2 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-stone-900">What Our Customers Say</h2>
-            <div class="w-16 h-0.5 bg-gold-500 mx-auto"></div>
+            <div class="w-16 h-0.5 bg-stone-900 mx-auto"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {% for review in reviews %}
             <div class="p-6 rounded-3xl bg-white border border-stone-200 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-md transition-shadow">
                 <div class="space-y-2">
-                    <div class="flex text-amber-500 text-xs gap-1">
+                    <div class="flex text-stone-800 text-xs gap-1">
                         {% for i in "12345" %}
                         <i class="fas fa-star"></i>
                         {% endfor %}

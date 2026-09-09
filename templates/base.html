@@ -140,9 +140,11 @@
                     <a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="hover:text-terracotta-700 transition-colors py-1 flex items-center gap-1.5 {% if request.GET.category == 'ceramic-pots-designer-planters' %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">
                         <span class="w-2 h-2 rounded-full bg-terracotta-600"></span> Pots &amp; Planters
                     </a>
-                    <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-terracotta-700 transition-colors py-1">Antique Decor</a>
-                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20have%20a%20custom%20decor%20/%20plant%20requirement." target="_blank" class="hover:text-forest-700 text-forest-800 transition-colors py-1 font-extrabold flex items-center gap-1"><i class="fab fa-whatsapp text-sm text-forest-600"></i> Custom Request</a>
-                    <a href="{% url 'contact' %}" class="hover:text-terracotta-700 transition-colors py-1">Contact</a>
+                    <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-terracotta-700 transition-colors py-1 {% if request.GET.category == 'antique-brass-heritage-decor' %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">Antique Decor</a>
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20have%20a%20custom%20decor%20/%20plant%20requirement." target="_blank" class="hover:text-forest-700 text-forest-800 transition-colors py-1.5 px-3 rounded-full bg-forest-50 border border-forest-200 font-extrabold flex items-center gap-1.5 shadow-sm">
+                        <i class="fab fa-whatsapp text-sm text-forest-600"></i>
+                        <span>Custom Request</span>
+                    </a>
                 </nav>
 
                 <!-- HEADER ACTIONS -->
@@ -160,12 +162,6 @@
                             0
                         </span>
                     </button>
-
-                    <!-- Direct WhatsApp CTA with Phone Number -->
-                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20your%20artificial%20plants%20and%20decor." target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-forest-700 hover:bg-forest-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all">
-                        <i class="fab fa-whatsapp text-sm"></i>
-                        <span>+91 98990 97676</span>
-                    </a>
 
                     <!-- Mobile Menu Trigger -->
                     <button id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-xl bg-sand-100 text-walnut-800 flex items-center justify-center hover:bg-sand-200 transition-colors border border-sand-200">

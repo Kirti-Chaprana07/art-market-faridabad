@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ STORE_NAME }} | Artificial Plants, Vertical Green Walls &amp; Home Decor Faridabad{% endblock %}</title>
+    <title>{% block title %}{{ STORE_NAME }} | Artificial Plants, Green Walls &amp; Home Decor Faridabad{% endblock %}</title>
     <meta name="description" content="{% block meta_desc %}Art Market Faridabad: Explore lifelike artificial plants, vertical garden green walls, ceramic face pots, brass urulis, and custom wall art. Located at Sector 88, Faridabad.{% endblock %}">
     
     <!-- Favicon -->
@@ -12,19 +12,31 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Tailwind CSS (Play CDN) -->
+    <!-- Tailwind CSS (Play CDN) with Warm Organic Luxury Palette -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        botanic: {
+                        terracotta: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c', // Rich Warm Terracotta
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                        forest: {
                             50: '#f0fdf4',
                             100: '#dcfce7',
                             200: '#bbf7d0',
@@ -32,12 +44,31 @@
                             400: '#4ade80',
                             500: '#22c55e',
                             600: '#16a34a',
-                            700: '#15803d',
+                            700: '#15803d', // Lush Forest Emerald
                             800: '#166534',
                             900: '#14532d',
+                            950: '#064e3b',
                         },
-                        terracotta: '#c2410c',
-                        darkonyx: '#0f172a',
+                        walnut: {
+                            50: '#faf7f2',
+                            100: '#f5f0e8',
+                            200: '#e7decfa',
+                            300: '#d6c6b0',
+                            400: '#bda68a',
+                            500: '#a38768',
+                            600: '#8c6e51',
+                            700: '#715640',
+                            800: '#523e30',
+                            900: '#292524',
+                            950: '#1c1917', // Deep Espresso Walnut
+                        },
+                        sand: {
+                            50: '#faf8f5',
+                            100: '#f4ede2',
+                            200: '#e9dfd0',
+                            300: '#dacbbb',
+                            400: '#c5b19c',
+                        }
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
@@ -52,90 +83,92 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body class="bg-stone-50/40 text-stone-900 font-sans antialiased flex flex-col min-h-screen selection:bg-stone-900 selection:text-white">
+<body class="bg-[#faf7f2] text-walnut-900 font-sans antialiased flex flex-col min-h-screen selection:bg-terracotta-700 selection:text-white">
 
-    <!-- TOP ANNOUNCEMENT TICKER WITH EXACT ADDRESS -->
-    <div class="bg-stone-950 text-stone-300 text-xs py-2.5 px-4 border-b border-stone-800 relative z-50">
+    <!-- TOP ANNOUNCEMENT TICKER -->
+    <div class="bg-walnut-950 text-sand-200 text-xs py-2.5 px-4 border-b border-walnut-800 relative z-50">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
             <div class="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-stone-800 text-emerald-400 border border-stone-700 tracking-wide">
-                    <i class="fas fa-map-marker-alt text-[9px] mr-1"></i> STORE LOCATION
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-terracotta-800 text-terracotta-100 border border-terracotta-700/60 tracking-wide uppercase">
+                    <i class="fas fa-map-marker-alt text-[9px] mr-1 text-terracotta-300"></i> FARIDABAD STORE
                 </span>
-                <span class="text-stone-300 text-[11px] sm:text-xs">
-                    {{ STORE_ADDRESS }} ? Open All 7 Days (10:30 AM - 9:00 PM)
+                <span class="text-sand-100 text-[11px] sm:text-xs">
+                    {{ STORE_ADDRESS }} ? Open 7 Days (10:30 AM - 9:00 PM)
                 </span>
             </div>
-            <div class="flex items-center gap-4 text-xs font-medium">
-                <a href="tel:{{ STORE_PHONE }}" class="hover:text-white text-stone-200 transition-colors flex items-center gap-1.5 font-bold">
-                    <i class="fas fa-phone-alt text-[11px] text-emerald-400"></i> {{ STORE_PHONE }}
+            <div class="flex items-center gap-4 text-xs font-semibold">
+                <a href="tel:{{ STORE_PHONE }}" class="hover:text-terracotta-300 text-sand-100 transition-colors flex items-center gap-1.5">
+                    <i class="fas fa-phone-alt text-[10px] text-terracotta-400"></i> {{ STORE_PHONE }}
                 </a>
-                <span class="text-stone-700">|</span>
-                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20artificial%20plants%20and%20decor." target="_blank" class="hover:text-emerald-300 text-emerald-400 font-semibold transition-colors flex items-center gap-1.5">
-                    <i class="fab fa-whatsapp text-sm"></i> WhatsApp Order
+                <span class="text-walnut-700">|</span>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20artificial%20plants%20and%20decor." target="_blank" class="hover:text-forest-300 text-forest-400 font-bold transition-colors flex items-center gap-1.5">
+                    <i class="fab fa-whatsapp text-sm"></i> WhatsApp Support
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- MAIN NAVBAR -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all duration-300" id="mainHeader">
+    <!-- MAIN NAVBAR (WARM IVORY & CRISP WALNUT) -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sand-200 shadow-sm transition-all duration-300" id="mainHeader">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <!-- BRAND LOGO & CLEAN UNSTRETCHED NAME -->
-                <a href="{% url 'home' %}" class="flex items-center gap-3 group">
-                    <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden shadow-sm border border-stone-200 group-hover:border-stone-900 transition-all bg-stone-900 flex-shrink-0 flex items-center justify-center">
+                <!-- BRAND LOGO & CLEAN PROPORTIONAL NAME -->
+                <a href="{% url 'home' %}" class="flex items-center gap-3.5 group">
+                    <div class="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl overflow-hidden shadow-sm border-2 border-sand-300 group-hover:border-terracotta-700 transition-all bg-walnut-950 flex-shrink-0 flex items-center justify-center">
                         <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=150&q=80';">
                     </div>
                     <div class="flex flex-col justify-center">
-                        <span class="font-cinzel text-lg sm:text-xl font-bold tracking-tight text-stone-950 group-hover:text-stone-700 transition-colors leading-tight">
+                        <span class="font-cinzel text-xl sm:text-2xl font-bold tracking-tight text-walnut-950 group-hover:text-terracotta-800 transition-colors leading-tight">
                             Art Market
                         </span>
-                        <span class="text-[11px] sm:text-xs font-semibold text-emerald-800 tracking-normal flex items-center gap-1">
+                        <span class="text-[11px] sm:text-xs font-semibold text-forest-800 tracking-normal flex items-center gap-1">
                             <span>Sector 88, Faridabad</span>
-                            <span class="text-stone-300">?</span>
-                            <span class="text-stone-500 font-normal">Plants &amp; Decor</span>
+                            <span class="text-sand-300">?</span>
+                            <span class="text-walnut-600 font-medium">Plants &amp; Decor</span>
                         </span>
                     </div>
                 </a>
 
                 <!-- DESKTOP NAVIGATION -->
-                <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold text-stone-700 uppercase tracking-wide">
-                    <a href="{% url 'home' %}" class="hover:text-stone-950 transition-colors py-1 {% if request.path == '/' %}text-stone-950 font-bold border-b-2 border-stone-950{% endif %}">Home</a>
-                    <a href="{% url 'shop' %}" class="hover:text-stone-950 transition-colors py-1 {% if '/shop/' in request.path and not request.GET.category %}text-stone-950 font-bold border-b-2 border-stone-950{% endif %}">All Collections</a>
-                    <a href="{% url 'shop' %}?category=artificial-plants-trees" class="hover:text-emerald-700 transition-colors py-1 flex items-center gap-1.5 {% if request.GET.category == 'artificial-plants-trees' %}text-emerald-700 font-bold border-b-2 border-emerald-700{% endif %}">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Artificial Plants
+                <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-bold text-walnut-700 uppercase tracking-wide">
+                    <a href="{% url 'home' %}" class="hover:text-terracotta-700 transition-colors py-1 {% if request.path == '/' %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">Home</a>
+                    <a href="{% url 'shop' %}" class="hover:text-terracotta-700 transition-colors py-1 {% if '/shop/' in request.path and not request.GET.category %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">All Collections</a>
+                    <a href="{% url 'shop' %}?category=artificial-plants-trees" class="hover:text-forest-700 transition-colors py-1 flex items-center gap-1.5 {% if request.GET.category == 'artificial-plants-trees' %}text-forest-700 font-extrabold border-b-2 border-forest-700{% endif %}">
+                        <span class="w-2 h-2 rounded-full bg-forest-600"></span> Artificial Plants
                     </a>
-                    <a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="hover:text-stone-950 transition-colors py-1">Pots &amp; Planters</a>
-                    <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-stone-950 transition-colors py-1">Antique Decor</a>
-                    <a href="{% url 'visit_showroom' %}" class="hover:text-stone-950 transition-colors py-1 {% if '/visit-showroom/' in request.path %}text-stone-950 font-bold border-b-2 border-stone-950{% endif %}">Showroom Visit</a>
-                    <a href="{% url 'contact' %}" class="hover:text-stone-950 transition-colors py-1">Contact</a>
+                    <a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="hover:text-terracotta-700 transition-colors py-1 flex items-center gap-1.5 {% if request.GET.category == 'ceramic-pots-designer-planters' %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">
+                        <span class="w-2 h-2 rounded-full bg-terracotta-600"></span> Pots &amp; Planters
+                    </a>
+                    <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-terracotta-700 transition-colors py-1">Antique Decor</a>
+                    <a href="{% url 'visit_showroom' %}" class="hover:text-terracotta-700 transition-colors py-1 {% if '/visit-showroom/' in request.path %}text-terracotta-700 font-extrabold border-b-2 border-terracotta-700{% endif %}">Showroom Visit</a>
+                    <a href="{% url 'contact' %}" class="hover:text-terracotta-700 transition-colors py-1">Contact</a>
                 </nav>
 
                 <!-- HEADER ACTIONS -->
-                <div class="flex items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-2.5 sm:gap-3">
                     
                     <!-- Search Button -->
-                    <button id="searchOpenBtn" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-stone-200 hover:border-stone-900 hover:bg-stone-50 text-stone-700 hover:text-stone-950 flex items-center justify-center transition-all" title="Search catalog">
+                    <button id="searchOpenBtn" class="w-10 h-10 rounded-xl bg-sand-100 hover:bg-sand-200 text-walnut-700 hover:text-walnut-950 flex items-center justify-center transition-all border border-sand-200" title="Search catalog">
                         <i class="fas fa-search text-xs sm:text-sm"></i>
                     </button>
 
                     <!-- Cart Trigger Button -->
-                    <button id="cartDrawerBtn" class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-stone-200 hover:border-stone-900 hover:bg-stone-50 text-stone-700 hover:text-stone-950 flex items-center justify-center transition-all" title="View Cart">
+                    <button id="cartDrawerBtn" class="relative w-10 h-10 rounded-xl bg-sand-100 hover:bg-sand-200 text-walnut-700 hover:text-walnut-950 flex items-center justify-center transition-all border border-sand-200" title="View Cart">
                         <i class="fas fa-shopping-bag text-xs sm:text-sm"></i>
-                        <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-stone-900 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md ring-2 ring-white">
+                        <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-terracotta-700 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md ring-2 ring-white">
                             0
                         </span>
                     </button>
 
                     <!-- Direct WhatsApp CTA with Phone Number -->
-                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20your%20artificial%20plants%20and%20decor." target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-sm hover:shadow-md transition-all">
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20your%20artificial%20plants%20and%20decor." target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-forest-700 hover:bg-forest-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all">
                         <i class="fab fa-whatsapp text-sm"></i>
                         <span>+91 98990 97676</span>
                     </a>
 
                     <!-- Mobile Menu Trigger -->
-                    <button id="mobileMenuBtn" class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-stone-100 text-stone-800 flex items-center justify-center hover:bg-stone-200 transition-colors">
+                    <button id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-xl bg-sand-100 text-walnut-800 flex items-center justify-center hover:bg-sand-200 transition-colors border border-sand-200">
                         <i class="fas fa-bars text-base"></i>
                     </button>
                 </div>
@@ -143,37 +176,37 @@
         </div>
 
         <!-- MOBILE MENU OVERLAY -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-stone-200 px-5 py-5 space-y-3.5 shadow-xl">
-            <div class="flex items-center gap-3 pb-3 border-b border-stone-100">
-                <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-stone-300">
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-sand-200 px-5 py-5 space-y-3.5 shadow-xl">
+            <div class="flex items-center gap-3 pb-3 border-b border-sand-100">
+                <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300">
                 <div>
-                    <span class="font-cinzel font-bold text-stone-900 block leading-tight">Art Market</span>
-                    <span class="text-[11px] text-emerald-800 font-medium">Maharana Pratap Chowk, Sector 88</span>
+                    <span class="font-cinzel font-bold text-walnut-950 block leading-tight">Art Market</span>
+                    <span class="text-[11px] text-forest-800 font-semibold">Maharana Pratap Chowk, Sector 88</span>
                 </div>
             </div>
-            <div class="space-y-1.5 text-xs font-semibold uppercase tracking-wider">
-                <a href="{% url 'home' %}" class="block py-2 text-stone-800 hover:text-stone-950">Home</a>
-                <a href="{% url 'shop' %}" class="block py-2 text-stone-800 hover:text-stone-950">All Collections</a>
-                <a href="{% url 'shop' %}?category=artificial-plants-trees" class="block py-2 text-emerald-800 font-bold flex items-center gap-2">
-                    <i class="fas fa-leaf text-xs text-emerald-600"></i> Artificial Plants &amp; Trees
+            <div class="space-y-1 text-xs font-bold uppercase tracking-wider">
+                <a href="{% url 'home' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">Home</a>
+                <a href="{% url 'shop' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">All Collections</a>
+                <a href="{% url 'shop' %}?category=artificial-plants-trees" class="block py-2 text-forest-800 font-extrabold flex items-center gap-2">
+                    <i class="fas fa-leaf text-xs text-forest-600"></i> Artificial Plants &amp; Trees
                 </a>
-                <a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="block py-2 text-stone-800 hover:text-stone-950 flex items-center gap-2">
-                    <i class="fas fa-wine-bottle text-xs text-stone-700"></i> Planters &amp; Ceramic Pots
+                <a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="block py-2 text-terracotta-800 font-extrabold flex items-center gap-2">
+                    <i class="fas fa-wine-bottle text-xs text-terracotta-600"></i> Planters &amp; Ceramic Pots
                 </a>
-                <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="block py-2 text-stone-900 font-bold flex items-center gap-2">
-                    <i class="fas fa-gem text-xs text-stone-700"></i> Antique Brass &amp; Heritage Urulis
+                <a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="block py-2 text-walnut-900 font-bold flex items-center gap-2">
+                    <i class="fas fa-gem text-xs text-walnut-600"></i> Antique Brass &amp; Heritage Urulis
                 </a>
-                <a href="{% url 'visit_showroom' %}" class="block py-2 text-stone-900 font-bold flex items-center gap-2">
-                    <i class="fas fa-store text-xs text-emerald-700"></i> Book Showroom Visit (Sector 88)
+                <a href="{% url 'visit_showroom' %}" class="block py-2 text-walnut-900 font-bold flex items-center gap-2">
+                    <i class="fas fa-store text-xs text-forest-700"></i> Book Showroom Visit (Sector 88)
                 </a>
-                <a href="{% url 'about' %}" class="block py-2 text-stone-800 hover:text-stone-950">About Our Shop</a>
-                <a href="{% url 'contact' %}" class="block py-2 text-stone-800 hover:text-stone-950">Contact &amp; Location</a>
+                <a href="{% url 'about' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">About Our Shop</a>
+                <a href="{% url 'contact' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">Contact &amp; Location</a>
             </div>
-            <div class="pt-3 border-t border-stone-100 flex flex-col gap-2">
-                <a href="tel:{{ STORE_PHONE }}" class="flex items-center justify-center gap-2 bg-stone-100 text-stone-900 py-2.5 rounded-xl text-xs font-bold">
-                    <i class="fas fa-phone-alt text-emerald-700"></i> Call {{ STORE_PHONE }}
+            <div class="pt-3 border-t border-sand-100 flex flex-col gap-2">
+                <a href="tel:{{ STORE_PHONE }}" class="flex items-center justify-center gap-2 bg-sand-100 text-walnut-900 py-2.5 rounded-xl text-xs font-bold">
+                    <i class="fas fa-phone-alt text-forest-700"></i> Call {{ STORE_PHONE }}
                 </a>
-                <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="w-full bg-emerald-700 text-white text-center py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="w-full bg-forest-700 hover:bg-forest-800 text-white text-center py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
                     <i class="fab fa-whatsapp text-sm"></i> WhatsApp Support (+91 98990 97676)
                 </a>
             </div>
@@ -181,24 +214,24 @@
     </header>
 
     <!-- LIVE SEARCH OVERLAY MODAL -->
-    <div id="searchModal" class="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-md hidden items-start justify-center pt-16 sm:pt-24 px-4 animate-fadeIn">
-        <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden border border-stone-200">
-            <div class="p-5 sm:p-6 border-b border-stone-100 flex items-center gap-3">
-                <i class="fas fa-search text-stone-400 text-xl"></i>
-                <input type="text" id="liveSearchInput" placeholder="Search monstera, fiddle leaf, brass urulis, bonsai, clocks..." class="w-full text-base sm:text-lg focus:outline-none placeholder-stone-400 text-stone-900 font-medium">
-                <button id="searchCloseBtn" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center transition-colors">
+    <div id="searchModal" class="fixed inset-0 z-50 bg-walnut-950/70 backdrop-blur-md hidden items-start justify-center pt-16 sm:pt-24 px-4 animate-fadeIn">
+        <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden border border-sand-200">
+            <div class="p-5 sm:p-6 border-b border-sand-100 flex items-center gap-3">
+                <i class="fas fa-search text-walnut-400 text-xl"></i>
+                <input type="text" id="liveSearchInput" placeholder="Search monstera, fiddle leaf, brass urulis, bonsai, pots..." class="w-full text-base sm:text-lg focus:outline-none placeholder-walnut-400 text-walnut-900 font-medium">
+                <button id="searchCloseBtn" class="w-8 h-8 rounded-full bg-sand-100 hover:bg-sand-200 text-walnut-600 flex items-center justify-center transition-colors">
                     <i class="fas fa-times text-sm"></i>
                 </button>
             </div>
             <!-- Live Search Results -->
-            <div id="searchResults" class="max-h-96 overflow-y-auto p-4 divide-y divide-stone-100">
-                <div class="text-center py-10 text-stone-400 text-xs">
+            <div id="searchResults" class="max-h-96 overflow-y-auto p-4 divide-y divide-sand-100">
+                <div class="text-center py-10 text-walnut-400 text-xs">
                     Type a keyword to instantly discover our artificial plants, planters and decor...
                 </div>
             </div>
-            <div class="bg-stone-50 px-6 py-3.5 text-xs text-stone-500 flex flex-wrap justify-between items-center gap-2 border-t border-stone-100">
-                <span>Popular Searches: <a href="{% url 'shop' %}?q=Monstera" class="text-emerald-800 font-semibold hover:underline">Monstera</a>, <a href="{% url 'shop' %}?q=Fiddle" class="text-emerald-800 font-semibold hover:underline">Fiddle Leaf</a>, <a href="{% url 'shop' %}?q=Brass" class="text-stone-800 font-semibold hover:underline">Brass Uruli</a>, <a href="{% url 'shop' %}?q=Pot" class="text-stone-800 font-semibold hover:underline">Ceramic Pots</a></span>
-                <a href="{% url 'shop' %}" class="text-stone-900 font-bold hover:underline">Browse Full Store &rarr;</a>
+            <div class="bg-sand-50 px-6 py-3.5 text-xs text-walnut-600 flex flex-wrap justify-between items-center gap-2 border-t border-sand-100">
+                <span>Popular: <a href="{% url 'shop' %}?q=Monstera" class="text-forest-800 font-bold hover:underline">Monstera</a>, <a href="{% url 'shop' %}?q=Fiddle" class="text-forest-800 font-bold hover:underline">Fiddle Leaf</a>, <a href="{% url 'shop' %}?q=Pot" class="text-terracotta-700 font-bold hover:underline">Face Planters</a>, <a href="{% url 'shop' %}?q=Brass" class="text-walnut-800 font-bold hover:underline">Brass Uruli</a></span>
+                <a href="{% url 'shop' %}" class="text-terracotta-800 font-bold hover:underline">Browse Full Catalog &rarr;</a>
             </div>
         </div>
     </div>
@@ -207,12 +240,12 @@
     {% if messages %}
     <div class="fixed top-28 right-4 z-50 flex flex-col gap-2 max-w-md w-full px-4">
         {% for message in messages %}
-        <div class="p-4 rounded-2xl shadow-xl border text-xs sm:text-sm flex items-start justify-between gap-3 {% if message.tags == 'success' %}bg-emerald-50 border-emerald-300 text-emerald-950{% else %}bg-stone-100 border-stone-300 text-stone-900{% endif %}">
+        <div class="p-4 rounded-2xl shadow-xl border text-xs sm:text-sm flex items-start justify-between gap-3 {% if message.tags == 'success' %}bg-forest-50 border-forest-300 text-forest-950{% else %}bg-sand-100 border-sand-300 text-walnut-900{% endif %}">
             <div class="flex items-center gap-2.5">
-                <i class="fas {% if message.tags == 'success' %}fa-check-circle text-emerald-600 text-base{% else %}fa-info-circle text-stone-700 text-base{% endif %}"></i>
+                <i class="fas {% if message.tags == 'success' %}fa-check-circle text-forest-600 text-base{% else %}fa-info-circle text-walnut-700 text-base{% endif %}"></i>
                 <span class="font-medium">{{ message }}</span>
             </div>
-            <button onclick="this.parentElement.remove()" class="text-stone-400 hover:text-stone-700 p-1">
+            <button onclick="this.parentElement.remove()" class="text-walnut-400 hover:text-walnut-700 p-1">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -226,62 +259,62 @@
     </main>
 
     <!-- SLIDE-OUT CART DRAWER -->
-    <div id="cartDrawerOverlay" class="fixed inset-0 bg-stone-950/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
-    <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-stone-200">
-        <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+    <div id="cartDrawerOverlay" class="fixed inset-0 bg-walnut-950/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+    <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-sand-200">
+        <div class="p-5 border-b border-sand-200 flex items-center justify-between bg-sand-50">
             <div class="flex items-center gap-3">
-                <img src="/static/images/logo.jpg" alt="Logo" class="w-8 h-8 rounded-lg object-cover border border-stone-300">
+                <img src="/static/images/logo.jpg" alt="Logo" class="w-8 h-8 rounded-lg object-cover border border-sand-300">
                 <div>
-                    <h3 class="font-cinzel font-bold text-stone-900 text-base">Your Cart</h3>
-                    <span class="text-[10px] text-stone-500 uppercase tracking-wider font-semibold">Art Market Faridabad</span>
+                    <h3 class="font-cinzel font-bold text-walnut-950 text-base">Your Cart</h3>
+                    <span class="text-[10px] text-walnut-500 uppercase tracking-wider font-semibold">Art Market Faridabad</span>
                 </div>
             </div>
-            <button id="cartDrawerCloseBtn" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-600 flex items-center justify-center transition-colors">
+            <button id="cartDrawerCloseBtn" class="w-8 h-8 rounded-full bg-sand-200 hover:bg-sand-300 text-walnut-700 flex items-center justify-center transition-colors">
                 <i class="fas fa-times text-sm"></i>
             </button>
         </div>
 
-        <div class="bg-stone-100 border-b border-stone-200 p-3.5 text-xs text-stone-800">
+        <div class="bg-sand-100 border-b border-sand-200 p-3.5 text-xs text-walnut-800">
             <div class="flex justify-between font-bold mb-1.5 text-[11px]">
                 <span id="shippingProgressText">Add items for Free Delivery in Faridabad</span>
                 <span id="shippingTarget">?1,999</span>
             </div>
-            <div class="w-full bg-stone-200 rounded-full h-2 overflow-hidden shadow-inner">
-                <div id="shippingProgressBar" class="bg-emerald-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            <div class="w-full bg-sand-200 rounded-full h-2 overflow-hidden shadow-inner">
+                <div id="shippingProgressBar" class="bg-forest-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
             </div>
         </div>
 
-        <div id="cartItemsList" class="flex-grow overflow-y-auto p-5 space-y-3.5 divide-y divide-stone-100">
+        <div id="cartItemsList" class="flex-grow overflow-y-auto p-5 space-y-3.5 divide-y divide-sand-100">
             <!-- Dynamic Items Injected by JS -->
         </div>
 
-        <div class="p-5 border-t border-stone-200 bg-stone-50 space-y-3.5">
-            <div class="space-y-1 text-xs text-stone-600">
+        <div class="p-5 border-t border-sand-200 bg-sand-50 space-y-3.5">
+            <div class="space-y-1 text-xs text-walnut-600">
                 <div class="flex justify-between">
                     <span>Subtotal</span>
-                    <span id="cartSubtotal" class="font-bold text-stone-900 text-sm">?0</span>
+                    <span id="cartSubtotal" class="font-bold text-walnut-950 text-sm">?0</span>
                 </div>
-                <div class="flex justify-between text-[11px] text-stone-500">
+                <div class="flex justify-between text-[11px] text-walnut-500">
                     <span>Faridabad Local Delivery</span>
-                    <span class="text-emerald-700 font-semibold">Calculated at checkout</span>
+                    <span class="text-forest-700 font-semibold">Calculated at checkout</span>
                 </div>
             </div>
 
-            <div class="border-t border-stone-200 pt-3 flex justify-between items-center">
-                <span class="font-cinzel font-bold text-stone-900 text-sm">Total Amount</span>
-                <span id="cartGrandTotal" class="font-bold text-2xl text-stone-900">?0</span>
+            <div class="border-t border-sand-200 pt-3 flex justify-between items-center">
+                <span class="font-cinzel font-bold text-walnut-950 text-sm">Total Amount</span>
+                <span id="cartGrandTotal" class="font-bold text-2xl text-terracotta-800">?0</span>
             </div>
 
             <div class="grid grid-cols-2 gap-2 pt-1">
-                <a href="{% url 'cart' %}" class="text-center py-3 px-3 border border-stone-300 rounded-xl text-xs font-bold uppercase tracking-wider text-stone-700 hover:bg-stone-100 transition-colors">
+                <a href="{% url 'cart' %}" class="text-center py-3 px-3 border border-sand-300 rounded-xl text-xs font-bold uppercase tracking-wider text-walnut-700 hover:bg-sand-100 transition-colors">
                     View Full Cart
                 </a>
-                <a href="{% url 'checkout' %}" class="text-center py-3 px-3 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-sm">
+                <a href="{% url 'checkout' %}" class="text-center py-3 px-3 bg-walnut-900 hover:bg-walnut-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-sm">
                     Checkout Now
                 </a>
             </div>
 
-            <button id="whatsappCartOrderBtn" class="w-full py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all">
+            <button id="whatsappCartOrderBtn" class="w-full py-3.5 bg-forest-700 hover:bg-forest-800 text-white rounded-xl text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all">
                 <i class="fab fa-whatsapp text-lg"></i>
                 <span>Order Cart on WhatsApp</span>
             </button>
@@ -290,105 +323,104 @@
 
     <!-- FLOATING ACTIONS -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-        <a href="{% url 'visit_showroom' %}" class="hidden sm:flex items-center gap-2.5 bg-stone-900 text-white px-4 py-2.5 rounded-full text-xs font-bold shadow-xl hover:bg-stone-800 border border-stone-700 hover:scale-105 transition-all">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <i class="fas fa-map-marker-alt text-emerald-400"></i>
+        <a href="{% url 'visit_showroom' %}" class="hidden sm:flex items-center gap-2.5 bg-walnut-950 text-sand-100 px-4 py-2.5 rounded-full text-xs font-bold shadow-xl hover:bg-walnut-900 border border-walnut-800 hover:scale-105 transition-all">
+            <span class="w-2 h-2 rounded-full bg-forest-400 animate-ping"></span>
+            <i class="fas fa-map-marker-alt text-terracotta-400"></i>
             <span>Visit Sector 88 Store</span>
         </a>
 
-        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20browsing%20your%20website%20and%20would%20like%20assistance." target="_blank" class="w-14 h-14 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 group" title="Chat on WhatsApp">
+        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20browsing%20your%20website%20and%20would%20like%20assistance." target="_blank" class="w-14 h-14 bg-forest-600 hover:bg-forest-700 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all duration-300 group" title="Chat on WhatsApp">
             <i class="fab fa-whatsapp text-3xl"></i>
-            <span class="absolute right-16 bg-stone-900 text-white text-xs px-3 py-1.5 rounded-xl shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none font-semibold">
+            <span class="absolute right-16 bg-walnut-950 text-white text-xs px-3.5 py-2 rounded-xl shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none font-semibold border border-walnut-800">
                 WhatsApp: +91 98990 97676
             </span>
         </a>
     </div>
 
-    <!-- CLEAN LUXURY FOOTER WITH EXACT STORE ADDRESS -->
-    <footer class="bg-stone-950 text-stone-300 pt-16 pb-8 border-t border-stone-800">
+    <!-- WARM LUXURY FOOTER -->
+    <footer class="bg-walnut-950 text-sand-300 pt-16 pb-8 border-t border-walnut-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-walnut-900">
                 
                 <!-- Col 1: Brand -->
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
-                        <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-11 h-11 rounded-xl object-cover border border-stone-700 shadow-md">
+                        <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-11 h-11 rounded-xl object-cover border border-walnut-700 shadow-md">
                         <div>
                             <span class="font-cinzel text-xl font-bold text-white block leading-tight">Art Market</span>
-                            <span class="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide">Sector 88, Faridabad</span>
+                            <span class="text-[11px] font-semibold text-terracotta-400 uppercase tracking-wide">Sector 88, Faridabad</span>
                         </div>
                     </div>
-                    <p class="text-xs text-stone-400 leading-relaxed">
+                    <p class="text-xs text-sand-300/80 leading-relaxed">
                         Faridabad's trusted boutique for real-touch artificial plants, vertical garden green walls, luxury planters, handcrafted solid brass idols, and custom canvas paintings.
                     </p>
-                    <div class="pt-2 flex gap-3 text-stone-400">
-                        <a href="{{ STORE_INSTAGRAM }}" target="_blank" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-stone-800 hover:text-white flex items-center justify-center transition-all border border-stone-800" title="Instagram @artmarketfaridabad"><i class="fab fa-instagram text-xs"></i></a>
-                        <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-emerald-700 hover:text-white flex items-center justify-center transition-all border border-stone-800" title="WhatsApp"><i class="fab fa-whatsapp text-xs"></i></a>
-                        <a href="tel:{{ STORE_PHONE }}" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-stone-800 hover:text-white flex items-center justify-center transition-all border border-stone-800" title="Phone"><i class="fas fa-phone-alt text-xs"></i></a>
+                    <div class="pt-2 flex gap-3 text-sand-300">
+                        <a href="{{ STORE_INSTAGRAM }}" target="_blank" class="w-9 h-9 rounded-full bg-walnut-900 hover:bg-terracotta-700 hover:text-white flex items-center justify-center transition-all border border-walnut-800" title="Instagram @artmarketfaridabad"><i class="fab fa-instagram text-xs"></i></a>
+                        <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="w-9 h-9 rounded-full bg-walnut-900 hover:bg-forest-700 hover:text-white flex items-center justify-center transition-all border border-walnut-800" title="WhatsApp"><i class="fab fa-whatsapp text-xs"></i></a>
+                        <a href="tel:{{ STORE_PHONE }}" class="w-9 h-9 rounded-full bg-walnut-900 hover:bg-terracotta-700 hover:text-white flex items-center justify-center transition-all border border-walnut-800" title="Phone"><i class="fas fa-phone-alt text-xs"></i></a>
                     </div>
                 </div>
 
                 <!-- Col 2: Categories -->
                 <div>
-                    <h4 class="font-cinzel text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Collections
+                    <h4 class="font-cinzel text-sm font-bold text-sand-100 uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-forest-500"></span> Collections
                     </h4>
-                    <ul class="space-y-2.5 text-xs text-stone-400">
-                        <li><a href="{% url 'shop' %}?category=artificial-plants-trees" class="hover:text-emerald-400 transition-colors">Artificial Plants &amp; Trees</a></li>
-                        <li><a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="hover:text-white transition-colors">Ceramic Pots &amp; Planters</a></li>
-                        <li><a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-white transition-colors">Antique Brass &amp; Heritage Urulis</a></li>
-                        <li><a href="{% url 'shop' %}?category=vintage-clocks-water-fountains" class="hover:text-white transition-colors">Vintage Clocks &amp; Fountains</a></li>
-                        <li><a href="{% url 'shop' %}?category=custom-canvas-art-wall-decor" class="hover:text-white transition-colors">Custom Canvas Paintings</a></li>
+                    <ul class="space-y-2.5 text-xs text-sand-300/80">
+                        <li><a href="{% url 'shop' %}?category=artificial-plants-trees" class="hover:text-forest-400 transition-colors">Artificial Plants &amp; Trees</a></li>
+                        <li><a href="{% url 'shop' %}?category=ceramic-pots-designer-planters" class="hover:text-terracotta-300 transition-colors">Ceramic Pots &amp; Planters</a></li>
+                        <li><a href="{% url 'shop' %}?category=antique-brass-heritage-decor" class="hover:text-sand-100 transition-colors">Antique Brass &amp; Heritage Urulis</a></li>
+                        <li><a href="{% url 'shop' %}?category=vintage-clocks-water-fountains" class="hover:text-sand-100 transition-colors">Vintage Clocks &amp; Fountains</a></li>
+                        <li><a href="{% url 'shop' %}?category=custom-canvas-art-wall-decor" class="hover:text-sand-100 transition-colors">Custom Canvas Paintings</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 3: Customer Care -->
                 <div>
-                    <h4 class="font-cinzel text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-stone-500"></span> Quick Links
+                    <h4 class="font-cinzel text-sm font-bold text-sand-100 uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-terracotta-500"></span> Quick Links
                     </h4>
-                    <ul class="space-y-2.5 text-xs text-stone-400">
-                        <li><a href="{% url 'visit_showroom' %}" class="hover:text-white transition-colors">Book VIP Showroom Tour</a></li>
-                        <li><a href="{% url 'about' %}" class="hover:text-white transition-colors">About Our Faridabad Workshop</a></li>
-                        <li><a href="{% url 'contact' %}" class="hover:text-white transition-colors">Custom Gifting &amp; Bulk Orders</a></li>
-                        <li><a href="{{ STORE_INSTAGRAM }}" target="_blank" class="hover:text-emerald-400 transition-colors">Instagram @artmarketfaridabad</a></li>
-                        <li><a href="/owner/" class="text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"><i class="fas fa-lock text-[10px] mr-1"></i> Owner Portal (Orders & Upload)</a></li>
-                        <li><a href="/admin/" class="text-stone-500 hover:text-stone-300 transition-colors">Django Admin</a></li>
+                    <ul class="space-y-2.5 text-xs text-sand-300/80">
+                        <li><a href="{% url 'visit_showroom' %}" class="hover:text-sand-100 transition-colors">Book VIP Showroom Tour</a></li>
+                        <li><a href="{% url 'about' %}" class="hover:text-sand-100 transition-colors">About Our Faridabad Workshop</a></li>
+                        <li><a href="{% url 'contact' %}" class="hover:text-sand-100 transition-colors">Custom Gifting &amp; Bulk Orders</a></li>
+                        <li><a href="{{ STORE_INSTAGRAM }}" target="_blank" class="hover:text-forest-400 transition-colors">Instagram @artmarketfaridabad</a></li>
+                        <li><a href="/owner/" class="text-terracotta-400 font-bold hover:text-terracotta-300 transition-colors"><i class="fas fa-lock text-[10px] mr-1"></i> Owner Portal (Orders &amp; Upload)</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 4: Verified Store Location & Phone -->
                 <div>
-                    <h4 class="font-cinzel text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Exact Store Location
+                    <h4 class="font-cinzel text-sm font-bold text-sand-100 uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-forest-500"></span> Store Location
                     </h4>
-                    <ul class="space-y-3 text-xs text-stone-400">
+                    <ul class="space-y-3 text-xs text-sand-300/80">
                         <li class="flex items-start gap-2.5">
-                            <i class="fas fa-map-marker-alt text-emerald-400 mt-1"></i>
-                            <span class="leading-relaxed text-stone-200">{{ STORE_ADDRESS }}</span>
+                            <i class="fas fa-map-marker-alt text-terracotta-400 mt-1"></i>
+                            <span class="leading-relaxed text-sand-100">{{ STORE_ADDRESS }}</span>
                         </li>
                         <li class="flex items-center gap-2.5">
-                            <i class="fas fa-clock text-emerald-400"></i>
+                            <i class="fas fa-clock text-forest-400"></i>
                             <span>{{ STORE_HOURS }}</span>
                         </li>
                         <li class="flex items-center gap-2.5">
-                            <i class="fas fa-phone-alt text-emerald-400"></i>
-                            <a href="tel:{{ STORE_PHONE }}" class="hover:text-white font-bold text-white">{{ STORE_PHONE }}</a>
+                            <i class="fas fa-phone-alt text-terracotta-400"></i>
+                            <a href="tel:{{ STORE_PHONE }}" class="hover:text-white font-bold text-sand-100">{{ STORE_PHONE }}</a>
                         </li>
                         <li class="flex items-center gap-2.5">
-                            <i class="fab fa-whatsapp text-emerald-400 text-sm"></i>
-                            <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="hover:text-emerald-300 text-emerald-400 font-bold">+91 98990 97676</a>
+                            <i class="fab fa-whatsapp text-forest-400 text-sm"></i>
+                            <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="hover:text-forest-300 text-forest-400 font-bold">+91 98990 97676</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <!-- Bottom Copyright -->
-            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-stone-500">
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-sand-400">
                 <p>&copy; 2026 {{ STORE_NAME }}. Plot No 19, Maharana Pratap Chowk, Sector 88, Faridabad, Haryana 121002.</p>
-                <div class="flex items-center gap-5 text-stone-400">
-                    <span><i class="fas fa-shield-alt text-emerald-400 mr-1"></i> 100% Genuine Quality</span>
-                    <span><i class="fas fa-truck text-emerald-400 mr-1"></i> Fast Delivery across Faridabad &amp; NCR</span>
+                <div class="flex items-center gap-5 text-sand-300">
+                    <span><i class="fas fa-shield-alt text-forest-400 mr-1"></i> 100% Genuine Quality</span>
+                    <span><i class="fas fa-truck text-terracotta-400 mr-1"></i> Fast Delivery across Faridabad &amp; NCR</span>
                 </div>
             </div>
         </div>

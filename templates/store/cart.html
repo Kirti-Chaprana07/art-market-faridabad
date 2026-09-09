@@ -3,10 +3,10 @@
 {% block title %}Shopping Cart | {{ STORE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="bg-stone-100 py-8 border-b border-stone-200">
+<div class="bg-sand-100/70 py-8 border-b border-sand-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900">Your Shopping Cart</h1>
-        <p class="text-xs text-stone-500 mt-1">Review your selected antique decor &amp; artificial plants before checkout</p>
+        <h1 class="font-cinzel text-2xl sm:text-3xl font-bold text-walnut-950">Your Shopping Cart</h1>
+        <p class="text-xs text-walnut-600 mt-1">Review your selected artificial plants &amp; antique decor pieces before checkout</p>
     </div>
 </div>
 
@@ -15,16 +15,16 @@
         
         <!-- Cart Table / Items -->
         <div class="lg:col-span-2 space-y-4">
-            <div id="fullCartItemsContainer" class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden divide-y divide-stone-100">
+            <div id="fullCartItemsContainer" class="bg-white rounded-3xl border border-sand-200 shadow-sm overflow-hidden divide-y divide-sand-100">
                 <!-- Injected by JS -->
             </div>
 
             <div class="flex items-center justify-between pt-4">
-                <a href="{% url 'shop' %}" class="inline-flex items-center gap-2 text-xs font-semibold text-stone-800 hover:text-stone-950">
+                <a href="{% url 'shop' %}" class="inline-flex items-center gap-2 text-xs font-bold text-walnut-800 hover:text-terracotta-700">
                     <i class="fas fa-arrow-left"></i>
                     <span>Continue Shopping</span>
                 </a>
-                <button onclick="clearCart()" class="text-xs text-rose-600 hover:underline font-semibold">
+                <button onclick="clearCart()" class="text-xs text-rose-600 hover:underline font-bold">
                     Clear Entire Cart
                 </button>
             </div>
@@ -32,37 +32,37 @@
 
         <!-- Order Summary Box -->
         <div class="space-y-6">
-            <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 space-y-4">
-                <h3 class="font-cinzel font-bold text-stone-900 text-base border-b border-stone-100 pb-3">
+            <div class="bg-white rounded-3xl border border-sand-200 shadow-sm p-6 sm:p-7 space-y-4">
+                <h3 class="font-cinzel font-bold text-walnut-950 text-base border-b border-sand-100 pb-3">
                     Order Summary
                 </h3>
 
-                <div class="space-y-2 text-xs text-stone-600">
+                <div class="space-y-2 text-xs text-walnut-600">
                     <div class="flex justify-between">
                         <span>Items Subtotal</span>
-                        <span id="pageCartSubtotal" class="font-bold text-stone-900">?0</span>
+                        <span id="pageCartSubtotal" class="font-bold text-walnut-950">?0</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Faridabad &amp; NCR Delivery</span>
-                        <span class="text-emerald-700 font-semibold">FREE</span>
+                        <span class="text-forest-700 font-bold">FREE</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Packaging &amp; Insurance</span>
-                        <span class="text-emerald-700 font-semibold">FREE (Shockproof)</span>
+                        <span class="text-forest-700 font-bold">FREE (Shockproof)</span>
                     </div>
                 </div>
 
-                <div class="border-t border-stone-200 pt-4 flex justify-between items-center">
-                    <span class="font-bold text-stone-900 text-sm">Estimated Total</span>
-                    <span id="pageCartTotal" class="font-bold text-2xl text-stone-950">?0</span>
+                <div class="border-t border-sand-200 pt-4 flex justify-between items-center">
+                    <span class="font-bold text-walnut-900 text-sm">Estimated Total</span>
+                    <span id="pageCartTotal" class="font-bold text-2xl text-terracotta-800 font-cinzel">?0</span>
                 </div>
 
                 <div class="space-y-3 pt-2">
-                    <a href="{% url 'checkout' %}" class="block text-center w-full py-3.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md">
+                    <a href="{% url 'checkout' %}" class="block text-center w-full py-4 bg-walnut-950 hover:bg-walnut-900 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md">
                         Proceed to Checkout &rarr;
                     </a>
 
-                    <button id="pageWhatsappCartBtn" class="w-full py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all">
+                    <button id="pageWhatsappCartBtn" class="w-full py-4 bg-forest-700 hover:bg-forest-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all">
                         <i class="fab fa-whatsapp text-lg"></i>
                         <span>Order Full Cart via WhatsApp</span>
                     </button>
@@ -70,9 +70,9 @@
             </div>
 
             <!-- Trust badge -->
-            <div class="p-4 rounded-xl bg-stone-100 border border-stone-200 text-xs text-stone-700 flex items-start gap-3">
-                <i class="fas fa-hand-holding-heart text-stone-800 text-base mt-0.5"></i>
-                <p>All antique decor items are inspected, polished, and packaged in multi-layer shockproof boxes before dispatch from our Faridabad store.</p>
+            <div class="p-4 rounded-2xl bg-sand-100 border border-sand-200 text-xs text-walnut-800 flex items-start gap-3">
+                <i class="fas fa-hand-holding-heart text-terracotta-700 text-base mt-0.5"></i>
+                <p>All artificial plants and antique decor pieces are individually inspected and packaged in multi-layer shockproof boxes before dispatch from Sector 88, Faridabad.</p>
             </div>
         </div>
 

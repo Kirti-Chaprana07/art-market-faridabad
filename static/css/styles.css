@@ -1,71 +1,91 @@
-/* Modern Minimalist Luxury Aesthetics for Art Market Faridabad (Zero Yellow) */
+/* ==========================================================================
+   Art Market Faridabad - Luxury Botanical & Artisanal Decor Theme
+   Warm Sand, Rich Terracotta, Deep Sage & Emerald Green (No Yellow)
+   ========================================================================== */
 
 :root {
-    --primary-black: #111827;
-    --primary-charcoal: #1f2937;
-    --emerald-green: #059669;
-    --emerald-dark: #064e3b;
-    --soft-white: #fafafa;
-    --accent-terracotta: #c2410c;
+    --color-botanic-dark: #064e3b;
+    --color-botanic-emerald: #047857;
+    --color-botanic-sage: #34d399;
+    --color-terracotta-rich: #9a3412;
+    --color-terracotta-warm: #c2410c;
+    --color-terracotta-soft: #ffedd5;
+    --color-walnut-dark: #1c1917;
+    --color-walnut-medium: #292524;
+    --color-warm-sand: #f5f0e8;
+    --color-warm-cream: #faf7f2;
+    --color-stone-border: #e7e2d9;
 }
 
 body {
-    background-color: #fcfcfc;
-    color: #1f2937;
+    background-color: var(--color-warm-cream);
+    color: #292524;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 h1, h2, h3, .font-cinzel {
     font-family: 'Cinzel', serif;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.01em;
 }
 
 .font-serif {
     font-family: 'Playfair Display', serif;
 }
 
-/* Card hover transitions */
+/* Luxury Card Shadow & Hover Elevation */
 .product-card {
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: #ffffff;
+    border: 1px solid var(--color-stone-border);
 }
 
 .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 35px -10px rgba(41, 37, 36, 0.12), 0 0 1px 1px rgba(194, 65, 12, 0.1);
+    border-color: #d6cfc4;
 }
 
-/* Modern Minimalist Scrollbar */
+/* Category Feature Card */
+.category-card {
+    transition: all 0.35s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 30px -8px rgba(6, 78, 59, 0.2);
+}
+
+/* Smooth Minimal Scrollbar */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f3f4f6;
+    background: #f5f0e8;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #d1d5db;
+    background: #c7beaf;
     border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
+    background: #9a8f7e;
 }
 
-/* Smooth Fade In */
+/* Smooth Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-    animation: fadeIn 0.2s ease-out forwards;
+    animation: fadeIn 0.25s ease-out forwards;
 }
 
-/* Toast alert badge */
 .toast-badge {
-    animation: slideInRight 0.3s ease-out forwards;
+    animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes slideInRight {

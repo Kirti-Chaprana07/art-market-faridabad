@@ -3,14 +3,14 @@
 {% block title %}Book VIP Showroom Visit | {{ STORE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="bg-stone-950 text-white py-16">
+<div class="bg-walnut-950 text-white py-16 border-b border-walnut-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <span class="inline-block px-3 py-1 bg-stone-800 text-stone-300 text-xs font-bold uppercase tracking-wider rounded-full border border-stone-700">
-            Faridabad Flagship Experience
+        <span class="inline-block px-3.5 py-1 bg-terracotta-900/80 text-terracotta-200 text-xs font-bold uppercase tracking-wider rounded-full border border-terracotta-700/60">
+            Sector 88 Flagship Showroom
         </span>
         <h1 class="font-cinzel text-3xl sm:text-5xl font-bold">Book a VIP Showroom Tour</h1>
-        <p class="text-xs sm:text-sm text-stone-300 max-w-2xl mx-auto font-light">
-            Experience our 500+ collection of handcrafted brass heirlooms and lush artificial botanicals in person with our dedicated interior decor consultants.
+        <p class="text-xs sm:text-sm text-sand-200 max-w-2xl mx-auto font-light leading-relaxed">
+            Experience our 500+ collection of real-touch artificial plants, vertical garden walls, designer planters, and handcrafted brass urulis in person with our decor consultants.
         </p>
     </div>
 </div>
@@ -19,32 +19,32 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         
         <!-- Left: Booking Form -->
-        <div class="bg-white rounded-3xl border border-stone-200 p-8 shadow-sm space-y-6">
-            <h2 class="font-cinzel text-xl font-bold text-stone-900 flex items-center gap-2 border-b border-stone-100 pb-4">
-                <i class="fas fa-calendar-check text-stone-700"></i> Reserve Your Free Showroom Slot
+        <div class="bg-white rounded-3xl border border-sand-200 p-8 shadow-sm space-y-6">
+            <h2 class="font-cinzel text-xl font-bold text-walnut-950 flex items-center gap-2 border-b border-sand-100 pb-4">
+                <i class="fas fa-calendar-check text-terracotta-700"></i> Reserve Your Free Showroom Slot
             </h2>
 
             <form method="POST" action="{% url 'visit_showroom' %}" class="space-y-4">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Your Name *</label>
-                        <input type="text" name="name" required placeholder="e.g. Anjali Gupta" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                        <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Your Name *</label>
+                        <input type="text" name="name" required placeholder="e.g. Anjali Gupta" class="w-full p-3.5 bg-sand-50 border border-sand-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-terracotta-600 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Phone / WhatsApp *</label>
-                        <input type="tel" name="phone" required placeholder="e.g. 9899097676" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                        <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Phone / WhatsApp *</label>
+                        <input type="tel" name="phone" required placeholder="e.g. 9899097676" class="w-full p-3.5 bg-sand-50 border border-sand-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-terracotta-600 focus:outline-none">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Preferred Date *</label>
-                        <input type="date" name="visit_date" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                        <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Preferred Date *</label>
+                        <input type="date" name="visit_date" required class="w-full p-3.5 bg-sand-50 border border-sand-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-terracotta-600 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Preferred Time Slot *</label>
-                        <select name="time_slot" required class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-700 focus:outline-none">
+                        <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Preferred Time Slot *</label>
+                        <select name="time_slot" required class="w-full p-3.5 bg-sand-50 border border-sand-200 rounded-xl text-xs font-semibold text-walnut-800 focus:outline-none">
                             <option value="Morning (10:30 AM - 1:00 PM)">Morning (10:30 AM - 1:00 PM)</option>
                             <option value="Afternoon (2:00 PM - 5:00 PM)">Afternoon (2:00 PM - 5:00 PM)</option>
                             <option value="Evening (5:30 PM - 8:30 PM)" selected>Evening (5:30 PM - 8:30 PM)</option>
@@ -54,27 +54,27 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Number of Guests</label>
-                        <input type="number" name="guests_count" min="1" max="10" value="2" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                        <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Number of Guests</label>
+                        <input type="number" name="guests_count" min="1" max="10" value="2" class="w-full p-3 bg-sand-50 border border-sand-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-terracotta-600 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Primary Interest</label>
-                        <select name="interest_area" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-700 focus:outline-none">
-                            <option value="Antique Brass & Idols">Antique Brass &amp; Idols</option>
-                            <option value="Artificial Plants & Bonsai">Artificial Plants &amp; Bonsai</option>
-                            <option value="Vintage Clocks & Mirrors">Vintage Clocks &amp; Mirrors</option>
-                            <option value="Full Home / Office Decor Consultation">Full Home / Office Decor</option>
-                            <option value="Corporate & Wedding Gifting">Corporate &amp; Wedding Gifting</option>
+                        <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Primary Interest</label>
+                        <select name="interest_area" class="w-full p-3 bg-sand-50 border border-sand-200 rounded-xl text-xs font-semibold text-walnut-800 focus:outline-none">
+                            <option value="Artificial Plants & Trees">Artificial Plants &amp; Trees</option>
+                            <option value="Vertical Green Wall Transformations">Vertical Green Wall Makeovers</option>
+                            <option value="Ceramic Pots & Planters">Ceramic Pots &amp; Planters</option>
+                            <option value="Antique Brass & Urulis">Antique Brass &amp; Urulis</option>
+                            <option value="Full Home / Office Decor Consultation">Full Home Decor Project</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Specific Requirements / Notes</label>
-                    <textarea name="notes" rows="3" placeholder="Tell us if you are looking for specific sizes, rooms, or gifting hampers..." class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none"></textarea>
+                    <label class="block text-xs font-bold uppercase text-walnut-700 mb-1">Specific Requirements / Notes</label>
+                    <textarea name="notes" rows="3" placeholder="Tell us if you are looking for specific sizes, rooms, or gifting hampers..." class="w-full p-3 bg-sand-50 border border-sand-200 rounded-xl text-xs focus:ring-2 focus:ring-terracotta-600 focus:outline-none font-medium"></textarea>
                 </div>
 
-                <button type="submit" class="w-full py-4 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-md transition-all">
+                <button type="submit" class="w-full py-4 bg-terracotta-700 hover:bg-terracotta-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider shadow-md transition-all">
                     Confirm VIP Showroom Reservation
                 </button>
             </form>
@@ -83,24 +83,24 @@
         <!-- Right: Showroom Details & Experience -->
         <div class="space-y-6 flex flex-col justify-between">
             <div class="space-y-6">
-                <div class="bg-stone-50 rounded-3xl p-8 border border-stone-200 space-y-4">
-                    <h3 class="font-cinzel text-lg font-bold text-stone-900">What to Expect at our Faridabad Store:</h3>
+                <div class="bg-sand-100/70 rounded-3xl p-8 border border-sand-200 space-y-4">
+                    <h3 class="font-cinzel text-lg font-bold text-walnut-950">What to Expect at our Sector 88 Store:</h3>
                     
-                    <ul class="space-y-3 text-xs text-stone-700">
+                    <ul class="space-y-3 text-xs text-walnut-700">
                         <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-stone-900 text-white flex items-center justify-center flex-shrink-0 text-[10px] mt-0.5">
+                            <div class="w-6 h-6 rounded-full bg-forest-100 text-forest-800 flex items-center justify-center flex-shrink-0 text-[10px] mt-0.5">
                                 <i class="fas fa-check"></i>
                             </div>
                             <span><strong>Live Room Setups:</strong> See how brass urulis, antique clocks, and fiddle leaf figs match together in modern apartment settings.</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-stone-900 text-white flex items-center justify-center flex-shrink-0 text-[10px] mt-0.5">
+                            <div class="w-6 h-6 rounded-full bg-terracotta-100 text-terracotta-800 flex items-center justify-center flex-shrink-0 text-[10px] mt-0.5">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span><strong>Weight &amp; Material Inspection:</strong> Feel the weight of genuine solid brass castings and examine botanical leaf textures up close.</span>
+                            <span><strong>Touch &amp; Feel Quality:</strong> Examine real-touch silk botanical foliage and heavyweight brass castings up close.</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-stone-900 text-white flex items-center justify-center flex-shrink-0 text-[10px] mt-0.5">
+                            <div class="w-6 h-6 rounded-full bg-forest-100 text-forest-800 flex items-center justify-center flex-shrink-0 text-[10px] mt-0.5">
                                 <i class="fas fa-check"></i>
                             </div>
                             <span><strong>Instant Car Boot Loading &amp; Delivery:</strong> Take your chosen items home immediately with luxury gift packaging.</span>
@@ -109,30 +109,30 @@
                 </div>
 
                 <!-- Showroom Location Card -->
-                <div class="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm space-y-4">
-                    <h3 class="font-cinzel text-base font-bold text-stone-900 flex items-center gap-2">
-                        <i class="fas fa-map-marker-alt text-emerald-700"></i> Store Location &amp; Contact
+                <div class="bg-white rounded-3xl p-8 border border-sand-200 shadow-sm space-y-4">
+                    <h3 class="font-cinzel text-base font-bold text-walnut-950 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-terracotta-700"></i> Store Location &amp; Contact
                     </h3>
-                    <p class="text-xs text-stone-600 leading-relaxed">{{ STORE_ADDRESS }}</p>
+                    <p class="text-xs text-walnut-700 leading-relaxed font-medium">{{ STORE_ADDRESS }}</p>
                     <div class="grid grid-cols-2 gap-4 text-xs pt-2">
                         <div>
-                            <span class="text-stone-400 block text-[10px] uppercase">Showroom Hours</span>
-                            <span class="font-semibold text-stone-800">{{ STORE_HOURS }}</span>
+                            <span class="text-walnut-400 block text-[10px] uppercase font-bold">Showroom Hours</span>
+                            <span class="font-bold text-walnut-900">{{ STORE_HOURS }}</span>
                         </div>
                         <div>
-                            <span class="text-stone-400 block text-[10px] uppercase">Helpline</span>
-                            <a href="tel:{{ STORE_PHONE }}" class="font-semibold text-stone-900 hover:underline">{{ STORE_PHONE }}</a>
+                            <span class="text-walnut-400 block text-[10px] uppercase font-bold">Helpline</span>
+                            <a href="tel:{{ STORE_PHONE }}" class="font-bold text-terracotta-700 hover:underline">{{ STORE_PHONE }}</a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Direct WhatsApp Help -->
-            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20directions%20to%20your%20showroom." target="_blank" class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-900 hover:bg-emerald-100 transition-colors">
-                <span class="font-semibold flex items-center gap-2">
-                    <i class="fab fa-whatsapp text-emerald-600 text-lg"></i> Need Live GPS Location on WhatsApp?
+            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20directions%20to%20your%20showroom." target="_blank" class="p-4 rounded-2xl bg-forest-50 border border-forest-200 flex items-center justify-between text-xs text-forest-900 hover:bg-forest-100 transition-colors shadow-sm">
+                <span class="font-bold flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-forest-600 text-lg"></i> Need Live GPS Location on WhatsApp?
                 </span>
-                <span class="font-bold">Chat Now &rarr;</span>
+                <span class="font-extrabold text-forest-700">Chat Now &rarr;</span>
             </a>
         </div>
 

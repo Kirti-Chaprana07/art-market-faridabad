@@ -1,0 +1,377 @@
+{% extends 'base.html' %}
+
+{% block title %}Owner Dashboard | {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="bg-stone-950 text-white py-8 border-b border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-stone-800 text-white flex items-center justify-center border border-stone-700 shadow-sm">
+                <i class="fas fa-store text-emerald-400 text-lg"></i>
+            </div>
+            <div>
+                <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">Owner Control Center</span>
+                <h1 class="font-cinzel text-xl sm:text-2xl font-bold text-white">Art Market Faridabad</h1>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{% url 'shop' %}" target="_blank" class="px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                <i class="fas fa-external-link-alt text-xs"></i> View Live Store
+            </a>
+            <a href="{% url 'owner_logout' %}" class="px-4 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900 text-rose-300 text-xs font-semibold transition-colors border border-rose-800/40">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- METRICS CARDS -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+            <div>
+                <span class="text-[11px] font-bold text-stone-400 uppercase tracking-wider block">Total Sales</span>
+                <span class="text-xl sm:text-2xl font-extrabold text-stone-900 font-cinzel">?{{ total_revenue|floatformat:0 }}</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-lg">
+                <i class="fas fa-rupee-sign"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+            <div>
+                <span class="text-[11px] font-bold text-stone-400 uppercase tracking-wider block">Total Orders</span>
+                <span class="text-xl sm:text-2xl font-extrabold text-stone-900 font-cinzel">{{ total_orders_count }}</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-stone-100 text-stone-800 flex items-center justify-center text-lg">
+                <i class="fas fa-box"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+            <div>
+                <span class="text-[11px] font-bold text-stone-400 uppercase tracking-wider block">Pending Orders</span>
+                <span class="text-xl sm:text-2xl font-extrabold text-emerald-800 font-cinzel">{{ pending_orders_count }}</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-lg">
+                <i class="fas fa-clock"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+            <div>
+                <span class="text-[11px] font-bold text-stone-400 uppercase tracking-wider block">Live Products</span>
+                <span class="text-xl sm:text-2xl font-extrabold text-stone-900 font-cinzel">{{ total_products_count }}</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-stone-100 text-stone-800 flex items-center justify-center text-lg">
+                <i class="fas fa-gem"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS NAVIGATION -->
+    <div class="border-b border-stone-200 flex flex-wrap gap-2 sm:gap-6 text-xs sm:text-sm font-bold uppercase tracking-wider">
+        <button onclick="switchTab('orders')" id="tabBtn-orders" class="owner-tab-btn active border-b-2 border-stone-900 pb-3 text-stone-950 flex items-center gap-2">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Customer Orders ({{ total_orders_count }})</span>
+        </button>
+        <button onclick="switchTab('upload')" id="tabBtn-upload" class="owner-tab-btn border-b-2 border-transparent pb-3 text-stone-500 hover:text-stone-950 flex items-center gap-2">
+            <i class="fas fa-plus-circle text-emerald-600"></i>
+            <span>Upload New Product</span>
+        </button>
+        <button onclick="switchTab('inventory')" id="tabBtn-inventory" class="owner-tab-btn border-b-2 border-transparent pb-3 text-stone-500 hover:text-stone-950 flex items-center gap-2">
+            <i class="fas fa-boxes"></i>
+            <span>Manage Inventory ({{ total_products_count }})</span>
+        </button>
+        <button onclick="switchTab('bookings')" id="tabBtn-bookings" class="owner-tab-btn border-b-2 border-transparent pb-3 text-stone-500 hover:text-stone-950 flex items-center gap-2">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Showroom Visits ({{ bookings.count }})</span>
+        </button>
+    </div>
+
+    <!-- TAB 1: CUSTOMER ORDERS INBOX -->
+    <div id="tab-orders" class="owner-tab-content space-y-6">
+        <div class="flex items-center justify-between">
+            <h2 class="font-cinzel text-lg font-bold text-stone-900">Incoming Customer Orders</h2>
+            <span class="text-xs text-stone-500">Auto-saved from website checkouts</span>
+        </div>
+
+        {% if orders %}
+        <div class="space-y-4">
+            {% for item in orders %}
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-stone-100 gap-3">
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-sm font-bold text-stone-900 bg-stone-100 px-3 py-1 rounded-xl">
+                            {{ item.order.order_id }}
+                        </span>
+                        <span class="text-xs text-stone-500">{{ item.order.created_at|date:"d M Y, h:i A" }}</span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <form method="POST" action="{% url 'owner_update_order' item.order.order_id %}" class="flex items-center gap-2">
+                            {% csrf_token %}
+                            <select name="status" onchange="this.form.submit()" class="text-xs p-2 rounded-xl bg-stone-50 border border-stone-200 font-semibold text-stone-800">
+                                {% for val, label in item.order.STATUS_CHOICES %}
+                                <option value="{{ val }}" {% if item.order.order_status == val %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+
+                        <a href="https://wa.me/91{{ item.order.phone|cut:' ' }}?text=Hello%20{{ item.order.customer_name|urlencode }}!%20This%20is%20Art%20Market%20Faridabad%20regarding%20your%20order%20*{{ item.order.order_id }}*%20for%20?{{ item.order.total_amount|floatformat:0 }}." target="_blank" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                        <a href="tel:{{ item.order.phone }}" class="p-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xl text-xs" title="Call Customer">
+                            <i class="fas fa-phone-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-stone-600">
+                    <div>
+                        <span class="font-bold text-stone-900 block mb-1 uppercase tracking-wider text-[10px]">Customer Details:</span>
+                        <p class="font-bold text-stone-900 text-sm">{{ item.order.customer_name }}</p>
+                        <p class="text-stone-700">Phone: <strong>{{ item.order.phone }}</strong></p>
+                        {% if item.order.email %}<p>Email: {{ item.order.email }}</p>{% endif %}
+                    </div>
+
+                    <div>
+                        <span class="font-bold text-stone-900 block mb-1 uppercase tracking-wider text-[10px]">Delivery Address:</span>
+                        <p class="text-stone-800 leading-relaxed">{{ item.order.address }}, {{ item.order.city }}, {{ item.order.state }} - {{ item.order.pincode }}</p>
+                    </div>
+
+                    <div>
+                        <span class="font-bold text-stone-900 block mb-1 uppercase tracking-wider text-[10px]">Payment &amp; Total:</span>
+                        <p class="text-sm font-extrabold text-stone-950 font-cinzel">Total: ?{{ item.order.total_amount|floatformat:0 }}</p>
+                        <p>Method: <span class="font-semibold text-stone-800">{{ item.order.get_payment_method_display }}</span></p>
+                    </div>
+                </div>
+
+                {% if item.items %}
+                <div class="bg-stone-50 rounded-2xl p-4 border border-stone-100">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-stone-400 block mb-2">Ordered Items:</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {% for prod in item.items %}
+                        <div class="flex items-center gap-3 bg-white p-2.5 rounded-xl border border-stone-200 text-xs">
+                            <img src="{{ prod.image }}" alt="{{ prod.name }}" class="w-10 h-10 object-cover rounded-lg bg-stone-100 flex-shrink-0">
+                            <div class="min-w-0">
+                                <span class="font-bold text-stone-900 block truncate">{{ prod.name }}</span>
+                                <span class="text-stone-500 font-mono text-[10px]">Qty: {{ prod.quantity }} ? ?{{ prod.price }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-3xl p-12 text-center border border-stone-200 space-y-3">
+            <i class="fas fa-inbox text-stone-300 text-4xl"></i>
+            <h3 class="font-cinzel font-bold text-stone-800 text-base">No Customer Orders Yet</h3>
+            <p class="text-xs text-stone-500">When customers place orders via the website or checkout, they will appear here instantly.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- TAB 2: UPLOAD NEW PRODUCT FORM -->
+    <div id="tab-upload" class="owner-tab-content hidden space-y-6">
+        <div class="max-w-3xl mx-auto bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-10 space-y-6">
+            
+            <div class="border-b border-stone-100 pb-4">
+                <span class="text-xs font-bold text-emerald-800 uppercase tracking-widest block">Quick Inventory Upload</span>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">Upload New Product &amp; Set Rates</h2>
+                <p class="text-xs text-stone-500 mt-1">Add your photo, enter rate, and it will immediately go live on the website.</p>
+            </div>
+
+            <form method="POST" action="{% url 'owner_add_product' %}" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+
+                <!-- Title & Category -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Product Name / Title *</label>
+                        <input type="text" name="name" required placeholder="e.g. 5.5ft Fiddle Leaf Fig, Ceramic Donut Vase" class="w-full p-3.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-stone-900 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Category *</label>
+                        <select name="category" required class="w-full p-3.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold text-stone-800 focus:outline-none">
+                            {% for cat in categories %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Price & MRP -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Selling Rate / Price (?) *</label>
+                        <input type="number" step="1" name="price" required placeholder="e.g. 2499" class="w-full p-3.5 bg-stone-50 border border-stone-200 rounded-xl text-sm font-bold text-stone-900 focus:ring-2 focus:ring-stone-900 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Original MRP Price (?) (Optional)</label>
+                        <input type="number" step="1" name="original_price" placeholder="e.g. 3499 (for discount badge)" class="w-full p-3.5 bg-stone-50 border border-stone-200 rounded-xl text-sm font-semibold text-stone-600 focus:ring-2 focus:ring-stone-900 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Product Photo Upload -->
+                <div class="space-y-3 bg-stone-50 p-5 rounded-2xl border border-stone-200">
+                    <label class="block text-xs font-bold uppercase text-stone-800">
+                        <i class="fas fa-camera text-emerald-700 mr-1"></i> Product Photo (Upload File or Paste Image URL)
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <span class="text-[11px] text-stone-500 block mb-1">Option A: Upload Photo from Phone/Computer</span>
+                            <input type="file" name="image_file" accept="image/*" class="w-full text-xs text-stone-700 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 cursor-pointer">
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-stone-500 block mb-1">Option B: Or Paste Online Image URL</span>
+                            <input type="url" name="image_url" placeholder="https://..." class="w-full p-2.5 bg-white border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimensions, Space, Material -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Recommended Room / Space</label>
+                        <select name="room_type" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-700 focus:outline-none">
+                            <option value="living_room">Living Room &amp; Foyer</option>
+                            <option value="balcony">Balcony &amp; Garden</option>
+                            <option value="mandir">Mandir &amp; Pooja Room</option>
+                            <option value="office">Office &amp; Study</option>
+                            <option value="bedroom">Bedroom</option>
+                            <option value="all">All Spaces</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Material / Craft</label>
+                        <input type="text" name="material" placeholder="e.g. Real-Touch Silk, Heavy Solid Brass" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Stock Quantity</label>
+                        <input type="number" name="stock" value="10" min="1" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-stone-700 mb-1">Short Description / Notes</label>
+                    <textarea name="short_description" rows="2" placeholder="e.g. Ultra realistic texture, broad split leaves, comes in matte black nursery pot." class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none"></textarea>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" name="is_featured" id="is_featured" checked class="accent-stone-900 w-4 h-4">
+                    <label for="is_featured" class="text-xs font-bold text-stone-800 cursor-pointer">Feature this product on the Homepage spotlight</label>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider shadow-md transition-all">
+                    Publish Product to Website &rarr;
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TAB 3: INVENTORY MANAGER -->
+    <div id="tab-inventory" class="owner-tab-content hidden space-y-6">
+        <div class="flex items-center justify-between">
+            <h2 class="font-cinzel text-lg font-bold text-stone-900">Current Store Products ({{ total_products_count }})</h2>
+            <button onclick="switchTab('upload')" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fas fa-plus"></i> Add New Product
+            </button>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden divide-y divide-stone-100">
+            {% for p in products %}
+            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <img src="{{ p.get_image }}" alt="{{ p.name }}" class="w-16 h-16 object-cover rounded-xl bg-stone-100 flex-shrink-0 border border-stone-200">
+                    <div>
+                        <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">{{ p.category.name }}</span>
+                        <h4 class="font-cinzel font-bold text-sm text-stone-900">{{ p.name }}</h4>
+                        <div class="flex items-center gap-3 text-xs text-stone-500 mt-1">
+                            <span class="font-mono">{{ p.sku }}</span>
+                            <span>?</span>
+                            <span class="font-bold text-stone-900 text-sm">?{{ p.price|floatformat:0 }}</span>
+                            <span>?</span>
+                            <span>Stock: {{ p.stock }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 justify-end">
+                    <a href="{% url 'product_detail' p.slug %}" target="_blank" class="p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs" title="View in Store">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <form method="POST" action="{% url 'owner_delete_product' p.id %}" onsubmit="return confirm('Are you sure you want to remove {{ p.name|escapejs }} from the website?')">
+                        {% csrf_token %}
+                        <button type="submit" class="p-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs" title="Delete Product">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- TAB 4: SHOWROOM BOOKINGS & INQUIRIES -->
+    <div id="tab-bookings" class="owner-tab-content hidden space-y-6">
+        <h2 class="font-cinzel text-lg font-bold text-stone-900">Showroom Visit Bookings (Sector 88)</h2>
+
+        {% if bookings %}
+        <div class="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden divide-y divide-stone-100">
+            {% for b in bookings %}
+            <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <span class="text-[10px] font-bold bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        {{ b.time_slot }}
+                    </span>
+                    <h4 class="font-bold text-stone-900 text-sm pt-1">{{ b.name }}</h4>
+                    <p class="text-xs text-stone-600">Date: <strong>{{ b.visit_date }}</strong> ? Guests: <strong>{{ b.guests_count }}</strong> ? Interest: <strong>{{ b.interest_area }}</strong></p>
+                    {% if b.notes %}<p class="text-xs text-stone-500 italic">"{{ b.notes }}"</p>{% endif %}
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <a href="https://wa.me/91{{ b.phone|cut:' ' }}?text=Hello%20{{ b.name|urlencode }}!%20This%20is%20Art%20Market%20Faridabad.%20We%20have%20reserved%20your%20VIP%20showroom%20visit%20for%20{{ b.visit_date }}." target="_blank" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="tel:{{ b.phone }}" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs">
+                        <i class="fas fa-phone-alt"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-3xl p-12 text-center border border-stone-200 space-y-3">
+            <i class="fas fa-calendar-check text-stone-300 text-4xl"></i>
+            <h3 class="font-cinzel font-bold text-stone-800 text-base">No Showroom Appointments Yet</h3>
+            <p class="text-xs text-stone-500">Customer appointment bookings will show up here.</p>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.owner-tab-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.owner-tab-btn').forEach(btn => {
+            btn.classList.remove('active', 'border-stone-900', 'text-stone-950');
+            btn.classList.add('border-transparent', 'text-stone-500');
+        });
+
+        const activeContent = document.getElementById('tab-' + tabId);
+        const activeBtn = document.getElementById('tabBtn-' + tabId);
+
+        if (activeContent) activeContent.classList.remove('hidden');
+        if (activeBtn) {
+            activeBtn.classList.add('active', 'border-stone-900', 'text-stone-950');
+            activeBtn.classList.remove('border-transparent', 'text-stone-500');
+        }
+    }
+</script>
+{% endblock %}

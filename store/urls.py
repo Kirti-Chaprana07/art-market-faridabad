@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # Storefront
     path('', views.home, name='home'),
     path('shop/', views.shop, name='shop'),
     path('product/<slug:slug>/', views.product_detail, name='product_detail'),
@@ -12,8 +13,14 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     
+    # Owner Management Portal
+    path('owner/', views.owner_dashboard, name='owner_dashboard'),
+    path('owner/login/', views.owner_login, name='owner_login'),
+    path('owner/logout/', views.owner_logout, name='owner_logout'),
+    path('owner/product/add/', views.owner_add_product, name='owner_add_product'),
+    path('owner/product/<int:product_id>/delete/', views.owner_delete_product, name='owner_delete_product'),
+    path('owner/order/<str:order_id>/status/', views.owner_update_order, name='owner_update_order'),
+    
     # AJAX APIs
     path('api/products/', views.api_products, name='api_products'),
-    path('api/inquiry/', views.submit_inquiry_api, name='submit_inquiry_api'),
-    path('api/review/', views.submit_review_api, name='submit_review_api'),
 ]

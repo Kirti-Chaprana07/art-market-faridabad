@@ -33,24 +33,26 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    sku = models.CharField(max_length=50, unique=True)
-    original_price = models.DecimalField(max_digits=10, decimal_places=2)
-    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Discounted / Selling Price")
-    short_description = models.CharField(max_length=255)
-    description = models.TextField()
-    material = models.CharField(max_length=150, help_text="e.g. Solid Brass, Distressed Teak Wood, Real-Touch Silk")
-    dimensions = models.CharField(max_length=100, help_text="e.g. 18in H x 12in W")
-    weight = models.CharField(max_length=50, blank=True, help_text="e.g. 3.2 kg")
+    sku = models.CharField(max_length=50, unique=True, blank=True)
+    original_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Discounted / Selling Rate (?)")
+    short_description = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    material = models.CharField(max_length=150, blank=True, default="Real-Touch Polymer / Brass / Ceramic")
+    dimensions = models.CharField(max_length=100, blank=True, default="Standard")
+    weight = models.CharField(max_length=50, blank=True, default="1.5 kg")
     room_type = models.CharField(max_length=50, choices=ROOM_CHOICES, default='living_room')
     stock = models.PositiveIntegerField(default=10)
-    image_url = models.URLField(max_length=500)
-    image_url_2 = models.URLField(max_length=500, blank=True)
-    image_url_3 = models.URLField(max_length=500, blank=True)
+    
+    # Image support: both direct photo upload and external URL
+    image_file = models.ImageField(upload_to='products/', blank=True, null=True)
+    image_url = models.URLField(max_length=500, blank=True)
+    
     is_featured = models.BooleanField(default=False)
     is_bestseller = models.BooleanField(default=False)
-    is_new_arrival = models.BooleanField(default=False)
+    is_new_arrival = models.BooleanField(default=True)
     rating = models.DecimalField(max_digits=3, decimal_places=1, default=4.9)
-    reviews_count = models.PositiveIntegerField(default=18)
+    reviews_count = models.PositiveIntegerField(default=12)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -58,8 +60,31 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Product.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        if not self.sku:
+            import random
+            self.sku = f"AMF-{random.randint(100, 999)}"
+        if not self.short_description and self.name:
+            self.short_description = f"Premium {self.name} available at Art Market Faridabad."
+        if not self.description and self.name:
+            self.description = f"High quality {self.name}. Hand-crafted and inspected before delivery from Sector 88, Faridabad."
+        if not self.original_price or self.original_price <= self.price:
+            self.original_price = float(self.price) * 1.25
         super().save(*args, **kwargs)
+
+    @property
+    def get_image(self):
+        if self.image_file:
+            return self.image_file.url
+        if self.image_url:
+            return self.image_url
+        return "https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=800&q=80"
 
     @property
     def discount_percent(self):
@@ -72,7 +97,7 @@ class Product(models.Model):
 
 class Order(models.Model):
     STATUS_CHOICES = [
-        ('Received', 'Order Received'),
+        ('Received', 'New Order (Pending)'),
         ('Processing', 'Processing & Packing'),
         ('Dispatched', 'Out for Delivery'),
         ('Delivered', 'Delivered'),
@@ -99,6 +124,9 @@ class Order(models.Model):
     items_json = models.TextField(help_text="JSON serialized list of ordered items")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return f"Order {self.order_id} - {self.customer_name} (?{self.total_amount})"
 
@@ -111,6 +139,9 @@ class Inquiry(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return f"Inquiry from {self.name} ({self.inquiry_type})"
 
@@ -121,9 +152,12 @@ class ShowroomBooking(models.Model):
     visit_date = models.DateField()
     time_slot = models.CharField(max_length=50)
     guests_count = models.PositiveIntegerField(default=2)
-    interest_area = models.CharField(max_length=150, default="Antiques & Artificial Plants")
+    interest_area = models.CharField(max_length=150, default="Artificial Plants & Decor")
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return f"Booking: {self.name} on {self.visit_date} ({self.time_slot})"
@@ -134,9 +168,12 @@ class Review(models.Model):
     rating = models.PositiveSmallIntegerField(default=5)
     title = models.CharField(max_length=200)
     comment = models.TextField()
-    product_name = models.CharField(max_length=200, blank=True, default="Antique Decor & Plants")
+    product_name = models.CharField(max_length=200, blank=True, default="Artificial Plants & Decor")
     is_verified = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return f"{self.name} ({self.rating}?) - {self.title}"

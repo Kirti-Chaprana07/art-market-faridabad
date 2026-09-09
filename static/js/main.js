@@ -1,6 +1,6 @@
 // Art Market Faridabad - Core Frontend & E-Commerce State Engine
 
-const STORE_WHATSAPP_NUMBER = "919876543210";
+const STORE_WHATSAPP_NUMBER = "919899097676";
 const FREE_SHIPPING_THRESHOLD = 1999;
 
 // Load Cart from LocalStorage

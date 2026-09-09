@@ -3,12 +3,12 @@
 {% block title %}Contact Us &amp; Faridabad Location | {{ STORE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="bg-stone-900 text-white py-16">
+<div class="bg-stone-950 text-white py-16 border-b border-stone-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Get in Touch</span>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">Get in Touch</span>
         <h1 class="font-cinzel text-3xl sm:text-5xl font-bold">Contact &amp; Showroom Location</h1>
-        <p class="text-xs sm:text-sm text-stone-300 max-w-2xl mx-auto">
-            We are here to answer your decor questions, provide custom quotes, and welcome you to our showroom.
+        <p class="text-xs sm:text-sm text-stone-300 max-w-2xl mx-auto font-light">
+            Visit our Sector 88 Faridabad showroom to explore our full collection of artificial plants, green walls, planters, and home decor.
         </p>
     </div>
 </div>
@@ -31,13 +31,14 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Phone / WhatsApp *</label>
-                        <input type="tel" name="phone" required placeholder="e.g. 9876543210" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
+                        <input type="tel" name="phone" required placeholder="e.g. 9899097676" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Inquiry Type</label>
                     <select name="inquiry_type" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-700 focus:outline-none">
+                        <option value="Artificial Plants & Green Wall">Artificial Plants &amp; Green Wall Installation</option>
                         <option value="Product Availability">Product Availability &amp; Pricing</option>
                         <option value="Corporate / Bulk Order">Corporate / Bulk Gifting</option>
                         <option value="Interior Decor Project">Interior Decor Project</option>
@@ -47,10 +48,10 @@
 
                 <div>
                     <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Your Message *</label>
-                    <textarea name="message" required rows="4" placeholder="How can we assist you?" class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none"></textarea>
+                    <textarea name="message" required rows="4" placeholder="Tell us about the plants, planters, or wall decor you are looking for..." class="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-stone-900 focus:outline-none"></textarea>
                 </div>
 
-                <button type="submit" class="w-full py-4 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg transition-all">
+                <button type="submit" class="w-full py-4 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm transition-all">
                     Send Message
                 </button>
             </form>
@@ -58,20 +59,21 @@
 
         <!-- Store Details & Map Info -->
         <div class="space-y-6">
-            <div class="bg-warmcream rounded-3xl p-8 border border-stone-200 space-y-6">
+            <div class="bg-stone-50 rounded-3xl p-8 border border-stone-200 space-y-6">
                 <h3 class="font-cinzel text-lg font-bold text-stone-900">Showroom Information</h3>
                 
                 <div class="space-y-4 text-xs text-stone-700">
                     <div class="flex items-start gap-3">
-                        <i class="fas fa-map-marker-alt text-stone-800 text-base mt-0.5"></i>
+                        <i class="fas fa-map-marker-alt text-emerald-700 text-base mt-0.5"></i>
                         <div>
-                            <span class="font-bold text-stone-900 block">Showroom Address:</span>
-                            <p>{{ STORE_ADDRESS }}</p>
+                            <span class="font-bold text-stone-900 block text-sm">Store Address:</span>
+                            <p class="mt-0.5 text-stone-800 font-medium">{{ STORE_ADDRESS }}</p>
+                            <span class="text-[11px] text-stone-500 block mt-1">Landmark: Near Chandi Wala Bagh &amp; Barfiwala, Sector 88</span>
                         </div>
                     </div>
 
                     <div class="flex items-start gap-3">
-                        <i class="fas fa-clock text-stone-800 text-base mt-0.5"></i>
+                        <i class="fas fa-clock text-emerald-700 text-base mt-0.5"></i>
                         <div>
                             <span class="font-bold text-stone-900 block">Visiting Hours:</span>
                             <p>{{ STORE_HOURS }}</p>
@@ -79,10 +81,10 @@
                     </div>
 
                     <div class="flex items-start gap-3">
-                        <i class="fas fa-phone-alt text-stone-800 text-base mt-0.5"></i>
+                        <i class="fas fa-phone-alt text-emerald-700 text-base mt-0.5"></i>
                         <div>
-                            <span class="font-bold text-stone-900 block">Call / Helpline:</span>
-                            <a href="tel:{{ STORE_PHONE }}" class="hover:text-amber-800 font-semibold">{{ STORE_PHONE }}</a>
+                            <span class="font-bold text-stone-900 block">Phone &amp; WhatsApp:</span>
+                            <a href="tel:{{ STORE_PHONE }}" class="hover:text-stone-900 font-bold text-sm text-stone-900">{{ STORE_PHONE }}</a>
                         </div>
                     </div>
 
@@ -90,17 +92,25 @@
                         <i class="fab fa-whatsapp text-emerald-600 text-lg mt-0.5"></i>
                         <div>
                             <span class="font-bold text-stone-900 block">Instant WhatsApp Support:</span>
-                            <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="text-emerald-700 font-semibold hover:underline">Click to Chat on WhatsApp (+{{ STORE_WHATSAPP }})</a>
+                            <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" class="text-emerald-700 font-bold hover:underline">Click to Chat on WhatsApp (+{{ STORE_WHATSAPP }})</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fab fa-instagram text-rose-600 text-lg mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-stone-900 block">Official Instagram:</span>
+                            <a href="{{ STORE_INSTAGRAM }}" target="_blank" class="text-stone-900 font-semibold hover:underline">@artmarketfaridabad</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Google Map Interactive Embed Guide -->
-            <div class="rounded-3xl overflow-hidden border border-stone-200 shadow-sm h-64 bg-stone-200 relative flex items-center justify-center text-center p-6">
+            <!-- Google Map Embed Guide for Sector 88 Faridabad -->
+            <div class="rounded-3xl overflow-hidden border border-stone-200 shadow-sm h-64 bg-stone-200 relative">
                 <iframe 
                     class="absolute inset-0 w-full h-full border-0" 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112328.7891734346!2d77.24357497645168!3d28.40891230000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdc15f8a009fb%3A0xb3556093952f41d9!2sFaridabad%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509.308734914102!2d77.348421!3d28.398687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdc97653761ab%3A0x4a4d63231eb93a8e!2sMaharana%20Pratap%20Chowk%2C%20Sector%2088%2C%20Faridabad%2C%20Haryana%20121002!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
                     allowfullscreen="" 
                     loading="lazy">
                 </iframe>

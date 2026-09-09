@@ -8,11 +8,11 @@ from django.db.models import Q
 from .models import Category, Product, Order, Inquiry, ShowroomBooking, Review
 
 def home(request):
-    featured_antiques = Product.objects.filter(is_featured=True, category__slug__icontains='antique')[:4]
+    featured_antiques = Product.objects.filter(is_featured=True, category__slug__iregex=r'(antique|brass|clock|canvas)')[:4]
     if not featured_antiques.exists():
         featured_antiques = Product.objects.filter(is_featured=True)[:4]
     
-    bestseller_plants = Product.objects.filter(category__slug__icontains='plant')[:4]
+    bestseller_plants = Product.objects.filter(category__slug__iregex=r'(plant|pot|ceramic)')[:4]
     if not bestseller_plants.exists():
         bestseller_plants = Product.objects.filter(is_bestseller=True)[:4]
 

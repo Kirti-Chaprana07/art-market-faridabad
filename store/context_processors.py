@@ -12,6 +12,6 @@ def store_info(request):
         'STORE_ADDRESS': 'G. Floor, Maharana Pratap Chowk, Plot No 19, Master Rd, near Chandi Wala Bagh, Sector 88, Faridabad, Haryana 121002',
         'STORE_SHORT_ADDRESS': 'Plot No 19, Master Rd, Maharana Pratap Chowk, Sector 88, Faridabad',
         'STORE_HOURS': 'Mon - Sun: 10:30 AM - 9:00 PM (Open 7 Days)',
-        'STORE_MAP_URL': 'https://www.google.com/maps/place/Art+Market+Faridabad/',
+        'STORE_MAP_URL': 'https://maps.app.goo.gl/VY8JVhcrypYDtG2g8',
         'STORE_CATEGORIES': categories,
     }

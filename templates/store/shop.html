@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop Antique Decor & Artificial Plants | {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="bg-stone-100 py-6 border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900">
+                {% if selected_category %}{{ selected_category.name }}{% elif query %}Search: "{{ query }}"{% else %}All Art &amp; Botanical Collections{% endif %}
+            </h1>
+            <p class="text-xs text-stone-500 mt-1">Showing {{ total_count }} handcrafted pieces available in Faridabad showroom &amp; online delivery</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-stone-500">
+            <a href="{% url 'home' %}" class="hover:text-amber-800">Home</a>
+            <span>/</span>
+            <span class="text-stone-800 font-semibold">Shop</span>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col lg:flex-row gap-8">
+        
+        <!-- SIDEBAR FILTERS -->
+        <aside class="w-full lg:w-72 flex-shrink-0 space-y-6">
+            <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm space-y-6">
+                
+                <!-- Active Filters & Reset -->
+                <div class="flex items-center justify-between border-b border-stone-100 pb-4">
+                    <h3 class="font-cinzel font-bold text-stone-900 text-sm flex items-center gap-2">
+                        <i class="fas fa-sliders-h text-amber-600"></i> Filters
+                    </h3>
+                    <a href="{% url 'shop' %}" class="text-xs text-amber-700 hover:underline">Clear All</a>
+                </div>
+
+                <!-- Search Input Form -->
+                <form method="GET" action="{% url 'shop' %}" class="space-y-4">
+                    {% if selected_category %}
+                    <input type="hidden" name="category" value="{{ selected_category.slug }}">
+                    {% endif %}
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-2">Search Catalog</label>
+                        <div class="relative">
+                            <input type="text" name="q" value="{{ query|default:'' }}" placeholder="e.g. Uruli, Bonsai, Clock..." class="w-full pl-3 pr-8 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-1 focus:ring-amber-600 focus:outline-none">
+                            <button type="submit" class="absolute right-2.5 top-2.5 text-stone-400 hover:text-amber-700">
+                                <i class="fas fa-search text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Category Filter List -->
+                    <div class="border-t border-stone-100 pt-4">
+                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-2">Categories</label>
+                        <div class="space-y-1.5 text-xs">
+                            <a href="{% url 'shop' %}{% if query %}?q={{ query }}{% endif %}" class="flex items-center justify-between p-2 rounded-lg hover:bg-stone-50 {% if not selected_category %}bg-amber-50 text-amber-900 font-semibold{% else %}text-stone-600{% endif %}">
+                                <span>All Categories</span>
+                            </a>
+                            {% for cat in categories %}
+                            <a href="{% url 'shop' %}?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}" class="flex items-center justify-between p-2 rounded-lg hover:bg-stone-50 {% if selected_category.slug == cat.slug %}bg-amber-50 text-amber-900 font-semibold{% else %}text-stone-600{% endif %}">
+                                <span>{{ cat.name }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Room Filter -->
+                    <div class="border-t border-stone-100 pt-4">
+                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-2">Space / Room</label>
+                        <select name="room" onchange="this.form.submit()" class="w-full p-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-700 focus:outline-none">
+                            <option value="all" {% if selected_room == 'all' or not selected_room %}selected{% endif %}>All Spaces</option>
+                            <option value="living_room" {% if selected_room == 'living_room' %}selected{% endif %}>Living Room &amp; Foyer</option>
+                            <option value="balcony" {% if selected_room == 'balcony' %}selected{% endif %}>Balcony &amp; Garden</option>
+                            <option value="mandir" {% if selected_room == 'mandir' %}selected{% endif %}>Mandir &amp; Pooja Room</option>
+                            <option value="office" {% if selected_room == 'office' %}selected{% endif %}>Office &amp; Workspace</option>
+                            <option value="bedroom" {% if selected_room == 'bedroom' %}selected{% endif %}>Bedroom &amp; Lounge</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="border-t border-stone-100 pt-4">
+                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-2">Max Price (?{{ max_price|default:'15000' }})</label>
+                        <input type="range" name="max_price" min="500" max="15000" step="500" value="{{ max_price|default:'15000' }}" onchange="this.form.submit()" class="w-full accent-amber-700 cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-stone-400 mt-1">
+                            <span>?500</span>
+                            <span>?15,000+</span>
+                        </div>
+                    </div>
+
+                    <!-- Sort -->
+                    <div class="border-t border-stone-100 pt-4">
+                        <label class="block text-xs font-semibold uppercase text-stone-600 mb-2">Sort By</label>
+                        <select name="sort" onchange="this.form.submit()" class="w-full p-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-700 focus:outline-none">
+                            <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest Additions</option>
+                            <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                            <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                            <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Customer Rating</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-semibold transition-colors">
+                        Apply Filters
+                    </button>
+                </form>
+
+                <!-- Showroom Visit Promo Box in Sidebar -->
+                <div class="bg-amber-50 rounded-xl p-4 border border-amber-200/80 text-xs text-amber-900 space-y-2">
+                    <div class="font-bold flex items-center gap-1.5">
+                        <i class="fas fa-store text-amber-700"></i> Want to see in person?
+                    </div>
+                    <p class="text-[11px] text-amber-800">Visit our Faridabad showroom to view our full collection of 500+ items.</p>
+                    <a href="{% url 'visit_showroom' %}" class="inline-block font-semibold text-amber-900 hover:underline">Schedule Visit &rarr;</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- PRODUCT GRID -->
+        <main class="flex-grow">
+            
+            {% if products %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for product in products %}
+                <div class="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group product-card"
+                     data-id="{{ product.id }}"
+                     data-name="{{ product.name }}"
+                     data-price="{{ product.price }}"
+                     data-image="{{ product.image_url }}"
+                     data-sku="{{ product.sku }}">
+                    
+                    <!-- Image -->
+                    <div class="relative h-64 overflow-hidden bg-stone-100">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </a>
+                        
+                        {% if product.discount_percent > 0 %}
+                        <span class="absolute top-3 left-3 bg-terracotta text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                            {{ product.discount_percent }}% OFF
+                        </span>
+                        {% endif %}
+
+                        <span class="absolute bottom-3 left-3 bg-stone-900/80 backdrop-blur-sm text-stone-200 text-[10px] font-medium px-2 py-0.5 rounded">
+                            {{ product.get_room_type_display }}
+                        </span>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="p-5 flex flex-col flex-grow justify-between space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between text-[11px] text-stone-500 mb-1">
+                                <span class="font-mono text-amber-800 font-semibold">{{ product.sku }}</span>
+                                <span class="flex items-center text-amber-500 gap-1 font-semibold">
+                                    <i class="fas fa-star text-xs"></i> {{ product.rating }} ({{ product.reviews_count }})
+                                </span>
+                            </div>
+
+                            <h3 class="font-cinzel font-bold text-stone-900 text-sm hover:text-amber-700 transition-colors line-clamp-2">
+                                <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                            </h3>
+
+                            <p class="text-xs text-stone-500 mt-1 line-clamp-2">{{ product.short_description }}</p>
+                        </div>
+
+                        <!-- Price & Actions -->
+                        <div class="pt-3 border-t border-stone-100">
+                            <div class="flex items-baseline gap-2 mb-3">
+                                <span class="text-lg font-bold text-stone-900">?{{ product.price|floatformat:0 }}</span>
+                                {% if product.original_price > product.price %}
+                                <span class="text-xs text-stone-400 line-through">?{{ product.original_price|floatformat:0 }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="addToCart({{ product.id }}, '{{ product.name|escapejs }}', {{ product.price }}, '{{ product.image_url|escapejs }}', '{{ product.sku|escapejs }}')" class="w-full py-2 bg-stone-900 hover:bg-amber-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                                    <i class="fas fa-cart-plus text-xs"></i>
+                                    <span>Add</span>
+                                </button>
+                                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20buying:%20*{{ product.name|urlencode }}*%20(Price:%20?{{ product.price|floatformat:0 }},%20SKU:%20{{ product.sku }}).%20Please%20share%20delivery%20details." target="_blank" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                                    <i class="fab fa-whatsapp text-xs"></i>
+                                    <span>WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="bg-white rounded-2xl p-12 text-center border border-stone-200 max-w-lg mx-auto space-y-4">
+                <div class="w-16 h-16 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center mx-auto text-2xl">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="font-cinzel font-bold text-lg text-stone-900">No matching items found</h3>
+                <p class="text-xs text-stone-500">Try adjusting your keyword, price range, or category filter.</p>
+                <a href="{% url 'shop' %}" class="inline-block px-6 py-2.5 bg-stone-900 text-white rounded-xl text-xs font-semibold hover:bg-stone-800">
+                    Reset All Filters
+                </a>
+            </div>
+            {% endif %}
+
+        </main>
+    </div>
+</div>
+{% endblock %}

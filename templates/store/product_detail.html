@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} | {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-stone-100 py-4 border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-xs text-stone-500">
+        <a href="{% url 'home' %}" class="hover:text-amber-800">Home</a>
+        <span>/</span>
+        <a href="{% url 'shop' %}" class="hover:text-amber-800">Shop</a>
+        <span>/</span>
+        <a href="{% url 'shop' %}?category={{ product.category.slug }}" class="hover:text-amber-800">{{ product.category.name }}</a>
+        <span>/</span>
+        <span class="text-stone-800 font-semibold truncate">{{ product.name }}</span>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Left: Image Gallery -->
+        <div class="space-y-4">
+            <div class="rounded-3xl overflow-hidden bg-stone-100 border border-stone-200 shadow-md h-96 sm:h-[500px] relative">
+                <img id="mainProductImg" src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                {% if product.discount_percent > 0 %}
+                <span class="absolute top-4 left-4 bg-terracotta text-white text-xs font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                    {{ product.discount_percent }}% OFF
+                </span>
+                {% endif %}
+            </div>
+
+            <!-- Trust Highlights -->
+            <div class="grid grid-cols-3 gap-3 pt-2">
+                <div class="p-3 rounded-xl bg-white border border-stone-200 text-center space-y-1">
+                    <i class="fas fa-shield-alt text-amber-600 text-lg"></i>
+                    <span class="block text-[11px] font-bold text-stone-900">100% Authentic</span>
+                    <span class="block text-[10px] text-stone-500">Solid Handcrafted</span>
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-stone-200 text-center space-y-1">
+                    <i class="fas fa-truck text-emerald-600 text-lg"></i>
+                    <span class="block text-[11px] font-bold text-stone-900">Safe NCR Delivery</span>
+                    <span class="block text-[10px] text-stone-500">Shockproof Box</span>
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-stone-200 text-center space-y-1">
+                    <i class="fas fa-store text-amber-600 text-lg"></i>
+                    <span class="block text-[11px] font-bold text-stone-900">Faridabad Store</span>
+                    <span class="block text-[10px] text-stone-500">Live Showroom</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Product Information & CTAs -->
+        <div class="space-y-6 flex flex-col justify-between">
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-3 py-1 rounded-full">
+                        {{ product.category.name }}
+                    </span>
+                    <span class="text-xs text-stone-500 font-mono">SKU: <strong>{{ product.sku }}</strong></span>
+                </div>
+
+                <h1 class="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+                    {{ product.name }}
+                </h1>
+
+                <!-- Rating -->
+                <div class="flex items-center gap-3">
+                    <div class="flex text-amber-500 text-sm gap-1">
+                        {% for i in "12345" %}
+                        <i class="fas fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <span class="text-xs font-bold text-stone-800">{{ product.rating }}</span>
+                    <span class="text-xs text-stone-400">({{ product.reviews_count }} verified buyer ratings)</span>
+                </div>
+
+                <!-- Price Box -->
+                <div class="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-baseline gap-3">
+                            <span class="text-3xl font-bold text-stone-900">?{{ product.price|floatformat:0 }}</span>
+                            {% if product.original_price > product.price %}
+                            <span class="text-base text-stone-400 line-through">?{{ product.original_price|floatformat:0 }}</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Save ?{{ product.original_price|add:"-product.price"|default:"0" }}</span>
+                            {% endif %}
+                        </div>
+                        <span class="text-[11px] text-stone-500 mt-1 block">Inclusive of all taxes. Free shipping across Faridabad &amp; NCR.</span>
+                    </div>
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full {% if product.stock > 0 %}bg-emerald-100 text-emerald-800{% else %}bg-rose-100 text-rose-800{% endif %}">
+                        {% if product.stock > 0 %}In Stock ({{ product.stock }} units){% else %}Out of Stock{% endif %}
+                    </span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-sm text-stone-600 leading-relaxed">
+                    {{ product.description }}
+                </p>
+
+                <!-- Key Specifications Table -->
+                <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden text-xs">
+                    <div class="grid grid-cols-2 p-3 bg-stone-50 border-b border-stone-200 font-medium">
+                        <span class="text-stone-500">Material &amp; Craft</span>
+                        <span class="text-stone-900 font-semibold">{{ product.material }}</span>
+                    </div>
+                    <div class="grid grid-cols-2 p-3 border-b border-stone-100 font-medium">
+                        <span class="text-stone-500">Dimensions</span>
+                        <span class="text-stone-900 font-semibold">{{ product.dimensions }}</span>
+                    </div>
+                    {% if product.weight %}
+                    <div class="grid grid-cols-2 p-3 bg-stone-50 border-b border-stone-200 font-medium">
+                        <span class="text-stone-500">Weight</span>
+                        <span class="text-stone-900 font-semibold">{{ product.weight }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="grid grid-cols-2 p-3 font-medium">
+                        <span class="text-stone-500">Recommended Placement</span>
+                        <span class="text-stone-900 font-semibold">{{ product.get_room_type_display }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-3 pt-4 border-t border-stone-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="addToCart({{ product.id }}, '{{ product.name|escapejs }}', {{ product.price }}, '{{ product.image_url|escapejs }}', '{{ product.sku|escapejs }}')" class="w-full py-4 bg-stone-900 hover:bg-stone-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all">
+                        <i class="fas fa-shopping-bag text-sm"></i>
+                        <span>Add to Cart</span>
+                    </button>
+
+                    <!-- DIRECT WHATSAPP INSTANT BUY BUTTON -->
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20want%20to%20buy:%20*{{ product.name|urlencode }}*%0A??%20Price:%20?{{ product.price|floatformat:0 }}%0A???%20SKU:%20{{ product.sku }}%0A%0APlease%20confirm%20availability%20and%20delivery%20schedule%20for%20my%20address." target="_blank" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-600/30 transition-all">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Buy on WhatsApp</span>
+                    </a>
+                </div>
+
+                <a href="{% url 'visit_showroom' %}" class="block text-center py-3 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded-xl text-xs font-semibold transition-colors border border-amber-200">
+                    <i class="fas fa-eye mr-1 text-amber-700"></i> Want to view this piece in person? Visit our Faridabad Showroom
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    {% if related_products %}
+    <div class="mt-20 pt-12 border-t border-stone-200">
+        <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 mb-8">You May Also Like</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for rel in related_products %}
+            <div class="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-md transition-all flex flex-col group">
+                <div class="h-56 overflow-hidden bg-stone-100">
+                    <a href="{% url 'product_detail' rel.slug %}">
+                        <img src="{{ rel.image_url }}" alt="{{ rel.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                </div>
+                <div class="p-4 flex flex-col flex-grow justify-between space-y-2">
+                    <h4 class="font-cinzel font-bold text-xs text-stone-900 hover:text-amber-700 transition-colors line-clamp-1">
+                        <a href="{% url 'product_detail' rel.slug %}">{{ rel.name }}</a>
+                    </h4>
+                    <div class="flex items-center justify-between text-xs pt-2 border-t border-stone-100">
+                        <span class="font-bold text-stone-900">?{{ rel.price|floatformat:0 }}</span>
+                        <a href="{% url 'product_detail' rel.slug %}" class="text-amber-800 font-semibold hover:underline">View &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

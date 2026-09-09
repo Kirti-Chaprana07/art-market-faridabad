@@ -1,0 +1,70 @@
+/* Custom Aesthetics for Art Market Faridabad */
+
+:root {
+    --primary-brass: #b88628;
+    --primary-brass-dark: #7c511c;
+    --botanical-green: #2c734e;
+    --warm-cream: #faf8f5;
+}
+
+body {
+    background-color: var(--warm-cream);
+    color: #2b2b2b;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+h1, h2, h3, .font-cinzel {
+    font-family: 'Cinzel', serif;
+}
+
+.font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Custom Smooth Transitions */
+.product-card {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1ede4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c5b497;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a38f6d;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Toast alert badge */
+.toast-badge {
+    animation: slideInRight 0.3s ease-out forwards;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}

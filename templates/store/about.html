@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us | {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="bg-stone-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Our Heritage &amp; Vision</span>
+        <h1 class="font-cinzel text-3xl sm:text-5xl font-bold">About Art Market Faridabad</h1>
+        <p class="text-xs sm:text-sm text-stone-300 max-w-2xl mx-auto">
+            Preserving centuries of Indian brass &amp; wood handicraft traditions while bringing modern zero-maintenance greenery to contemporary homes.
+        </p>
+    </div>
+</div>
+
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="space-y-4 text-xs sm:text-sm text-stone-600 leading-relaxed">
+            <h2 class="font-cinzel text-2xl font-bold text-stone-900">Rooted in Faridabad, Cherished Across India</h2>
+            <p>
+                Founded in Faridabad, Haryana, <strong>Art Market Faridabad</strong> was born out of a profound admiration for traditional Indian artisanal metalwork and timeless decor aesthetics.
+            </p>
+            <p>
+                In a world dominated by mass-produced plastic knick-knacks, we curate genuine solid brass statues, temple lamps, antique railway station clocks, and hand-carved jharokhas that carry soul, weight, and history.
+            </p>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-200">
+            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" alt="Artisan Metal Craft" class="w-full h-80 object-cover">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-200 order-last md:order-first">
+            <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=800&q=80" alt="Botanical Realism" class="w-full h-80 object-cover">
+        </div>
+        <div class="space-y-4 text-xs sm:text-sm text-stone-600 leading-relaxed">
+            <h2 class="font-cinzel text-2xl font-bold text-stone-900">Why Artificial Botanicals?</h2>
+            <p>
+                We believe greenery brings life to every living room and workspace. However, busy urban lifestyles, lack of sunlight in high-rises, and maintenance challenges often make real plants difficult to sustain.
+            </p>
+            <p>
+                Our curated <strong>Real-Touch Artificial Plants &amp; Bonsais</strong> provide the exact optical texture, leaf veining, and lush aesthetic of living plants without requiring watering, soil changes, or pest control.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

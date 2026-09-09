@@ -124,13 +124,8 @@
                 </nav>
 
                 <!-- HEADER ACTIONS -->
-                <div class="flex items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-2.5 sm:gap-3">
                     
-                    <!-- Instagram Button -->
-                    <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-sand-100 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:text-white text-walnut-800 flex items-center justify-center transition-all border border-sand-200 shadow-sm group" title="Follow us on Instagram (@artmarketfaridabad)">
-                        <i class="fab fa-instagram text-lg group-hover:scale-110 transition-transform"></i>
-                    </a>
-
                     <!-- Search Button -->
                     <button id="searchOpenBtn" class="w-10 h-10 rounded-xl bg-sand-100 hover:bg-sand-200 text-walnut-700 hover:text-walnut-950 flex items-center justify-center transition-all border border-sand-200" title="Search catalog">
                         <i class="fas fa-search text-xs sm:text-sm"></i>
@@ -154,20 +149,15 @@
 
         <!-- MOBILE MENU OVERLAY -->
         <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-sand-200 px-5 py-5 space-y-3.5 shadow-xl">
-            <div class="flex items-center justify-between pb-3 border-b border-sand-100">
-                <div class="flex items-center gap-3">
-                    <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300">
-                    <div>
-                        <a href="{% url 'home' %}" class="font-cinzel font-bold text-walnut-950 block leading-tight hover:text-terracotta-800">Art Market</a>
-                        <a href="{{ STORE_MAP_URL }}" target="_blank" class="text-[11px] text-forest-800 font-semibold hover:underline flex items-center gap-1">
-                            <i class="fas fa-map-marker-alt text-[10px] text-terracotta-700"></i>
-                            <span>Sector 88, Faridabad</span>
-                        </a>
-                    </div>
+            <div class="flex items-center gap-3 pb-3 border-b border-sand-100">
+                <img src="/static/images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-xl object-cover border border-sand-300">
+                <div>
+                    <a href="{% url 'home' %}" class="font-cinzel font-bold text-walnut-950 block leading-tight hover:text-terracotta-800">Art Market</a>
+                    <a href="{{ STORE_MAP_URL }}" target="_blank" class="text-[11px] text-forest-800 font-semibold hover:underline flex items-center gap-1">
+                        <i class="fas fa-map-marker-alt text-[10px] text-terracotta-700"></i>
+                        <span>Sector 88, Faridabad</span>
+                    </a>
                 </div>
-                <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white transition-colors" title="Instagram">
-                    <i class="fab fa-instagram text-base"></i>
-                </a>
             </div>
             <div class="space-y-1 text-xs font-bold uppercase tracking-wider">
                 <a href="{% url 'home' %}" class="block py-2 text-walnut-800 hover:text-terracotta-700">Home</a>
@@ -306,11 +296,16 @@
         </div>
     </aside>
 
-    <!-- FLOATING DIRECT WHATSAPP ACTION -->
+    <!-- FLOATING DIRECT ACTIONS (INSTAGRAM & WHATSAPP) -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20looking%20for%20home%20decor%20/%20plants.%20Here%20is%20what%20I%20need:" target="_blank" class="flex items-center gap-2.5 bg-forest-700 hover:bg-forest-800 text-white px-5 py-3.5 rounded-full text-xs font-extrabold shadow-2xl hover:scale-105 transition-all group border-2 border-white/20">
-            <i class="fab fa-whatsapp text-xl"></i>
-            
+        <!-- Floating Instagram Button -->
+        <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener noreferrer" class="w-12 h-12 flex items-center justify-center bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 hover:opacity-95 text-white rounded-full shadow-2xl hover:scale-110 transition-all border-2 border-white/30 group" title="Follow Art Market on Instagram (@artmarketfaridabad)">
+            <i class="fab fa-instagram text-2xl group-hover:rotate-6 transition-transform"></i>
+        </a>
+
+        <!-- Floating WhatsApp Button -->
+        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20looking%20for%20home%20decor%20/%20plants.%20Here%20is%20what%20I%20need:" target="_blank" class="w-12 h-12 flex items-center justify-center bg-forest-700 hover:bg-forest-800 text-white rounded-full shadow-2xl hover:scale-110 transition-all border-2 border-white/30 group" title="Chat with Art Market on WhatsApp">
+            <i class="fab fa-whatsapp text-2xl group-hover:scale-110 transition-transform"></i>
         </a>
     </div>
 

@@ -85,29 +85,6 @@
 </head>
 <body class="bg-[#faf7f2] text-walnut-900 font-sans antialiased flex flex-col min-h-screen selection:bg-terracotta-700 selection:text-white">
 
-    <!-- TOP ANNOUNCEMENT TICKER -->
-    <div class="bg-walnut-950 text-sand-200 text-xs py-2.5 px-4 border-b border-walnut-800 relative z-50">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
-            <div class="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-                <a href="{{ STORE_MAP_URL }}" target="_blank" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-terracotta-800 hover:bg-terracotta-700 text-terracotta-100 border border-terracotta-700/60 tracking-wide uppercase transition-colors" title="Pin Address on Google Maps">
-                    <i class="fas fa-map-marker-alt text-[9px] mr-1 text-terracotta-300"></i> FARIDABAD STORE
-                </a>
-                <a href="{{ STORE_MAP_URL }}" target="_blank" class="text-sand-100 hover:text-white hover:underline text-[11px] sm:text-xs transition-colors">
-                    {{ STORE_ADDRESS }} &bull; Open 7 Days (10:30 AM - 9:00 PM)
-                </a>
-            </div>
-            <div class="flex items-center gap-4 text-xs font-semibold">
-                <a href="tel:{{ STORE_PHONE }}" class="hover:text-terracotta-300 text-sand-100 transition-colors flex items-center gap-1.5">
-                    <i class="fas fa-phone-alt text-[10px] text-terracotta-400"></i> {{ STORE_PHONE }}
-                </a>
-                <span class="text-walnut-700">|</span>
-                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20interested%20in%20artificial%20plants%20and%20decor." target="_blank" class="hover:text-forest-300 text-forest-400 font-bold transition-colors flex items-center gap-1.5">
-                    <i class="fab fa-whatsapp text-sm"></i> WhatsApp Support
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN NAVBAR (WARM IVORY & CRISP WALNUT) -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sand-200 shadow-sm transition-all duration-300" id="mainHeader">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -323,7 +300,7 @@
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20looking%20for%20home%20decor%20/%20plants.%20Here%20is%20what%20I%20need:" target="_blank" class="flex items-center gap-2.5 bg-forest-700 hover:bg-forest-800 text-white px-5 py-3.5 rounded-full text-xs font-extrabold shadow-2xl hover:scale-105 transition-all group border-2 border-white/20">
             <i class="fab fa-whatsapp text-xl"></i>
-            <span>Share What You Need on WhatsApp</span>
+            
         </a>
     </div>
 

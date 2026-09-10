@@ -85,6 +85,40 @@
 </head>
 <body class="bg-[#faf7f2] text-walnut-900 font-sans antialiased flex flex-col min-h-screen selection:bg-terracotta-700 selection:text-white">
 
+    <!-- LUXURY SPLASH SCREEN (ANIMATED LOGO & BRAND REVEAL) -->
+    <div id="splashScreen" class="fixed inset-0 z-[100] bg-walnut-950 flex flex-col items-center justify-center p-6 text-center transition-all duration-700 select-none">
+        <div class="relative flex flex-col items-center space-y-6 max-w-sm w-full">
+            <!-- Animated Logo Container with Glow Ring -->
+            <div class="relative">
+                <div class="absolute -inset-4 bg-gradient-to-r from-terracotta-600 via-forest-600 to-terracotta-600 rounded-3xl blur-md opacity-70 animate-pulse"></div>
+                <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-3xl overflow-hidden shadow-2xl border-2 border-sand-300 bg-walnut-900 animate-splashLogo">
+                    <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=200&q=80';">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <h1 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white tracking-wider">
+                    Art Market
+                </h1>
+                <p class="text-xs sm:text-sm font-semibold text-terracotta-300 uppercase tracking-widest">
+                    Sector 88, Faridabad
+                </p>
+                <p class="text-[11px] text-sand-300/80 font-light max-w-xs mx-auto">
+                    Real-Touch Plants &bull; Designer Planters &bull; Brass Decor
+                </p>
+            </div>
+
+            <!-- Loading indicator bar -->
+            <div class="w-36 bg-walnut-800 rounded-full h-1 overflow-hidden">
+                <div class="bg-gradient-to-r from-terracotta-500 to-forest-500 h-1 w-full rounded-full animate-pulse"></div>
+            </div>
+
+            <button id="skipSplashBtn" class="text-[11px] text-sand-400 hover:text-white uppercase tracking-wider font-bold underline transition-colors pt-2">
+                Skip Intro &rarr;
+            </button>
+        </div>
+    </div>
+
     <!-- MAIN NAVBAR (WARM IVORY & CRISP WALNUT) -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sand-200 shadow-sm transition-all duration-300" id="mainHeader">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -441,6 +475,108 @@
             </div>
         </div>
     </footer>
+
+    <!-- GLOBAL LOGIN / OTP POPUP MODAL -->
+    <div id="loginModal" class="fixed inset-0 z-[90] bg-walnut-950/80 backdrop-blur-md hidden items-center justify-center p-4 animate-fadeIn">
+        <div class="relative max-w-md w-full bg-white rounded-3xl shadow-2xl border border-sand-200 p-7 sm:p-8 space-y-6">
+            
+            <!-- Close Button -->
+            <button id="closeLoginModalBtn" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-sand-100 hover:bg-sand-200 text-walnut-700 flex items-center justify-center transition-colors">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-center space-y-2">
+                <img src="/static/images/logo.jpg" alt="Logo" class="w-12 h-12 rounded-xl mx-auto object-cover border border-sand-300 shadow-sm" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=150&q=80';">
+                <h2 id="loginModalTitle" class="font-cinzel text-xl sm:text-2xl font-bold text-walnut-950">
+                    Sign In to Art Market
+                </h2>
+                <p id="loginModalSubtitle" class="text-xs text-walnut-600">
+                    Enter your mobile number to explore full product details, prices, and fast checkout.
+                </p>
+            </div>
+
+            <!-- Alert Box -->
+            <div id="loginModalAlert" class="hidden p-3 rounded-xl text-xs font-semibold flex items-center gap-2"></div>
+
+            <!-- STEP 1: Phone Form -->
+            <form id="modalPhoneForm" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-walnut-800 mb-1.5">
+                        Your Name <span class="text-walnut-400 font-normal lowercase">(optional)</span>
+                    </label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-walnut-400 text-xs"></i>
+                        <input type="text" id="modalInputName" placeholder="e.g. Rahul Sharma" class="w-full pl-9 pr-3.5 py-3 bg-sand-50 border border-sand-300 rounded-xl text-xs text-walnut-900 font-semibold focus:outline-none focus:border-terracotta-700">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-walnut-800 mb-1.5">
+                        Mobile Number <span class="text-terracotta-700">*</span>
+                    </label>
+                    <div class="relative flex rounded-xl shadow-sm">
+                        <span class="inline-flex items-center px-3.5 rounded-l-xl border border-r-0 border-sand-300 bg-sand-100 text-walnut-800 font-bold text-xs">
+                            🇮🇳 +91
+                        </span>
+                        <input type="tel" id="modalInputPhone" required maxlength="10" pattern="[0-9]{10}" placeholder="98990 97676" class="w-full px-3.5 py-3 bg-sand-50 border border-sand-300 rounded-r-xl text-sm font-bold text-walnut-950 focus:outline-none focus:border-terracotta-700">
+                    </div>
+                    <p class="text-[11px] text-walnut-500 mt-1">A 6-digit OTP will be generated for your mobile.</p>
+                </div>
+
+                <button type="submit" id="modalSendOtpBtn" class="w-full py-3.5 bg-gradient-to-r from-terracotta-700 to-terracotta-800 hover:from-terracotta-800 hover:to-terracotta-900 text-white rounded-xl font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane text-xs"></i>
+                    <span>Get OTP Code &rarr;</span>
+                </button>
+            </form>
+
+            <!-- STEP 2: OTP Form -->
+            <form id="modalOtpForm" class="space-y-4 hidden">
+                {% csrf_token %}
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-walnut-800">
+                            6-Digit Security OTP
+                        </label>
+                        <button type="button" id="modalChangePhoneBtn" class="text-[11px] text-terracotta-700 hover:underline font-bold">
+                            Change Number
+                        </button>
+                    </div>
+                    <input type="text" id="modalInputOtp" required maxlength="6" pattern="[0-9]{6}" autofocus placeholder="------" value="" class="w-full text-center tracking-[0.35em] font-mono text-2xl font-bold py-3 px-4 bg-sand-50 border-2 border-sand-300 rounded-xl text-walnut-950 focus:outline-none focus:border-terracotta-700">
+                    <p class="text-[11px] text-walnut-500 mt-1 text-center">Enter the 6-digit code received on your mobile.</p>
+                </div>
+
+                <button type="submit" id="modalVerifyOtpBtn" class="w-full py-3.5 bg-gradient-to-r from-forest-700 to-forest-800 hover:from-forest-800 hover:to-forest-900 text-white rounded-xl font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-check-circle text-xs"></i>
+                    <span>Verify &amp; Unlock</span>
+                </button>
+
+                <div class="text-center pt-1">
+                    <button type="button" id="modalResendOtpBtn" class="text-xs text-terracotta-700 font-bold hover:underline">
+                        Didn't receive code? Resend OTP
+                    </button>
+                </div>
+            </form>
+
+            <!-- Footer / Skip -->
+            <div class="pt-3 border-t border-sand-100 flex items-center justify-between text-xs">
+                <button type="button" id="skipModalBtn" class="text-walnut-500 hover:text-walnut-900 font-bold underline">
+                    Skip &amp; Browse Store &rarr;
+                </button>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20need%20OTP%20login%20assistance." target="_blank" class="text-forest-700 hover:text-forest-900 font-bold flex items-center gap-1">
+                    <i class="fab fa-whatsapp text-sm"></i> WhatsApp Help
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pass Authentication Flag to JavaScript -->
+    <script>
+        window.IS_AUTHENTICATED = {% if request.user.is_authenticated %}true{% else %}false{% endif %};
+        window.CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
 
     <!-- Main JavaScript File -->
     <script src="/static/js/main.js"></script>

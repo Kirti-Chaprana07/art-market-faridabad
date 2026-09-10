@@ -18,6 +18,7 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('account/', views.user_account, name='account'),
     path('api/send-otp/', views.api_send_otp, name='api_send_otp'),
+    path('api/verify-otp/', views.api_verify_otp, name='api_verify_otp'),
     
     # Owner Management Portal
     path('owner/', views.owner_dashboard, name='owner_dashboard'),

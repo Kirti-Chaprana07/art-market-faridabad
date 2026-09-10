@@ -2,6 +2,7 @@
 
 const STORE_WHATSAPP_NUMBER = "919899097676";
 const FREE_SHIPPING_THRESHOLD = 1999;
+window.PENDING_TARGET_URL = null;
 
 // Load Cart from LocalStorage
 function getCart() {
@@ -20,6 +21,12 @@ function saveCart(cart) {
 
 // Add Item to Cart
 function addToCart(id, name, price, image, sku) {
+    if (!window.IS_AUTHENTICATED) {
+        window.PENDING_TARGET_URL = null;
+        openLoginModal("Sign In to Add to Cart", `Please enter your mobile number to add "${name}" to your cart.`);
+        return;
+    }
+
     let cart = getCart();
     const existingIndex = cart.findIndex(item => item.id == id);
     
@@ -278,11 +285,275 @@ function sendCartToWhatsApp() {
     window.open(url, '_blank');
 }
 
-// Initialize Event Listeners
+
+// --- LOGIN MODAL CONTROLS ---
+
+function openLoginModal(title, subtitle, targetUrl = null) {
+    const modal = document.getElementById('loginModal');
+    const titleEl = document.getElementById('loginModalTitle');
+    const subEl = document.getElementById('loginModalSubtitle');
+    const alertEl = document.getElementById('loginModalAlert');
+
+    if (modal) {
+        if (title && titleEl) titleEl.innerText = title;
+        if (subtitle && subEl) subEl.innerText = subtitle;
+        if (alertEl) {
+            alertEl.classList.add('hidden');
+            alertEl.innerText = '';
+        }
+        if (targetUrl) {
+            window.PENDING_TARGET_URL = targetUrl;
+        }
+
+        // Reset to Step 1
+        const phoneForm = document.getElementById('modalPhoneForm');
+        const otpForm = document.getElementById('modalOtpForm');
+        const otpInput = document.getElementById('modalInputOtp');
+        if (phoneForm) phoneForm.classList.remove('hidden');
+        if (otpForm) otpForm.classList.add('hidden');
+        if (otpInput) otpInput.value = '';
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+}
+
+function closeLoginModal() {
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+
+// Initialize Event Listeners & Lifecycles
 document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
 
-    // Drawer triggers
+    // 1. SPLASH SCREEN LIFECYCLE
+    const splash = document.getElementById('splashScreen');
+    const skipSplashBtn = document.getElementById('skipSplashBtn');
+
+    function hideSplashScreen() {
+        if (splash) {
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                sessionStorage.setItem('artmarket_splash_shown', 'true');
+
+                // After splash screen ends: check if welcome login modal should appear
+                if (!window.IS_AUTHENTICATED && !sessionStorage.getItem('artmarket_login_skipped')) {
+                    setTimeout(() => {
+                        openLoginModal("Welcome to Art Market", "Sign in with your mobile number to view curated collections, pricing, and orders.");
+                    }, 400);
+                }
+            }, 600);
+        }
+    }
+
+    if (splash) {
+        // Auto-fade after 1.8 seconds
+        setTimeout(hideSplashScreen, 1800);
+        if (skipSplashBtn) {
+            skipSplashBtn.addEventListener('click', hideSplashScreen);
+        }
+    }
+
+    // 2. PRODUCT CLICK INTERCEPTOR (Pop up login modal for unauthenticated visitors)
+    document.addEventListener('click', (e) => {
+        if (window.IS_AUTHENTICATED) return;
+
+        // Check if click is on a product card link or image
+        const productLink = e.target.closest('a[href*="/product/"]');
+        if (productLink) {
+            e.preventDefault();
+            const href = productLink.getAttribute('href');
+            openLoginModal(
+                "Sign In to View Details", 
+                "Please enter your mobile number with OTP to view full specifications, photos, and order this item.",
+                href
+            );
+        }
+    });
+
+    // 3. LOGIN MODAL BUTTONS & FORMS
+    const closeLoginBtn = document.getElementById('closeLoginModalBtn');
+    const skipModalBtn = document.getElementById('skipModalBtn');
+    const modalPhoneForm = document.getElementById('modalPhoneForm');
+    const modalOtpForm = document.getElementById('modalOtpForm');
+    const modalChangePhoneBtn = document.getElementById('modalChangePhoneBtn');
+    const modalResendOtpBtn = document.getElementById('modalResendOtpBtn');
+    const loginModalAlert = document.getElementById('loginModalAlert');
+
+    if (closeLoginBtn) {
+        closeLoginBtn.addEventListener('click', () => {
+            sessionStorage.setItem('artmarket_login_skipped', 'true');
+            closeLoginModal();
+        });
+    }
+
+    if (skipModalBtn) {
+        skipModalBtn.addEventListener('click', () => {
+            sessionStorage.setItem('artmarket_login_skipped', 'true');
+            closeLoginModal();
+        });
+    }
+
+    if (modalChangePhoneBtn) {
+        modalChangePhoneBtn.addEventListener('click', () => {
+            if (modalPhoneForm) modalPhoneForm.classList.remove('hidden');
+            if (modalOtpForm) modalOtpForm.classList.add('hidden');
+            if (loginModalAlert) loginModalAlert.classList.add('hidden');
+        });
+    }
+
+    // AJAX Step 1: Send OTP
+    if (modalPhoneForm) {
+        modalPhoneForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phoneInput = document.getElementById('modalInputPhone');
+            const nameInput = document.getElementById('modalInputName');
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+            const name = nameInput ? nameInput.value.trim() : '';
+            const sendBtn = document.getElementById('modalSendOtpBtn');
+
+            if (!phone || phone.length !== 10) {
+                if (loginModalAlert) {
+                    loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block';
+                    loginModalAlert.innerHTML = `<i class="fas fa-exclamation-circle text-rose-600 mr-1.5"></i> Please enter a valid 10-digit mobile number.`;
+                }
+                return;
+            }
+
+            if (sendBtn) {
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = `<i class="fas fa-spinner fa-spin text-xs"></i> Sending OTP...`;
+            }
+
+            try {
+                const res = await fetch('/api/send-otp/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': window.CSRF_TOKEN || '',
+                    },
+                    body: JSON.stringify({ phone: phone, name: name })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.status === 'success') {
+                    if (loginModalAlert) {
+                        loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-forest-50 text-forest-800 border border-forest-200 block';
+                        loginModalAlert.innerHTML = `<i class="fas fa-check-circle text-forest-600 mr-1.5"></i> ${data.message}`;
+                    }
+                    modalPhoneForm.classList.add('hidden');
+                    modalOtpForm.classList.remove('hidden');
+                    const otpInput = document.getElementById('modalInputOtp');
+                    if (otpInput) {
+                        otpInput.value = '';
+                        otpInput.focus();
+                    }
+                } else {
+                    if (loginModalAlert) {
+                        loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block';
+                        loginModalAlert.innerHTML = `<i class="fas fa-exclamation-circle text-rose-600 mr-1.5"></i> ${data.message || 'Error sending OTP.'}`;
+                    }
+                }
+            } catch (err) {
+                if (loginModalAlert) {
+                    loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block';
+                    loginModalAlert.innerHTML = `<i class="fas fa-exclamation-circle text-rose-600 mr-1.5"></i> Network error. Please try again.`;
+                }
+            } finally {
+                if (sendBtn) {
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = `<i class="fas fa-paper-plane text-xs mr-1"></i> Get OTP Code &rarr;`;
+                }
+            }
+        });
+    }
+
+    // AJAX Step 2: Verify OTP
+    if (modalOtpForm) {
+        modalOtpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phoneInput = document.getElementById('modalInputPhone');
+            const nameInput = document.getElementById('modalInputName');
+            const otpInput = document.getElementById('modalInputOtp');
+            const verifyBtn = document.getElementById('modalVerifyOtpBtn');
+
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+            const name = nameInput ? nameInput.value.trim() : '';
+            const otp = otpInput ? otpInput.value.trim() : '';
+
+            if (!otp || otp.length !== 6) {
+                if (loginModalAlert) {
+                    loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block';
+                    loginModalAlert.innerHTML = `<i class="fas fa-exclamation-circle text-rose-600 mr-1.5"></i> Please enter the full 6-digit OTP.`;
+                }
+                return;
+            }
+
+            if (verifyBtn) {
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = `<i class="fas fa-spinner fa-spin text-xs"></i> Verifying...`;
+            }
+
+            try {
+                const res = await fetch('/api/verify-otp/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': window.CSRF_TOKEN || '',
+                    },
+                    body: JSON.stringify({ 
+                        phone: phone, 
+                        otp: otp, 
+                        name: name,
+                        next: window.PENDING_TARGET_URL || '/'
+                    })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.status === 'success') {
+                    window.IS_AUTHENTICATED = true;
+                    showToast(`Welcome back, ${data.user_name}!`);
+                    closeLoginModal();
+
+                    // If user was trying to open a product, navigate immediately
+                    if (window.PENDING_TARGET_URL) {
+                        window.location.href = window.PENDING_TARGET_URL;
+                    } else {
+                        window.location.reload();
+                    }
+                } else {
+                    if (loginModalAlert) {
+                        loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block';
+                        loginModalAlert.innerHTML = `<i class="fas fa-exclamation-circle text-rose-600 mr-1.5"></i> ${data.message || 'Invalid OTP code.'}`;
+                    }
+                }
+            } catch (err) {
+                if (loginModalAlert) {
+                    loginModalAlert.className = 'p-3 rounded-xl text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 block';
+                    loginModalAlert.innerHTML = `<i class="fas fa-exclamation-circle text-rose-600 mr-1.5"></i> Verification failed. Please check connection.`;
+                }
+            } finally {
+                if (verifyBtn) {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = `<i class="fas fa-check-circle text-xs mr-1"></i> Verify &amp; Unlock`;
+                }
+            }
+        });
+    }
+
+    if (modalResendOtpBtn && modalPhoneForm) {
+        modalResendOtpBtn.addEventListener('click', () => {
+            modalPhoneForm.dispatchEvent(new Event('submit'));
+        });
+    }
+
+    // 4. Standard UI Triggers
     const cartOpenBtn = document.getElementById('cartDrawerBtn');
     const cartCloseBtn = document.getElementById('cartDrawerCloseBtn');
     const overlay = document.getElementById('cartDrawerOverlay');

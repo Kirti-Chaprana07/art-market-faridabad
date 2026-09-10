@@ -1,7 +1,10 @@
 import json
 import uuid
 import re
+import os
 import random
+import urllib.request
+import urllib.parse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -25,6 +28,31 @@ def clean_phone_number(raw_phone):
     elif len(digits) == 11 and digits.startswith('0'):
         digits = digits[1:]
     return digits[-10:] if len(digits) >= 10 else digits
+
+
+def send_otp_via_gateway(phone, otp_code):
+    """
+    Sends OTP to the mobile phone via SMS Gateway (Fast2SMS) if API key is provided,
+    or logs for verification.
+    """
+    fast2sms_key = os.environ.get('FAST2SMS_API_KEY')
+    if fast2sms_key:
+        try:
+            url = "https://www.fast2sms.com/dev/bulkV2"
+            data = urllib.parse.urlencode({
+                'authorization': fast2sms_key,
+                'variables_values': otp_code,
+                'route': 'otp',
+                'numbers': phone,
+            }).encode('utf-8')
+            req = urllib.request.Request(url, data=data, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=5) as response:
+                pass
+            return True
+        except Exception as e:
+            print(f"[SMS GATEWAY ERROR] Failed to send SMS: {e}")
+            return False
+    return False
 
 
 # --- PUBLIC STOREFRONT VIEWS ---
@@ -227,10 +255,9 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect(next_url)
 
-    step = 'send_otp'  # 'send_otp' or 'verify_otp'
+    step = 'send_otp'
     phone = ''
     name = ''
-    demo_otp = ''
 
     if request.method == 'POST':
         action = request.POST.get('action', 'send_otp')
@@ -251,7 +278,10 @@ def user_login(request):
                 )
                 request.session['auth_phone'] = phone
                 request.session['auth_name'] = name
-                demo_otp = otp_code
+                
+                # Send via SMS gateway / WhatsApp
+                send_otp_via_gateway(phone, otp_code)
+                
                 step = 'verify_otp'
                 messages.info(request, f'Verification OTP sent to +91 {phone}. Enter the 6-digit code below.')
 
@@ -267,7 +297,7 @@ def user_login(request):
                 # Validate latest active OTP
                 otp_record = PhoneOTP.objects.filter(phone=session_phone, is_used=False).order_by('-created_at').first()
                 
-                if otp_record and otp_record.is_valid() and (otp_record.otp == entered_otp or entered_otp == "123456"):
+                if otp_record and otp_record.is_valid() and otp_record.otp == entered_otp:
                     otp_record.is_used = True
                     otp_record.save()
 
@@ -282,32 +312,24 @@ def user_login(request):
                         request.session['is_owner'] = True
 
                     auth_login(request, user)
-                    messages.success(request, f'Welcome back {user.first_name or user.username}! You are logged in.')
+                    messages.success(request, f'Welcome {user.first_name or user.username}! You are logged in.')
                     return redirect(next_url)
                 else:
-                    messages.error(request, 'Invalid or expired OTP. Please check the 6-digit code and try again.')
+                    messages.error(request, 'Invalid or expired OTP. Please enter the correct 6-digit code.')
                     step = 'verify_otp'
                     phone = session_phone
                     name = session_name
-                    # Find existing OTP for demo banner
-                    latest_otp = PhoneOTP.objects.filter(phone=session_phone, is_used=False).order_by('-created_at').first()
-                    if latest_otp and latest_otp.is_valid():
-                        demo_otp = latest_otp.otp
 
     # Check if we are redirected to verify step
     if request.GET.get('step') == 'verify' and request.session.get('auth_phone'):
         step = 'verify_otp'
         phone = request.session.get('auth_phone', '')
         name = request.session.get('auth_name', '')
-        latest_otp = PhoneOTP.objects.filter(phone=phone, is_used=False).order_by('-created_at').first()
-        if latest_otp and latest_otp.is_valid():
-            demo_otp = latest_otp.otp
 
     context = {
         'step': step,
         'phone': phone,
         'name': name,
-        'demo_otp': demo_otp,
         'next': next_url,
     }
     return render(request, 'store/auth/login.html', context)
@@ -352,12 +374,14 @@ def user_account(request):
 
 @require_POST
 def api_send_otp(request):
-    """AJAX endpoint to send OTP"""
+    """AJAX endpoint to generate and dispatch OTP to mobile phone"""
     try:
         data = json.loads(request.body)
         raw_phone = data.get('phone', '')
+        name = data.get('name', '')
     except Exception:
         raw_phone = request.POST.get('phone', '')
+        name = request.POST.get('name', '')
 
     phone = clean_phone_number(raw_phone)
     if not phone or len(phone) != 10:
@@ -367,14 +391,68 @@ def api_send_otp(request):
     PhoneOTP.objects.create(
         phone=phone,
         otp=otp_code,
+        name=name,
     )
     request.session['auth_phone'] = phone
+    request.session['auth_name'] = name
+
+    # Dispatch via SMS Gateway / WhatsApp
+    send_otp_via_gateway(phone, otp_code)
 
     return JsonResponse({
         'status': 'success',
-        'message': f'OTP sent successfully to +91 {phone}.',
-        'demo_otp': otp_code,
+        'message': f'OTP sent to +91 {phone}.',
+        'phone': phone,
     })
+
+
+@require_POST
+def api_verify_otp(request):
+    """AJAX endpoint to verify OTP and log in customer seamlessly"""
+    try:
+        data = json.loads(request.body)
+        raw_phone = data.get('phone', '')
+        entered_otp = str(data.get('otp', '')).strip()
+        name = data.get('name', '')
+        next_url = data.get('next', '/')
+    except Exception:
+        raw_phone = request.POST.get('phone', '')
+        entered_otp = str(request.POST.get('otp', '')).strip()
+        name = request.POST.get('name', '')
+        next_url = request.POST.get('next', '/')
+
+    phone = clean_phone_number(raw_phone) or request.session.get('auth_phone', '')
+
+    if not phone or not entered_otp:
+        return JsonResponse({'status': 'error', 'message': 'Phone number and 6-digit OTP are required.'}, status=400)
+
+    otp_record = PhoneOTP.objects.filter(phone=phone, is_used=False).order_by('-created_at').first()
+
+    if otp_record and otp_record.is_valid() and otp_record.otp == entered_otp:
+        otp_record.is_used = True
+        otp_record.save()
+
+        user, created = User.objects.get_or_create(username=phone)
+        if name and not user.first_name:
+            user.first_name = name
+            user.save()
+
+        if phone == OWNER_PHONE or phone == "9899097676":
+            request.session['is_owner'] = True
+
+        auth_login(request, user)
+
+        return JsonResponse({
+            'status': 'success',
+            'message': f'Welcome {user.first_name or user.username}!',
+            'user_name': user.first_name or user.username,
+            'redirect_url': next_url,
+        })
+    else:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Invalid or expired OTP. Please enter the exact 6-digit code received on your phone.',
+        }, status=400)
 
 
 # --- OWNER PORTAL & PRODUCT UPLOAD VIEWS ---

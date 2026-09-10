@@ -331,33 +331,11 @@ function closeLoginModal() {
 document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
 
-    // 1. SPLASH SCREEN LIFECYCLE
-    const splash = document.getElementById('splashScreen');
-    const skipSplashBtn = document.getElementById('skipSplashBtn');
-
-    function hideSplashScreen() {
-        if (splash) {
-            splash.style.opacity = '0';
-            setTimeout(() => {
-                splash.style.display = 'none';
-                sessionStorage.setItem('artmarket_splash_shown', 'true');
-
-                // After splash screen ends: check if welcome login modal should appear
-                if (!window.IS_AUTHENTICATED && !sessionStorage.getItem('artmarket_login_skipped')) {
-                    setTimeout(() => {
-                        openLoginModal("Welcome to Art Market", "Sign in with your mobile number to view curated collections, pricing, and orders.");
-                    }, 400);
-                }
-            }, 600);
-        }
-    }
-
-    if (splash) {
-        // Auto-fade after 1.8 seconds
-        setTimeout(hideSplashScreen, 1800);
-        if (skipSplashBtn) {
-            skipSplashBtn.addEventListener('click', hideSplashScreen);
-        }
+    // 1. Initial Welcome Login Popup (Skippable)
+    if (!window.IS_AUTHENTICATED && !sessionStorage.getItem('artmarket_login_skipped')) {
+        setTimeout(() => {
+            openLoginModal("Welcome to Art Market", "Sign in with your mobile number to view curated collections, pricing, and orders.");
+        }, 500);
     }
 
     // 2. PRODUCT CLICK INTERCEPTOR (Pop up login modal for unauthenticated visitors)

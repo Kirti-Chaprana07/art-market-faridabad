@@ -85,40 +85,6 @@
 </head>
 <body class="bg-[#faf7f2] text-walnut-900 font-sans antialiased flex flex-col min-h-screen selection:bg-terracotta-700 selection:text-white">
 
-    <!-- LUXURY SPLASH SCREEN (ANIMATED LOGO & BRAND REVEAL) -->
-    <div id="splashScreen" class="fixed inset-0 z-[100] bg-walnut-950 flex flex-col items-center justify-center p-6 text-center transition-all duration-700 select-none">
-        <div class="relative flex flex-col items-center space-y-6 max-w-sm w-full">
-            <!-- Animated Logo Container with Glow Ring -->
-            <div class="relative">
-                <div class="absolute -inset-4 bg-gradient-to-r from-terracotta-600 via-forest-600 to-terracotta-600 rounded-3xl blur-md opacity-70 animate-pulse"></div>
-                <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-3xl overflow-hidden shadow-2xl border-2 border-sand-300 bg-walnut-900 animate-splashLogo">
-                    <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=200&q=80';">
-                </div>
-            </div>
-
-            <div class="space-y-2">
-                <h1 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white tracking-wider">
-                    Art Market
-                </h1>
-                <p class="text-xs sm:text-sm font-semibold text-terracotta-300 uppercase tracking-widest">
-                    Sector 88, Faridabad
-                </p>
-                <p class="text-[11px] text-sand-300/80 font-light max-w-xs mx-auto">
-                    Real-Touch Plants &bull; Designer Planters &bull; Brass Decor
-                </p>
-            </div>
-
-            <!-- Loading indicator bar -->
-            <div class="w-36 bg-walnut-800 rounded-full h-1 overflow-hidden">
-                <div class="bg-gradient-to-r from-terracotta-500 to-forest-500 h-1 w-full rounded-full animate-pulse"></div>
-            </div>
-
-            <button id="skipSplashBtn" class="text-[11px] text-sand-400 hover:text-white uppercase tracking-wider font-bold underline transition-colors pt-2">
-                Skip Intro &rarr;
-            </button>
-        </div>
-    </div>
-
     <!-- MAIN NAVBAR (WARM IVORY & CRISP WALNUT) -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sand-200 shadow-sm transition-all duration-300" id="mainHeader">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -193,7 +159,7 @@
                     {% else %}
                     <a href="{% url 'login' %}" class="h-10 px-3 rounded-xl bg-sand-100 hover:bg-sand-200 text-walnut-900 flex items-center gap-1.5 transition-all border border-sand-200 text-xs font-bold" title="Sign in with mobile OTP">
                         <i class="fas fa-user-circle text-base text-walnut-600"></i>
-                        <span class="hidden md:inline">Login</span>
+                        
                     </a>
                     {% endif %}
 

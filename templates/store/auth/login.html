@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In / Login with OTP | {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-[75vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#faf7f2]">
+    <div class="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-sand-200 animate-fadeIn">
+        
+        <!-- Header & Logo -->
+        <div class="text-center space-y-3">
+            <a href="{% url 'home' %}" class="inline-block group">
+                <img src="/static/images/logo.jpg" alt="{{ STORE_NAME }} Logo" class="w-16 h-16 rounded-2xl mx-auto object-cover border-2 border-sand-300 shadow-md group-hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606744888344-498238f01777?auto=format&fit=crop&w=150&q=80';">
+            </a>
+            <h1 class="font-cinzel text-2xl sm:text-3xl font-bold text-walnut-950">
+                {% if step == 'verify_otp' %}Enter Verification Code{% else %}Welcome to Art Market{% endif %}
+            </h1>
+            <p class="text-xs sm:text-sm text-walnut-600 font-light">
+                {% if step == 'verify_otp' %}
+                    Enter the 6-digit OTP sent to <strong class="text-walnut-900 font-bold">+91 {{ phone }}</strong>
+                {% else %}
+                    Sign in with your mobile number to view orders, track deliveries, and manage your account.
+                {% endif %}
+            </p>
+        </div>
+
+        {% if messages %}
+        <div class="space-y-2">
+            {% for message in messages %}
+            <div class="p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 {% if message.tags == 'error' %}bg-rose-50 text-rose-800 border border-rose-200{% elif message.tags == 'info' %}bg-blue-50 text-blue-800 border border-blue-200{% else %}bg-forest-50 text-forest-800 border border-forest-200{% endif %}">
+                <i class="fas {% if message.tags == 'error' %}fa-exclamation-circle text-rose-600{% else %}fa-check-circle text-forest-600{% endif %} text-sm"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if step == 'verify_otp' %}
+            <!-- STEP 2: VERIFY OTP FORM -->
+            <form method="POST" action="{% url 'login' %}" class="space-y-5">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="verify_otp">
+                <input type="hidden" name="phone" value="{{ phone }}">
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-walnut-800 mb-2">
+                        6-Digit Security OTP
+                    </label>
+                    <div class="relative">
+                        <input type="text" 
+                               name="otp" 
+                               id="otpInput"
+                               required 
+                               maxlength="6"
+                               autofocus
+                               placeholder="123456" 
+                               value="{{ demo_otp }}"
+                               class="w-full text-center tracking-[0.3em] font-mono text-2xl font-bold py-3.5 px-4 bg-sand-50 border-2 border-sand-300 rounded-2xl text-walnut-950 focus:outline-none focus:border-terracotta-700 transition-colors">
+                    </div>
+                </div>
+
+                {% if demo_otp %}
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                        <i class="fas fa-shield-alt text-amber-600"></i>
+                        <span>Testing Mode: OTP is <strong>{{ demo_otp }}</strong></span>
+                    </span>
+                    <button type="button" onclick="document.getElementById('otpInput').value='{{ demo_otp }}'" class="text-amber-800 underline font-bold hover:text-amber-950">Auto-fill</button>
+                </div>
+                {% endif %}
+
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-forest-700 to-forest-800 hover:from-forest-800 hover:to-forest-900 text-white rounded-2xl font-bold text-sm tracking-wide shadow-lg hover:shadow-forest-700/30 transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Verify &amp; Sign In</span>
+                </button>
+
+                <div class="flex items-center justify-between text-xs pt-2">
+                    <a href="{% url 'login' %}?next={{ next|urlencode }}" class="text-walnut-600 hover:text-walnut-900 font-semibold underline flex items-center gap-1">
+                        <i class="fas fa-arrow-left text-[10px]"></i> Change Phone Number
+                    </a>
+                    
+                    <form method="POST" action="{% url 'login' %}" class="inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="send_otp">
+                        <input type="hidden" name="phone" value="{{ phone }}">
+                        <input type="hidden" name="name" value="{{ name }}">
+                        <input type="hidden" name="next" value="{{ next }}">
+                        <button type="submit" class="text-terracotta-700 hover:text-terracotta-800 font-bold hover:underline">
+                            Resend OTP
+                        </button>
+                    </form>
+                </div>
+            </form>
+
+        {% else %}
+            <!-- STEP 1: ENTER PHONE NUMBER FORM -->
+            <form method="POST" action="{% url 'login' %}" class="space-y-5">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="send_otp">
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <!-- Full Name (Optional) -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-walnut-800 mb-1.5">
+                        Your Name <span class="text-walnut-400 font-normal lowercase">(optional)</span>
+                    </label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-walnut-400 text-sm"></i>
+                        <input type="text" 
+                               name="name" 
+                               value="{{ name }}"
+                               placeholder="e.g. Rahul Sharma" 
+                               class="w-full pl-11 pr-4 py-3.5 bg-sand-50 border border-sand-300 rounded-2xl text-xs sm:text-sm text-walnut-900 font-semibold focus:outline-none focus:border-terracotta-700 transition-colors">
+                    </div>
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-walnut-800 mb-1.5">
+                        Mobile Phone Number <span class="text-terracotta-700">*</span>
+                    </label>
+                    <div class="relative flex rounded-2xl shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-2xl border border-r-0 border-sand-300 bg-sand-100 text-walnut-800 font-bold text-xs sm:text-sm">
+                            🇮🇳 +91
+                        </span>
+                        <input type="tel" 
+                               name="phone" 
+                               required 
+                               maxlength="10"
+                               pattern="[0-9]{10}"
+                               autofocus
+                               placeholder="98990 97676" 
+                               value="{{ phone }}"
+                               class="w-full px-4 py-3.5 bg-sand-50 border border-sand-300 rounded-r-2xl text-sm sm:text-base font-bold text-walnut-950 focus:outline-none focus:border-terracotta-700 transition-colors">
+                    </div>
+                    <p class="text-[11px] text-walnut-500 mt-1.5 font-light">
+                        We will send a 6-digit authentication code to this number.
+                    </p>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-terracotta-700 to-terracotta-800 hover:from-terracotta-800 hover:to-terracotta-900 text-white rounded-2xl font-bold text-sm tracking-wide shadow-lg hover:shadow-terracotta-700/30 transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane text-xs"></i>
+                    <span>Get Verification OTP &rarr;</span>
+                </button>
+            </form>
+        {% endif %}
+
+        <!-- Security & Help footer -->
+        <div class="pt-4 border-t border-sand-100 text-center space-y-3">
+            <p class="text-[11px] text-walnut-500">
+                <i class="fas fa-lock text-forest-700 mr-1"></i> Safe &amp; secure one-time password login. No passwords to remember.
+            </p>
+            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20need%20help%20with%20logging%20into%20my%20account." target="_blank" class="text-xs font-bold text-forest-800 hover:underline inline-flex items-center gap-1.5">
+                <i class="fab fa-whatsapp text-forest-600"></i> Need login assistance on WhatsApp?
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

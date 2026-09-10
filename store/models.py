@@ -176,4 +176,26 @@ class Review(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.name} ({self.rating}?) - {self.title}"
+        return f"{self.name} ({self.rating}★) - {self.title}"
+
+
+class PhoneOTP(models.Model):
+    phone = models.CharField(max_length=20, db_index=True)
+    otp = models.CharField(max_length=6)
+    name = models.CharField(max_length=150, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Phone OTP"
+        verbose_name_plural = "Phone OTPs"
+
+    def is_valid(self):
+        from django.utils import timezone
+        from datetime import timedelta
+        # Valid for 10 minutes and not yet used
+        return not self.is_used and (timezone.now() - self.created_at) < timedelta(minutes=10)
+
+    def __str__(self):
+        return f"OTP {self.otp} for {self.phone} ({'Valid' if self.is_valid() else 'Expired/Used'})"

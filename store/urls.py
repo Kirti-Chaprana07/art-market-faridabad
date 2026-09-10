@@ -12,6 +12,12 @@ urlpatterns = [
     path('visit-showroom/', views.visit_showroom, name='visit_showroom'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+
+    # User Authentication & Customer Account
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
+    path('account/', views.user_account, name='account'),
+    path('api/send-otp/', views.api_send_otp, name='api_send_otp'),
     
     # Owner Management Portal
     path('owner/', views.owner_dashboard, name='owner_dashboard'),

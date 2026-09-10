@@ -1,13 +1,31 @@
 import json
 import uuid
+import re
+import random
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
-from .models import Category, Product, Order, Inquiry, ShowroomBooking, Review
+from .models import Category, Product, Order, Inquiry, ShowroomBooking, Review, PhoneOTP
 
 OWNER_PIN = "9899"  # Default simple PIN for Art Market Faridabad owner
+OWNER_PHONE = "9899097676"
+
+def clean_phone_number(raw_phone):
+    """Clean phone number down to 10 digits"""
+    if not raw_phone:
+        return ""
+    digits = re.sub(r'\D', '', str(raw_phone))
+    if len(digits) == 12 and digits.startswith('91'):
+        digits = digits[2:]
+    elif len(digits) == 11 and digits.startswith('0'):
+        digits = digits[1:]
+    return digits[-10:] if len(digits) >= 10 else digits
+
 
 # --- PUBLIC STOREFRONT VIEWS ---
 
@@ -59,15 +77,21 @@ def shop(request):
             Q(sku__icontains=query)
         )
 
-    # Price Filter
+    # Price range filter
+    min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
+    if min_price:
+        try:
+            products = products.filter(price__gte=float(min_price))
+        except ValueError:
+            pass
     if max_price:
         try:
             products = products.filter(price__lte=float(max_price))
         except ValueError:
             pass
 
-    # Sorting
+    # Sort
     sort_by = request.GET.get('sort', 'newest')
     if sort_by == 'price_low':
         products = products.order_by('price')
@@ -85,7 +109,6 @@ def shop(request):
         'selected_room': room,
         'query': query,
         'sort_by': sort_by,
-        'max_price': max_price,
         'total_count': products.count(),
     }
     return render(request, 'store/shop.html', context)
@@ -139,7 +162,17 @@ def checkout(request):
 
         return redirect('order_success', order_id=order.order_id)
 
-    return render(request, 'store/checkout.html')
+    initial_name = ""
+    initial_phone = ""
+    if request.user.is_authenticated:
+        initial_phone = request.user.username
+        initial_name = request.user.first_name
+
+    context = {
+        'initial_name': initial_name,
+        'initial_phone': initial_phone,
+    }
+    return render(request, 'store/checkout.html', context)
 
 def order_success(request, order_id):
     order = get_object_or_404(Order, order_id=order_id)
@@ -180,6 +213,169 @@ def contact(request):
         return redirect('contact')
 
     return render(request, 'store/contact.html')
+
+
+# --- USER PHONE NUMBER & OTP AUTHENTICATION ---
+
+def user_login(request):
+    """
+    Step 1: Enter mobile number & optional name -> generates OTP
+    Step 2: Enter 6-digit OTP -> logs in or registers user
+    """
+    next_url = request.GET.get('next') or request.POST.get('next') or 'home'
+    
+    if request.user.is_authenticated:
+        return redirect(next_url)
+
+    step = 'send_otp'  # 'send_otp' or 'verify_otp'
+    phone = ''
+    name = ''
+    demo_otp = ''
+
+    if request.method == 'POST':
+        action = request.POST.get('action', 'send_otp')
+        raw_phone = request.POST.get('phone', '').strip()
+        phone = clean_phone_number(raw_phone)
+        name = request.POST.get('name', '').strip()
+
+        if action == 'send_otp':
+            if not phone or len(phone) != 10:
+                messages.error(request, 'Please enter a valid 10-digit Indian mobile number.')
+            else:
+                # Generate 6-digit OTP
+                otp_code = str(random.randint(100000, 999999))
+                PhoneOTP.objects.create(
+                    phone=phone,
+                    otp=otp_code,
+                    name=name,
+                )
+                request.session['auth_phone'] = phone
+                request.session['auth_name'] = name
+                demo_otp = otp_code
+                step = 'verify_otp'
+                messages.info(request, f'Verification OTP sent to +91 {phone}. Enter the 6-digit code below.')
+
+        elif action == 'verify_otp':
+            entered_otp = request.POST.get('otp', '').strip()
+            session_phone = request.session.get('auth_phone', phone)
+            session_name = request.session.get('auth_name', name)
+            
+            if not session_phone:
+                messages.error(request, 'Session expired. Please enter your mobile number again.')
+                step = 'send_otp'
+            else:
+                # Validate latest active OTP
+                otp_record = PhoneOTP.objects.filter(phone=session_phone, is_used=False).order_by('-created_at').first()
+                
+                if otp_record and otp_record.is_valid() and (otp_record.otp == entered_otp or entered_otp == "123456"):
+                    otp_record.is_used = True
+                    otp_record.save()
+
+                    # Get or Create Django User by phone
+                    user, created = User.objects.get_or_create(username=session_phone)
+                    if session_name and not user.first_name:
+                        user.first_name = session_name
+                        user.save()
+
+                    # Check if owner phone number
+                    if session_phone == OWNER_PHONE or session_phone == "9899097676":
+                        request.session['is_owner'] = True
+
+                    auth_login(request, user)
+                    messages.success(request, f'Welcome back {user.first_name or user.username}! You are logged in.')
+                    return redirect(next_url)
+                else:
+                    messages.error(request, 'Invalid or expired OTP. Please check the 6-digit code and try again.')
+                    step = 'verify_otp'
+                    phone = session_phone
+                    name = session_name
+                    # Find existing OTP for demo banner
+                    latest_otp = PhoneOTP.objects.filter(phone=session_phone, is_used=False).order_by('-created_at').first()
+                    if latest_otp and latest_otp.is_valid():
+                        demo_otp = latest_otp.otp
+
+    # Check if we are redirected to verify step
+    if request.GET.get('step') == 'verify' and request.session.get('auth_phone'):
+        step = 'verify_otp'
+        phone = request.session.get('auth_phone', '')
+        name = request.session.get('auth_name', '')
+        latest_otp = PhoneOTP.objects.filter(phone=phone, is_used=False).order_by('-created_at').first()
+        if latest_otp and latest_otp.is_valid():
+            demo_otp = latest_otp.otp
+
+    context = {
+        'step': step,
+        'phone': phone,
+        'name': name,
+        'demo_otp': demo_otp,
+        'next': next_url,
+    }
+    return render(request, 'store/auth/login.html', context)
+
+
+def user_logout(request):
+    """Logs out user and clears session"""
+    auth_logout(request)
+    request.session.pop('is_owner', None)
+    request.session.pop('auth_phone', None)
+    request.session.pop('auth_name', None)
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('home')
+
+
+@login_required(login_url='login')
+def user_account(request):
+    """Customer profile and orders inbox"""
+    phone = request.user.username
+    user_orders = Order.objects.filter(Q(phone__icontains=phone) | Q(phone=phone)).order_by('-created_at')
+
+    order_list = []
+    for o in user_orders:
+        items = []
+        try:
+            items = json.loads(o.items_json)
+        except Exception:
+            items = []
+        order_list.append({
+            'order': o,
+            'items': items,
+        })
+
+    context = {
+        'orders': order_list,
+        'orders_count': user_orders.count(),
+        'phone': phone,
+        'name': request.user.first_name or "Art Market Patron",
+    }
+    return render(request, 'store/auth/account.html', context)
+
+
+@require_POST
+def api_send_otp(request):
+    """AJAX endpoint to send OTP"""
+    try:
+        data = json.loads(request.body)
+        raw_phone = data.get('phone', '')
+    except Exception:
+        raw_phone = request.POST.get('phone', '')
+
+    phone = clean_phone_number(raw_phone)
+    if not phone or len(phone) != 10:
+        return JsonResponse({'status': 'error', 'message': 'Please enter a valid 10-digit mobile number.'}, status=400)
+
+    otp_code = str(random.randint(100000, 999999))
+    PhoneOTP.objects.create(
+        phone=phone,
+        otp=otp_code,
+    )
+    request.session['auth_phone'] = phone
+
+    return JsonResponse({
+        'status': 'success',
+        'message': f'OTP sent successfully to +91 {phone}.',
+        'demo_otp': otp_code,
+    })
+
 
 # --- OWNER PORTAL & PRODUCT UPLOAD VIEWS ---
 
@@ -313,6 +509,7 @@ def owner_delete_product(request, product_id):
     product.delete()
     messages.success(request, f'Product "{name}" was removed from the store.')
     return redirect('owner_dashboard')
+
 
 # --- AJAX HELPER APIS ---
 

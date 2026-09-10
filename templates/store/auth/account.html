@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}My Orders &amp; Profile | {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+    
+    <!-- Profile Header Card -->
+    <div class="bg-walnut-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-walnut-800 mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div class="flex items-center gap-4 sm:gap-5">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-terracotta-700 to-terracotta-900 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold font-cinzel shadow-lg border-2 border-sand-400/30">
+                {{ name|slice:":1"|upper|default:"A" }}
+            </div>
+            <div class="space-y-1">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <h1 class="font-cinzel text-xl sm:text-2xl font-bold text-sand-100">
+                        {{ name }}
+                    </h1>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-forest-800 text-forest-200 border border-forest-600 uppercase tracking-wide">
+                        Verified Patron
+                    </span>
+                    {% if request.session.is_owner %}
+                    <a href="{% url 'owner_dashboard' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-walnut-950 uppercase tracking-wide hover:bg-amber-400 transition-colors">
+                        👑 Owner Portal
+                    </a>
+                    {% endif %}
+                </div>
+                <p class="text-xs sm:text-sm text-sand-300 flex items-center gap-1.5 font-mono">
+                    <i class="fas fa-phone-alt text-terracotta-400 text-xs"></i>
+                    <span>+91 {{ phone }}</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+            <a href="{% url 'shop' %}" class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-sand-100 hover:bg-white text-walnut-950 text-xs font-bold uppercase tracking-wider text-center transition-colors">
+                Continue Shopping
+            </a>
+            <a href="{% url 'logout' %}" class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-walnut-800 hover:bg-rose-800 text-sand-200 hover:text-white text-xs font-bold uppercase tracking-wider text-center border border-walnut-700 transition-colors flex items-center justify-center gap-1.5">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Orders Section -->
+    <div class="space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-sand-200">
+            <div>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-walnut-950">My Purchase History</h2>
+                <p class="text-xs text-walnut-600">Track incoming deliveries and view previous invoices</p>
+            </div>
+            <span class="px-3 py-1 bg-sand-100 text-walnut-800 rounded-xl text-xs font-bold border border-sand-200">
+                {{ orders_count }} Orders Total
+            </span>
+        </div>
+
+        {% if orders %}
+            <div class="space-y-4">
+                {% for item in orders %}
+                <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-sand-200 space-y-4 hover:border-terracotta-700/50 transition-colors">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-sand-100">
+                        <div class="space-y-1">
+                            <span class="text-xs font-mono font-bold text-terracotta-700">Order #{{ item.order.order_id }}</span>
+                            <p class="text-[11px] text-walnut-500">Placed on {{ item.order.created_at|date:"d M Y, h:i A" }}</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold {% if item.order.order_status == 'Delivered' %}bg-forest-100 text-forest-800{% elif item.order.order_status == 'Dispatched' %}bg-blue-100 text-blue-800{% else %}bg-amber-100 text-amber-900{% endif %}">
+                                {{ item.order.get_order_status_display }}
+                            </span>
+                            <span class="font-cinzel font-bold text-base text-walnut-950">
+                                Rs. {{ item.order.total_amount|floatformat:0 }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Items list -->
+                    <div class="space-y-2">
+                        {% for prod in item.items %}
+                        <div class="flex items-center justify-between text-xs py-1.5 border-b border-sand-50">
+                            <div class="flex items-center gap-3">
+                                {% if prod.image %}
+                                <img src="{{ prod.image }}" class="w-10 h-10 rounded-lg object-cover border border-sand-200">
+                                {% endif %}
+                                <div>
+                                    <span class="font-bold text-walnut-900">{{ prod.name }}</span>
+                                    <span class="text-[11px] text-walnut-500 block">Qty: {{ prod.quantity }} &times; Rs. {{ prod.price|floatformat:0 }}</span>
+                                </div>
+                            </div>
+                            <span class="font-bold text-walnut-800">Rs. {{ prod.price|floatformat:0 }}</span>
+                        </div>
+                        {% empty %}
+                        <p class="text-xs text-walnut-500 italic">Custom showroom order items</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Delivery & WhatsApp helper -->
+                    <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                        <div class="text-[11px] text-walnut-600">
+                            <i class="fas fa-map-pin text-terracotta-700 mr-1"></i> Delivery Address: <strong>{{ item.order.address }}, {{ item.order.city }} - {{ item.order.pincode }}</strong>
+                        </div>
+                        <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20Art%20Market%20Faridabad!%20I%20am%20inquiring%20about%20my%20Order%20*{{ item.order.order_id }}*." target="_blank" class="text-forest-700 hover:text-forest-900 font-bold flex items-center gap-1.5 hover:underline">
+                            <i class="fab fa-whatsapp text-sm"></i>
+                            <span>Inquire on WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty state -->
+            <div class="text-center py-16 px-4 bg-white rounded-3xl border border-sand-200 space-y-4">
+                <div class="w-16 h-16 rounded-full bg-sand-100 flex items-center justify-center text-walnut-400 mx-auto text-2xl">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="font-cinzel text-lg font-bold text-walnut-900">No Orders Placed Yet</h3>
+                    <p class="text-xs text-walnut-600 max-w-sm mx-auto">Explore our collection of real-touch plants, designer planters, and handcrafted brass urulis.</p>
+                </div>
+                <a href="{% url 'shop' %}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-forest-700 to-forest-800 text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all">
+                    <span>Browse Collections &rarr;</span>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

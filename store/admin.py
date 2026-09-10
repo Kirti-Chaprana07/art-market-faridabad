@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Order, Inquiry, ShowroomBooking, Review
+from .models import Category, Product, Order, Inquiry, ShowroomBooking, Review, PhoneOTP
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -39,3 +39,10 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ('name', 'rating', 'title', 'city', 'product_name', 'is_verified', 'created_at')
     list_filter = ('rating', 'is_verified', 'city')
     search_fields = ('name', 'title', 'comment')
+
+@admin.register(PhoneOTP)
+class PhoneOTPAdmin(admin.ModelAdmin):
+    list_display = ('phone', 'otp', 'name', 'created_at', 'is_used')
+    list_filter = ('is_used', 'created_at')
+    search_fields = ('phone', 'otp', 'name')
+    readonly_fields = ('created_at',)
